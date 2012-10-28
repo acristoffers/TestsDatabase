@@ -1,23 +1,59 @@
 Test Database
 =============
-Create a database with questions and easely print tests.
+Easily manage questions and print tests.
 
-Categories
+Banco de Questões
+=================
+Gerencie questões e imprima provas com facilidade.
+
+Fragen Bank
+===========
+Verwalten Fragen und Drucktests mit Leichtigkeit.
+
+
+
+
+
+
+License
+=======
+Subject to your compliance with these Terms, you are granted a free of charge license to download and install
+the Software on any computer, and use for any purpose, except the ones described in Restrictions section below, including
+personal use, commercial use and military use.
+
+Restrictions
+------------
+You may not and you agree not to:
+
+    (a) sub-license, sell, assign, rent, lease, export, import, distribute or transfer or otherwise grant rights to any third party in the Software or parts of it;
+
+    (b) undertake, cause, permit or authorize the modification, creation of derivative works or improvements, translation, reverse engineering, decompiling, disassembling, decryption, emulation, hacking, discovery or attempted discovery of the source code or protocols of the Software or any part or features thereof (except to the extent permitted by law);
+
+    (c) remove, obscure or alter any copyright notices or other proprietary notices included in the Software;
+    
+    (d) resell or commercialise the Software or parts of it and/or Products to any third party.
+
+
+
+
+
+
+
+Licença
+=======
+Concordando com estes Termos, lhe é concedida uma licença gratuita para baixar e instalar o software em qualquer computador, e usá-lo para qualquer fim, exceto pelos descritos na seção abaixo "Restrições", incluindo uso pessoal, comercial e militar.
+
+Restrições
 ----------
-You can organize your questions into categories.
-A category can have subcategories, so you can make a tree as deep as needed.
+Você não irá e concorda em não:
 
-Questions
----------
-Your questions can have a internal title, a reference (so you know where it came from), a difficulty level (0 to 10), a beatiful body (WYSIWYG editor) and as much anserwers as you want.
-For now (and probably forever) the only supported question format is multi-choice.
+    (a) relicenciar, sub-licenciar, vender, conceder, alugar, arrendar, importar, distribuir ou transferir ou mesmo dar direitos     à qualquer terceiro sobre o Software ou partes dele;
+    
+    (b) aceitar, causar, permitir ou autorizar a modificação, criação de trabalhos derivados ou melhorias, engenharia de tradução, reversa, descompilação, desmontagem, decodificação, a emulação, a descoberta, hacking ou tentar descobrir o código-fonte ou protocolos do Software ou de qualquer parte ou caracteristica do mesmo (exceto na medida permitida por lei);
+    
+    (c) remover, obscurecer ou alterar qualquer marca de direito autoral ou outras notificações de propriedade incluídas no Software;
+    
+    (d) revender ou comercializar o Software ou partes do mesmo e/ou Produtos de qualquer terceiro;
 
-MIT Licenced!
--------------
-You can fork it and modify as you wish!
 
-Copyright (c) 2012 Álan Crístoffer
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+(c) 2012 Álan Crístoffer (acristoffers@gmail.com)
