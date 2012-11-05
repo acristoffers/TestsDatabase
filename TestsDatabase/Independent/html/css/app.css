@@ -11,38 +11,15 @@ body {
     background: url(../img/bg.png) repeat-y top left;
 }
 
-a:hover {
+a {
     cursor: pointer;
 }
 
-.clear {
-    clear: both;
-}
-
-
-
-/*
-Open modal dialog
-*/
-#open-dialog img {
-	max-width: 128px;
-	height: auto;
-}
-
-#open-dialog div {
-	display: inline-block;
-	padding: 60px;
-    color: #666;
-    cursor: pointer;
-    text-align: center;
-}
-
-#open-dialog div:hover {
-    color: black;
-}
-
-#open-dialog div h1 {
-	text-align: center;
+.light-well {
+    padding: 10px;
+    background: #F5F5F5;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
 }
 
 
@@ -65,10 +42,6 @@ Header stuff
 	right: 410px;
 	top: 45px;
 	position: absolute;
-}
-
-#open-dialog-new {
-	margin-left: 15px;
 }
 
 
@@ -95,69 +68,76 @@ Header menu
 }
 
 
-/*
-Main area
-*/
-#main {
-}
-
 
 
 /*
-Main menu
+Navigation div
 */
-#main-left {
+#navigation {
 	padding: 5px;
 	overflow: auto;
     width: 390px;
-    float: left;
 }
 
-#categories-list li, #path-navigator li a {
-	cursor: pointer;
-}
 
-#path-navigator ul {
-    margin: 0;
-}
-
-#categories-list li[data-kind=category] {
-	/*list-style-image: url(../img/bullet.png);*/
-}
 
 /*
-Main content
+Content div
 */
-#main-right {
-	overflow: auto;
-    padding: 10px;
+#content {
+    margin-left: 400px;
 }
 
-#category-edit-form-parent-tree div, #question-form-category-tree div {
-	margin-left: 20px;
+
+
+/*
+Open file dialog
+*/
+#open-dialog-bg {
+    background: black;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.8;
+    z-index: 99;
 }
 
-.light-well {
-    padding: 10px;
-    background: #F5F5F5;
-    -webkit-border-radius: 5px;
+#open-dialog {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: -250px;
+    margin-top: -150px;
+    width: 500px;
+    height: 300px;
+    z-index: 100;
+    background: white;
     border-radius: 5px;
 }
 
-.slider {
-	width: 300px;
+#open-dialog img {
+	max-width: 128px;
+	height: auto;
+}
+
+#open-dialog div {
 	display: inline-block;
-    margin: 0 10px;
+	padding: 60px;
+    cursor: pointer;
+    text-align: center;
 }
 
-.question-view-answer-right {
-	color: green;
+#open-dialog div:hover {
+    color: black;
 }
 
-#test-form-categories div {
-    margin-left: 20px;
+#open-dialog div h2 {
+	text-align: center;
 }
 
-.print-right-answer {
-    font-weight: bold;
+#copyright {
+    text-align: right;
+    margin: 10px 10px;
 }
