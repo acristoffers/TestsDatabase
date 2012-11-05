@@ -3,5 +3,6 @@
         <file>icon.png</file>
         <file>qt_pt.qm</file>
         <file>qt_help_pt.qm</file>
+        <file>html.qtx</file>
     </qresource>
 </RCC>

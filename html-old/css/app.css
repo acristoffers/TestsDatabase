@@ -1,0 +1,163 @@
+/* (c) 2012 Álan Crístoffer */
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+    background: url(../img/bg.png) repeat-y top left;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+.clear {
+    clear: both;
+}
+
+
+
+/*
+Open modal dialog
+*/
+#open-dialog img {
+	max-width: 128px;
+	height: auto;
+}
+
+#open-dialog div {
+	display: inline-block;
+	padding: 60px;
+    color: #666;
+    cursor: pointer;
+    text-align: center;
+}
+
+#open-dialog div:hover {
+    color: black;
+}
+
+#open-dialog div h1 {
+	text-align: center;
+}
+
+
+
+/* 
+Header stuff 
+*/
+#header {
+	background: #333 url(../img/top.png) no-repeat top right;
+	height: 140px;
+}
+
+#header-text {
+	font-size: 16.5pt;
+	text-transform: uppercase;
+	font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: #CCC;
+	line-height: normal;
+	right: 410px;
+	top: 45px;
+	position: absolute;
+}
+
+#open-dialog-new {
+	margin-left: 15px;
+}
+
+
+
+/*
+Header menu
+*/
+#header-menu {
+	height: 38px;
+	background-color: #444;
+	border-top: 2px solid #666;
+}
+
+.icon-folder-new {
+    background: url(../img/document-new-big.png);
+    background-size: 16px;
+    width: 16px;
+}
+
+.icon-white, li > a:hover > .icon-folder-new,
+.active > a > .icon-folder-new
+{
+    background-image: url(../img/document-new-big-white.png) !important;
+}
+
+
+/*
+Main area
+*/
+#main {
+}
+
+
+
+/*
+Main menu
+*/
+#main-left {
+	padding: 5px;
+	overflow: auto;
+    width: 390px;
+    float: left;
+}
+
+#categories-list li, #path-navigator li a {
+	cursor: pointer;
+}
+
+#path-navigator ul {
+    margin: 0;
+}
+
+#categories-list li[data-kind=category] {
+	/*list-style-image: url(../img/bullet.png);*/
+}
+
+/*
+Main content
+*/
+#main-right {
+	overflow: auto;
+    padding: 10px;
+}
+
+#category-edit-form-parent-tree div, #question-form-category-tree div {
+	margin-left: 20px;
+}
+
+.light-well {
+    padding: 10px;
+    background: #F5F5F5;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.slider {
+	width: 300px;
+	display: inline-block;
+    margin: 0 10px;
+}
+
+.question-view-answer-right {
+	color: green;
+}
+
+#test-form-categories div {
+    margin-left: 20px;
+}
+
+.print-right-answer {
+    font-weight: bold;
+}

@@ -7,9 +7,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleName</key>
-	<string>Test Database</string>
+	<string>Tests Database</string>
 	<key>CFBundleDisplayName</key>
-	<string>Test Database</string>
+	<string>Tests Database</string>
 	<key>LSHasLocalizedDisplayName</key>
 	<true/>
 	<key>CFBundleGetInfoString</key>
@@ -17,7 +17,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleExecutable</key>
-	<string>Test Database</string>
+	<string>Tests Database</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.acristoffers.Banco_de_Questoes</string>
 	<key>CFBundleDocumentTypes</key>
