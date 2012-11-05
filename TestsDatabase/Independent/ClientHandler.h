@@ -5,6 +5,8 @@
 
 #include "include/cef_client.h"
 
+#include "AppHandler.h"
+
 // I implement the same class as the CEFClient, but won't get into the implementation of methods
 // The idea here is to keep it minimal, if you want details, check ou CEFClient
 class ClientHandler : public CefClient, public CefLifeSpanHandler, public CefPrintHandler, public CefV8ContextHandler, public CefV8Handler {
@@ -40,6 +42,8 @@ public:
     
     // Virutal on CefV8Handler
     bool Execute(const CefString& name, CefRefPtr<CefV8Value> object, const CefV8ValueList& arguments, CefRefPtr<CefV8Value>& retval, CefString& exception) OVERRIDE;
+    
+    void modelChanged();
 
 protected:
     // The child browser window

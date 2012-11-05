@@ -16,11 +16,14 @@
 
 #include <iostream>
 
-ClientHandler::ClientHandler()
-: m_Browser(NULL),
-m_BrowserHwnd(NULL)
+#include <DataBase.h>
+
+extern std::string OpenFileDialog();
+extern std::string SaveFileDialog();
+
+ClientHandler::ClientHandler() : m_Browser(NULL), m_BrowserHwnd(NULL)
 {
-    
+    AppHandler::instance()->clientHandler = this;
 }
 
 bool ClientHandler::DoClose(CefRefPtr<CefBrowser> browser)
@@ -31,7 +34,7 @@ bool ClientHandler::DoClose(CefRefPtr<CefBrowser> browser)
 void ClientHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser)
 {
     if (!m_Browser.get())   {
-        // We need to keep the main child window, but not popup windows
+		// We need to keep the main child window, but not popup windows
         m_Browser = browser;
         m_BrowserHwnd = browser->GetWindowHandle();
     }
@@ -40,7 +43,7 @@ void ClientHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser)
 void ClientHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser)
 {
     if (m_BrowserHwnd == browser->GetWindowHandle()) {
-        // Free the browser pointer so that the browser can be destroyed
+		// Free the browser pointer so that the browser can be destroyed
         m_Browser = NULL;
     }
 }
@@ -50,52 +53,79 @@ bool ClientHandler::OnBeforePopup(CefRefPtr<CefBrowser> parentBrowser, const Cef
     return false;
 }
 
-void ClientHandler::OnContextCreated(CefRefPtr<CefBrowser> browser,
-                                 CefRefPtr<CefFrame> frame,
-                                 CefRefPtr<CefV8Context> context)
+void ClientHandler::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context)
 {
-    // Retrieve the context's window object.
+	// Retrieve the context's window object.
     CefRefPtr<CefV8Value> window = context->GetGlobal();
-    
-    // Create a new object
+
+	// Create an instance of my CefV8Handler object.
+	// In this case it's this object, and content will be executed in bool ClientHandler::Execute(...)
+    CefRefPtr<CefV8Handler> handler = this;
+
+	// Create a new object
     CefRefPtr<CefV8Value> cpp = CefV8Value::CreateObject(NULL);
-    
-    // Add the object to windows JS: window.cpp
+
+	// Add the object to windows JS: window.cpp
     window->SetValue("AppCore", cpp, V8_PROPERTY_ATTRIBUTE_NONE);
     
-    // Create an instance of my CefV8Handler object.
-    // In this case it's this object, and content will be executed in bool ClientHandler::Execute(...)
-    CefRefPtr<CefV8Handler> handler = this;
+    /*
+     // Create a function.
+     CefRefPtr<CefV8Value> function = CefV8Value::CreateFunction("ChangeTextInJS", handler);
+     
+     // Add the function to the object
+     cpp->SetValue("ChangeTextInJS", function, V8_PROPERTY_ATTRIBUTE_NONE);
+    */
+#define ADD_FUNCTION_TO_JS(FUNCTION) cpp->SetValue(FUNCTION, CefV8Value::CreateFunction(FUNCTION, handler), V8_PROPERTY_ATTRIBUTE_NONE);
     
-    // Create a function.
-    CefRefPtr<CefV8Value> function = CefV8Value::CreateFunction("ChangeTextInJS", handler);
-    
-    // Add the function to the object
-    cpp->SetValue("ChangeTextInJS", function, V8_PROPERTY_ATTRIBUTE_NONE);
+    ADD_FUNCTION_TO_JS("checkDatabase");
+    ADD_FUNCTION_TO_JS("OpenFileDialog");
+    ADD_FUNCTION_TO_JS("SaveFileDialog");
 }
 
 void ClientHandler::OnContextReleased(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context)
 {
-    
+
 }
 
 bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object, const CefV8ValueList& arguments, CefRefPtr<CefV8Value>& retval, CefString& exception)
 {
-    if (name == "ChangeTextInJS") {
+    if (name == "OpenFileDialog") {
         if (arguments.size() == 1 && arguments[0]->IsString()) {
             CefString text = arguments[0]->GetStringValue();
-            
+
             CefRefPtr<CefFrame> frame = this->GetBrowser()->GetMainFrame();
-            
+
             std::string jscall = "ChangeText('";
             jscall += text;
             jscall += "');";
-            
+
             frame->ExecuteJavaScript(jscall, frame->GetURL(), 0);
-            
+
             return true;
         }
     }
     
+    if (name == "OpenFileDialog") {
+        AppHandler::instance()->openDataBase(OpenFileDialog());
+        return true;
+    }
+    
+    if (name == "SaveFileDialog") {
+        AppHandler::instance()->openDataBase(SaveFileDialog());
+        return true;
+    }
+    
+    if (name == "checkDatabase") {
+        retval = CefV8Value::CreateBool(AppHandler::instance()->getDataBase()->isValid());
+        return true;
+    }
+
     return false;
+}
+
+void ClientHandler::modelChanged()
+{
+    CefRefPtr<CefFrame> frame = this->GetBrowser()->GetMainFrame();
+    
+    frame->ExecuteJavaScript("App.modelChanged();", frame->GetURL(), 0);
 }

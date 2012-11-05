@@ -4,8 +4,8 @@ var AppNav = {
     execute: function(cmd) {
         cmdlist = {
             database: {
-                choose: AppCore.openDialogAndChooseFile,
-                create: AppCore.openDialogAndCreateFile,
+                choose: AppCore.OpenFileDialog,
+                create: AppCore.SaveFileDialog,
                 showdialog: AppUI.showOpenDialog,
                 close:  AppCore.closeDatabase
             },

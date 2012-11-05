@@ -6,6 +6,10 @@ var App = {
             AppNav.navigated('#/category/show/0');
         else
             AppNav.navigated('#/database/showdialog');
+    },
+    
+    modelChanged: function() {
+        App.databaseChanged();
     }
 };
 
@@ -14,6 +18,6 @@ $(document).ready(function() {
     AppUI.listAvailableTranslations();
     AppUI.translate();
     
-    //$('#open-dialog-bg').show();
-    //$('#open-dialog').show();
+    $('#open-dialog-bg').show();
+    $('#open-dialog').show();
 });
