@@ -15,8 +15,7 @@ var AppUI = {
     },
     
     listAvailableTranslations: function() {
-        var langs = JSON.parse(AppCore.availableTranslations());
-        langs['English'] = 'en';
+        var langs = AppI18N.availableLanguages();
         
         var ordered_langs = [];
         
@@ -40,7 +39,7 @@ var AppUI = {
     	});
         
         $(elements).click(function() {
-            AppCore.installTranslation($(this).data('lang'));
+            AppI18N.currentLanguage = ($(this).data('lang'));
             AppUI.translate();
         });
     },
@@ -52,32 +51,27 @@ var AppUI = {
     },
     
     translate: function() {
-        /*
-        The lines marked with "ease translation process"
-        are used to ouput the content of the html 'section'
-        of UIBridge::htmlTranslations() so I don't have to
-        type all the tr() lines that are used by lupdate
-        and thus can be removed if necessary (production, for example)
-        */
         var elements = $("*").filter(function() {
             return $(this).data("i18n") != undefined; 
         });
-    
-        var trs      = []; // ease translation process
-        var cpp = window.AppCore;
 	    
         for( var i   = 0; i < elements.length; i++) {
             var e    = elements[i];
-		
-            trs.push($(e).data('i18n')); // ease translation process
-
+            
+            var text = $(e).data('i18n');
+            var numbers = null;
+            
+            if ( $(e).data('i18n-numbers') ) {
+                numbers = $(e).data('i18n-numbers').toString().split(';');
+            }
+            
             if ( $(e).html ) {
-                $(e).html(cpp.jstr($(e).data('i18n')));
+                $(e).html(AppI18N.translate(text, numbers));
             } else if ( $(e).val ) {
-                $(e).val(cpp.jstr($(e).data('i18n')));
+                $(e).val(AppI18N.translate(text, numbers));
             }
         }
-    
+        
     	// begin add-icons
         var elements = $("*").filter(function() {
     		return $(this).data("icon") != undefined; 
@@ -87,20 +81,5 @@ var AppUI = {
         
             $(e).html( '<i class="icon-' + $(e).data('icon') + '"></i> ' + $(e).html());
         }
-        // end add-icons
-    
-        // ease translation process
-        var utrs     = [];
-        $.each(trs, function(i, el){
-            if($.inArray(el, utrs) === -1) utrs.push(el);
-        });
-    
-        var str      = '';
-        for (var i   = 0; i < utrs.length; i++) {
-            var tr   = utrs[i];
-            str += 'tr("' + tr + '");\n';
-        };
-    
-        //cpp.debug(str);
     }
 };

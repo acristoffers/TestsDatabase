@@ -42,6 +42,6 @@ var AppNav = {
     }
 };
 
-$(window).hashchange(function() {
+window.onhashchange = function() {
     AppNav.navigated(location.hash);
-});
+};

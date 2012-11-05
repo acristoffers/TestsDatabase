@@ -57,18 +57,18 @@ void ClientHandler::OnContextCreated(CefRefPtr<CefBrowser> browser,
     // Retrieve the context's window object.
     CefRefPtr<CefV8Value> window = context->GetGlobal();
     
+    // Create a new object
+    CefRefPtr<CefV8Value> cpp = CefV8Value::CreateObject(NULL);
+    
+    // Add the object to windows JS: window.cpp
+    window->SetValue("AppCore", cpp, V8_PROPERTY_ATTRIBUTE_NONE);
+    
     // Create an instance of my CefV8Handler object.
     // In this case it's this object, and content will be executed in bool ClientHandler::Execute(...)
     CefRefPtr<CefV8Handler> handler = this;
     
     // Create a function.
     CefRefPtr<CefV8Value> function = CefV8Value::CreateFunction("ChangeTextInJS", handler);
-    
-    // Create a new object
-    CefRefPtr<CefV8Value> cpp = CefV8Value::CreateObject(NULL);
-    
-    // Add the object to windows JS: window.cpp
-    window->SetValue("cpp", cpp, V8_PROPERTY_ATTRIBUTE_NONE);
     
     // Add the function to the object
     cpp->SetValue("ChangeTextInJS", function, V8_PROPERTY_ATTRIBUTE_NONE);

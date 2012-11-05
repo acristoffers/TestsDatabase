@@ -7,10 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E709C0DA1648126B009EE317 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E709C0DC1648126B009EE317 /* Localizable.strings */; };
+		E709C0DF16481308009EE317 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E709C0E116481308009EE317 /* MainMenu.xib */; };
+		E710283D1647FE3D007DF484 /* DataBase_answer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E71028351647FE3D007DF484 /* DataBase_answer.cpp */; };
+		E710283E1647FE3D007DF484 /* DataBase_category.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E71028361647FE3D007DF484 /* DataBase_category.cpp */; };
+		E710283F1647FE3D007DF484 /* DataBase_question.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E71028371647FE3D007DF484 /* DataBase_question.cpp */; };
+		E71028401647FE3D007DF484 /* DataBase_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E71028381647FE3D007DF484 /* DataBase_test.cpp */; };
+		E71028411647FE3D007DF484 /* DataBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E71028391647FE3D007DF484 /* DataBase.cpp */; };
+		E71028421647FE3D007DF484 /* DataBasePrivate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E710283B1647FE3D007DF484 /* DataBasePrivate.cpp */; };
+		E71028461647FE62007DF484 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = E71028441647FE62007DF484 /* sqlite3.c */; };
 		E738E8651647BC2900B83357 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E738E8641647BC2900B83357 /* Cocoa.framework */; };
-		E738E8951647BE4A00B83357 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E738E88E1647BE4A00B83357 /* Credits.rtf */; };
-		E738E8961647BE4A00B83357 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E738E8901647BE4A00B83357 /* InfoPlist.strings */; };
-		E738E8971647BE4A00B83357 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E738E8921647BE4A00B83357 /* MainMenu.xib */; };
 		E738E89B1647BFFB00B83357 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = E738E8991647BFFB00B83357 /* AppDelegate.mm */; };
 		E738E89C1647BFFB00B83357 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = E738E89A1647BFFB00B83357 /* main.mm */; };
 		E738E8A11647C85D00B83357 /* ClientHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E738E89E1647C85D00B83357 /* ClientHandler.cpp */; };
@@ -138,6 +144,25 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E709C0DB1648126B009EE317 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E709C0DD164812D6009EE317 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E709C0DE164812DA009EE317 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E709C0E016481308009EE317 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		E709C0E21648130E009EE317 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		E709C0E31648130F009EE317 /* pt */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = pt; path = pt.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		E709C0E41648187C009EE317 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = "en.lproj/TestsDatabase-Info.plist"; sourceTree = "<group>"; };
+		E709C0E616481882009EE317 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = pt; path = "pt.lproj/TestsDatabase-Info.plist"; sourceTree = "<group>"; };
+		E709C0E716481882009EE317 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = de; path = "de.lproj/TestsDatabase-Info.plist"; sourceTree = "<group>"; };
+		E71028351647FE3D007DF484 /* DataBase_answer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataBase_answer.cpp; path = TestsDatabase/Independent/DataBase/DataBase_answer.cpp; sourceTree = "<group>"; };
+		E71028361647FE3D007DF484 /* DataBase_category.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataBase_category.cpp; path = TestsDatabase/Independent/DataBase/DataBase_category.cpp; sourceTree = "<group>"; };
+		E71028371647FE3D007DF484 /* DataBase_question.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataBase_question.cpp; path = TestsDatabase/Independent/DataBase/DataBase_question.cpp; sourceTree = "<group>"; };
+		E71028381647FE3D007DF484 /* DataBase_test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataBase_test.cpp; path = TestsDatabase/Independent/DataBase/DataBase_test.cpp; sourceTree = "<group>"; };
+		E71028391647FE3D007DF484 /* DataBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataBase.cpp; path = TestsDatabase/Independent/DataBase/DataBase.cpp; sourceTree = "<group>"; };
+		E710283A1647FE3D007DF484 /* DataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataBase.h; path = TestsDatabase/Independent/DataBase/DataBase.h; sourceTree = "<group>"; };
+		E710283B1647FE3D007DF484 /* DataBasePrivate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataBasePrivate.cpp; path = TestsDatabase/Independent/DataBase/DataBasePrivate.cpp; sourceTree = "<group>"; };
+		E710283C1647FE3D007DF484 /* DataBasePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataBasePrivate.h; path = TestsDatabase/Independent/DataBase/DataBasePrivate.h; sourceTree = "<group>"; };
+		E71028441647FE62007DF484 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sqlite3.c; path = TestsDatabase/Independent/sqlite/sqlite3.c; sourceTree = "<group>"; };
+		E71028451647FE62007DF484 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sqlite3.h; path = TestsDatabase/Independent/sqlite/sqlite3.h; sourceTree = "<group>"; };
 		E738E8601647BC2900B83357 /* TestsDatabase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestsDatabase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E738E8641647BC2900B83357 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E738E8671647BC2900B83357 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -145,10 +170,6 @@
 		E738E8691647BC2900B83357 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E738E8871647BE3A00B83357 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Mac/AppDelegate.h; sourceTree = "<group>"; };
 		E738E88A1647BE3A00B83357 /* TestsDatabase-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TestsDatabase-Prefix.pch"; path = "Mac/TestsDatabase-Prefix.pch"; sourceTree = "<group>"; };
-		E738E88F1647BE4A00B83357 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = Credits.rtf; sourceTree = "<group>"; };
-		E738E8911647BE4A00B83357 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
-		E738E8931647BE4A00B83357 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MainMenu.xib; sourceTree = "<group>"; };
-		E738E8941647BE4A00B83357 /* TestsDatabase-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "TestsDatabase-Info.plist"; path = "Mac/resources/TestsDatabase-Info.plist"; sourceTree = "<group>"; };
 		E738E8991647BFFB00B83357 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Mac/AppDelegate.mm; sourceTree = "<group>"; };
 		E738E89A1647BFFB00B83357 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = main.mm; path = Mac/main.mm; sourceTree = "<group>"; };
 		E738E89E1647C85D00B83357 /* ClientHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ClientHandler.cpp; path = TestsDatabase/Independent/ClientHandler.cpp; sourceTree = "<group>"; };
@@ -156,7 +177,7 @@
 		E738E8A01647C85D00B83357 /* html */ = {isa = PBXFileReference; lastKnownFileType = folder; name = html; path = TestsDatabase/Independent/html; sourceTree = "<group>"; };
 		E738E8A41647C8F500B83357 /* libcef_dll_wrapper.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcef_dll_wrapper.a; path = TestsDatabase/CEF/Mac/lib/libcef_dll_wrapper.a; sourceTree = "<group>"; };
 		E738E8A51647C8F500B83357 /* libcef.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcef.dylib; path = TestsDatabase/CEF/Mac/lib/libcef.dylib; sourceTree = "<group>"; };
-		E738E9811647CB9800B83357 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = ../../../../icon.icns; sourceTree = "<group>"; };
+		E738E9811647CB9800B83357 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = ../icon.icns; sourceTree = "<group>"; };
 		E738E9F91647CE1500B83357 /* aliasCursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = aliasCursor.png; path = TestsDatabase/CEF/Mac/resources/aliasCursor.png; sourceTree = "<group>"; };
 		E738E9FA1647CE1500B83357 /* am.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = am.lproj; path = TestsDatabase/CEF/Mac/resources/am.lproj; sourceTree = "<group>"; };
 		E738E9FB1647CE1500B83357 /* ar.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ar.lproj; path = TestsDatabase/CEF/Mac/resources/ar.lproj; sourceTree = "<group>"; };
@@ -276,6 +297,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E71028331647FE2E007DF484 /* DataBase */ = {
+			isa = PBXGroup;
+			children = (
+				E71028351647FE3D007DF484 /* DataBase_answer.cpp */,
+				E71028361647FE3D007DF484 /* DataBase_category.cpp */,
+				E71028371647FE3D007DF484 /* DataBase_question.cpp */,
+				E71028381647FE3D007DF484 /* DataBase_test.cpp */,
+				E71028391647FE3D007DF484 /* DataBase.cpp */,
+				E710283A1647FE3D007DF484 /* DataBase.h */,
+				E710283B1647FE3D007DF484 /* DataBasePrivate.cpp */,
+				E710283C1647FE3D007DF484 /* DataBasePrivate.h */,
+			);
+			name = DataBase;
+			sourceTree = "<group>";
+		};
+		E71028431647FE54007DF484 /* SQLite */ = {
+			isa = PBXGroup;
+			children = (
+				E71028441647FE62007DF484 /* sqlite3.c */,
+				E71028451647FE62007DF484 /* sqlite3.h */,
+			);
+			name = SQLite;
+			sourceTree = "<group>";
+		};
 		E738E8551647BC2900B83357 = {
 			isa = PBXGroup;
 			children = (
@@ -330,27 +375,19 @@
 		E738E86B1647BC2900B83357 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E738E88D1647BE4A00B83357 /* en.lproj */,
-				E738E8941647BE4A00B83357 /* TestsDatabase-Info.plist */,
+				E709C0E116481308009EE317 /* MainMenu.xib */,
+				E709C0DC1648126B009EE317 /* Localizable.strings */,
+				E738E9811647CB9800B83357 /* icon.icns */,
+				E709C0E51648187C009EE317 /* TestsDatabase-Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		E738E88D1647BE4A00B83357 /* en.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				E738E9811647CB9800B83357 /* icon.icns */,
-				E738E88E1647BE4A00B83357 /* Credits.rtf */,
-				E738E8901647BE4A00B83357 /* InfoPlist.strings */,
-				E738E8921647BE4A00B83357 /* MainMenu.xib */,
-			);
-			name = en.lproj;
-			path = Mac/resources/en.lproj;
 			sourceTree = "<group>";
 		};
 		E738E89D1647C83A00B83357 /* Platform Independent files */ = {
 			isa = PBXGroup;
 			children = (
+				E71028431647FE54007DF484 /* SQLite */,
+				E71028331647FE2E007DF484 /* DataBase */,
 				E738E89E1647C85D00B83357 /* ClientHandler.cpp */,
 				E738E89F1647C85D00B83357 /* ClientHandler.h */,
 				E738E8A01647C85D00B83357 /* html */,
@@ -513,6 +550,9 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
+				de,
+				pt,
 			);
 			mainGroup = E738E8551647BC2900B83357;
 			productRefGroup = E738E8611647BC2900B83357 /* Products */;
@@ -529,9 +569,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E738E8951647BE4A00B83357 /* Credits.rtf in Resources */,
-				E738E8961647BE4A00B83357 /* InfoPlist.strings in Resources */,
-				E738E8971647BE4A00B83357 /* MainMenu.xib in Resources */,
 				E738E8A21647C85D00B83357 /* html in Resources */,
 				E738E9821647CB9800B83357 /* icon.icns in Resources */,
 				E738EA601647CE1500B83357 /* aliasCursor.png in Resources */,
@@ -636,6 +673,8 @@
 				E738EAC41647CE1600B83357 /* zh_TW.lproj in Resources */,
 				E738EAC51647CE1600B83357 /* zoomInCursor.png in Resources */,
 				E738EAC61647CE1600B83357 /* zoomOutCursor.png in Resources */,
+				E709C0DF16481308009EE317 /* MainMenu.xib in Resources */,
+				E709C0DA1648126B009EE317 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,34 +689,50 @@
 				E738E89C1647BFFB00B83357 /* main.mm in Sources */,
 				E738E8A11647C85D00B83357 /* ClientHandler.cpp in Sources */,
 				E738EA671647CE1500B83357 /* calendarPicker.js in Sources */,
+				E710283D1647FE3D007DF484 /* DataBase_answer.cpp in Sources */,
+				E710283E1647FE3D007DF484 /* DataBase_category.cpp in Sources */,
+				E710283F1647FE3D007DF484 /* DataBase_question.cpp in Sources */,
+				E71028401647FE3D007DF484 /* DataBase_test.cpp in Sources */,
+				E71028411647FE3D007DF484 /* DataBase.cpp in Sources */,
+				E71028421647FE3D007DF484 /* DataBasePrivate.cpp in Sources */,
+				E71028461647FE62007DF484 /* sqlite3.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		E738E88E1647BE4A00B83357 /* Credits.rtf */ = {
+		E709C0DC1648126B009EE317 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E738E88F1647BE4A00B83357 /* en */,
+				E709C0DB1648126B009EE317 /* en */,
+				E709C0DD164812D6009EE317 /* de */,
+				E709C0DE164812DA009EE317 /* pt */,
 			);
-			name = Credits.rtf;
+			name = Localizable.strings;
+			path = Mac/resources;
 			sourceTree = "<group>";
 		};
-		E738E8901647BE4A00B83357 /* InfoPlist.strings */ = {
+		E709C0E116481308009EE317 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E738E8911647BE4A00B83357 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		E738E8921647BE4A00B83357 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E738E8931647BE4A00B83357 /* en */,
+				E709C0E016481308009EE317 /* en */,
+				E709C0E21648130E009EE317 /* de */,
+				E709C0E31648130F009EE317 /* pt */,
 			);
 			name = MainMenu.xib;
+			path = Mac/resources;
+			sourceTree = "<group>";
+		};
+		E709C0E51648187C009EE317 /* TestsDatabase-Info.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E709C0E41648187C009EE317 /* en */,
+				E709C0E616481882009EE317 /* pt */,
+				E709C0E716481882009EE317 /* de */,
+			);
+			name = "TestsDatabase-Info.plist";
+			path = Mac/resources;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -706,7 +761,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -729,7 +784,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
 			name = Release;

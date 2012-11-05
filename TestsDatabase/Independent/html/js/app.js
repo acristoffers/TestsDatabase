@@ -14,6 +14,6 @@ $(document).ready(function() {
     AppUI.listAvailableTranslations();
     AppUI.translate();
     
-    $('#open-dialog-bg').show();
-    $('#open-dialog').show();
+    //$('#open-dialog-bg').show();
+    //$('#open-dialog').show();
 });
