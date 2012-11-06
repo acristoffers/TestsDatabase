@@ -4,7 +4,8 @@
             return number;
         },
         
-        '__lang__': 'Deutsch'
+        '__lang__': 'Deutsch',
+        'Language': 'Sprache'
     };
     
     AppI18N.registerTranslation('de', translation);

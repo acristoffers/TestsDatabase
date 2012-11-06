@@ -5,6 +5,8 @@
 
 #include <string>
 
+#include "include/cef_v8.h"
+
 #include "DataBase.h"
 
 class ClientHandler;
@@ -17,6 +19,8 @@ public:
     DataBase* getDataBase() const;
     
     void openDataBase(std::string file);
+    
+    static CefRefPtr<CefV8Value> SqlResultToJSArray(SqlResult);
     
 protected:
     AppHandler();

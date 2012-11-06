@@ -35,7 +35,7 @@ var AppNav = {
             if ( split[2] )
                 cmd.action = split[2];
             if ( split[3] )
-                cmd.id     = split[3];
+                cmd.id     = parseInt(split[3]);
         }
         
         return cmd;

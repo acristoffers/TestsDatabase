@@ -15,11 +15,20 @@
 #include "include/cef_v8context_handler.h"
 
 #include <iostream>
+#include <sstream>
 
+#include <AppHandler.h>
 #include <DataBase.h>
 
 extern std::string OpenFileDialog();
 extern std::string SaveFileDialog();
+
+std::string IntToString(int i)
+{
+    std::stringstream s;
+    s << i;
+    return s.str();
+}
 
 ClientHandler::ClientHandler() : m_Browser(NULL), m_BrowserHwnd(NULL)
 {
@@ -57,14 +66,14 @@ void ClientHandler::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<Ce
 {
 	// Retrieve the context's window object.
     CefRefPtr<CefV8Value> window = context->GetGlobal();
-
+    
 	// Create an instance of my CefV8Handler object.
 	// In this case it's this object, and content will be executed in bool ClientHandler::Execute(...)
     CefRefPtr<CefV8Handler> handler = this;
-
+    
 	// Create a new object
     CefRefPtr<CefV8Value> cpp = CefV8Value::CreateObject(NULL);
-
+    
 	// Add the object to windows JS: window.cpp
     window->SetValue("AppCore", cpp, V8_PROPERTY_ATTRIBUTE_NONE);
     
@@ -74,35 +83,29 @@ void ClientHandler::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<Ce
      
      // Add the function to the object
      cpp->SetValue("ChangeTextInJS", function, V8_PROPERTY_ATTRIBUTE_NONE);
-    */
+     */
 #define ADD_FUNCTION_TO_JS(FUNCTION) cpp->SetValue(FUNCTION, CefV8Value::CreateFunction(FUNCTION, handler), V8_PROPERTY_ATTRIBUTE_NONE);
     
     ADD_FUNCTION_TO_JS("checkDatabase");
+    ADD_FUNCTION_TO_JS("listCategories");
     ADD_FUNCTION_TO_JS("OpenFileDialog");
     ADD_FUNCTION_TO_JS("SaveFileDialog");
 }
 
 void ClientHandler::OnContextReleased(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context)
 {
-
+    
 }
 
 bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object, const CefV8ValueList& arguments, CefRefPtr<CefV8Value>& retval, CefString& exception)
 {
-    if (name == "OpenFileDialog") {
-        if (arguments.size() == 1 && arguments[0]->IsString()) {
-            CefString text = arguments[0]->GetStringValue();
-
-            CefRefPtr<CefFrame> frame = this->GetBrowser()->GetMainFrame();
-
-            std::string jscall = "ChangeText('";
-            jscall += text;
-            jscall += "');";
-
-            frame->ExecuteJavaScript(jscall, frame->GetURL(), 0);
-
-            return true;
-        }
+    if (name == "listCategories") {
+        int id = arguments[0]->GetIntValue();
+        
+        SqlResult result = AppHandler::instance()->getDataBase()->category_select_where("parent=" + IntToString(id));
+        retval = AppHandler::SqlResultToJSArray(result);
+        
+        return true;
     }
     
     if (name == "OpenFileDialog") {
@@ -119,7 +122,7 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
         retval = CefV8Value::CreateBool(AppHandler::instance()->getDataBase()->isValid());
         return true;
     }
-
+    
     return false;
 }
 

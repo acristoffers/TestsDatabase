@@ -3,6 +3,24 @@
 var AppUI = {
     categoryShow: function(id) {
         AppUI.clean();
+        $('#category-list-btn-toolbar').show();
+        $('#categories-list-wrapper').show();
+        
+        var categories = AppCore.listCategories(id);
+        
+        var html;
+        
+        if (categories) {
+            html = '<li class="nav-header" data-i18n="Categories"></li>';
+        
+            for (var i = categories.length - 1; i >= 0; i--){
+                html += '<li>' + categories[i]['name'] + '</li>';
+            };
+        }
+        
+        $('#categories-list').html(html);
+        
+        AppUI.translate();
     },
     
     clean: function() {
