@@ -21,6 +21,7 @@ public:
     void openDataBase(std::string file);
     
     static CefRefPtr<CefV8Value> SqlResultToJSArray(SqlResult);
+    static CefRefPtr<CefV8Value> SqlRowToJSObject(SqlRow);
     
 protected:
     AppHandler();

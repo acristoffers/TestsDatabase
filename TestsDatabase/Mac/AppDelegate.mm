@@ -14,8 +14,12 @@
 #import "include/cef_web_urlrequest.h"
 
 #import "ClientHandler.h"
+#import "AppHandler.h"
 
 #include <iostream>
+
+extern std::string OpenFileDialog();
+extern std::string SaveFileDialog();
 
 @implementation AppDelegate
 
@@ -50,6 +54,16 @@
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
 {
     return YES;
+}
+
+- (IBAction)openAction:(id)sender
+{
+    AppHandler::instance()->openDataBase(OpenFileDialog());
+}
+
+- (IBAction)saveAction:(id)sender
+{
+    AppHandler::instance()->openDataBase(SaveFileDialog());
 }
 
 @end

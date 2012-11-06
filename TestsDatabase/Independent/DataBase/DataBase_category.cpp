@@ -51,7 +51,7 @@ SqlRow DataBase::category_select(int id)
 
 SqlResult DataBase::category_select_where(std::string where_clause)
 {
-    std::string query = "SELECT * FROM categories ";
+    std::string query = "SELECT * FROM categories";
     
     if ( !where_clause.empty() ) {
         query += " WHERE ";

@@ -5,7 +5,8 @@
         },
         
         '__lang__': 'Português Brasileiro',
-        'Language': 'Idioma'
+        'Language': 'Idioma',
+        'Root': 'Início'
     };
     
     AppI18N.registerTranslation('pt_BR', translation);

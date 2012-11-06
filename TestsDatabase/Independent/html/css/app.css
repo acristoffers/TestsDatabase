@@ -67,6 +67,9 @@ Header menu
     background-image: url(../img/document-new-big-white.png) !important;
 }
 
+#copyright {
+    margin: 10px 10px;
+}
 
 
 
@@ -74,6 +77,7 @@ Header menu
 Navigation div
 */
 #navigation {
+    float: left;
 	padding: 5px;
 	overflow: auto;
     width: 390px;
@@ -86,8 +90,49 @@ Content div
 */
 #content {
     margin-left: 400px;
+    padding: 10px;
 }
 
+#category-edit-form-parent-tree div {
+    margin-left: 10px;
+}
+
+#category-edit-form-parent-tree input {
+    margin-right: 10px;
+}
+
+
+/*
+Alert modal
+*/
+#alert-modal {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 50%;
+    
+    height: auto;
+    margin-top: -200px;
+    
+    z-index: 100;
+    
+    background: #333;
+    padding: 50px 0;
+    
+    border-top: 12px solid #CCC;
+    border-bottom: 12px solid #CCC;
+    
+    color: white;
+}
+
+#alert-modal-center {
+    width: 50%;
+    margin: 0 auto;
+}
+
+#alert-modal-buttons {
+    text-align: right;
+}
 
 
 /*
@@ -135,9 +180,4 @@ Open file dialog
 
 #open-dialog div h2 {
 	text-align: center;
-}
-
-#copyright {
-    text-align: right;
-    margin: 10px 10px;
 }

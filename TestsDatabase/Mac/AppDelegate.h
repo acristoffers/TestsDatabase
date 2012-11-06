@@ -8,4 +8,7 @@
 
 @property (assign) IBOutlet NSWindow *window;
 
+- (IBAction) openAction:(id)sender;
+- (IBAction) saveAction:(id)sender;
+
 @end

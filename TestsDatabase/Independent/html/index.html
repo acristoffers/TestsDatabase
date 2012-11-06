@@ -38,7 +38,6 @@
             <a class="dropdown-toggle" href="#" data-toggle="dropdown" data-i18n="Test Database"></a>
             <ul class="dropdown-menu">
                 <li id="about"></i><a data-i18n="About" data-icon="info-sign"></a></li>
-                <li id="about-qt"><a data-i18n="About Qt" data-icon="info-sign"></a></li>
             </ul>
         </li>
         <li class="dropdown">
@@ -85,18 +84,20 @@
     <!--
         List Categories
     -->
-    <div id='category-list-btn-toolbar' class="btn-toolbar">
-        <button id='category-new' class="btn" data-i18n='' data-icon='plus'></button>
-        <button id='category-edit' class="btn" data-i18n='' data-icon='edit'></button>
-        <button id='question-new' class="btn pull-right" data-i18n='New Question'></button>
+    <div id="category-list-btn-toolbar" class="btn-toolbar">
+        <a href="#/modal/new_category"  class="btn" data-i18n="" data-icon="plus"></a>
+        <a id="category-list-edit" href="#/category/edit" class="btn" data-i18n="" data-icon="edit"></a>
+        <a href="#/question/new" class="btn pull-right" data-i18n="New Question"></a>
     </div>
-    <div id='test-list-toolbar' class="btn-toolbar">
-        <button id='test-new' class="btn" data-i18n='New Test'></button>
+    <div id="test-list-toolbar" class="btn-toolbar">
+        <button id="test-new" class="btn" data-i18n="New Test"></button>
     </div>
     <div id="categories-list-wrapper" class="light-well">
         <ul id="categories-list" class="nav nav-list">
         </ul>
     </div>
+    
+    <div id="copyright">© 2012 Álan Crístoffer</div>
 </div>
 
 
@@ -105,10 +106,56 @@
     Content
 -->
 <div id="content">
-
+    <!--
+        Edit Category
+    -->
+    <div id="category-edit-wrapper">
+        <form>
+            <legend data-i18n='Edit Category'></legend>
+            <label data-i18n='Name'></label>
+            <input id='category-edit-form-name' type="text" />
+            <div   id="category-edit-form-parent-tree"></div>
+            <div class="btn-toolbar">
+                <a href="#/category/update" class="btn btn-primary" data-i18n="Save" ></a>
+                <a href="#/category/merge" class="btn btn-warning" data-i18n="Merge" ></a>
+                <a href="#/category/delete" class="btn btn-danger" data-i18n="Delete" ></a>
+            </div>
+        </form>
+    </div>
 </div>
 
 
+
+<!--
+    Alert modal
+-->
+<div id="alert-modal">
+    <div id="alert-modal-center">
+        <div id="alert-modal-title"><h1></h1></div>
+        <div id="alert-modal-content"></div>
+        <div id="alert-modal-buttons">
+            <a href="#/modal/close" class="btn" data-i18n='Cancel'></a>
+            <a id="alert-modal-btn-primary" class="btn btn-primary" data-i18n='Continue'></a>
+            <a id="alert-modal-btn-danger" class="btn btn-danger" data-i18n='Continue'></a>
+        </div>
+    </div>
+</div>
+
+<!--
+    New category modal
+-->
+<div id="category-new-modal" class="reveal-modal">
+    <h2 data-i18n="Add category"></h2>
+    <p>
+        <label data-i18n="Name:"></label>
+        <input type="text" class="input-xlarge" id="category-new-modal-title"/>
+    </p>
+    <div class="buttons">
+        <a href="#/category/insert" class="btn btn-primary" data-i18n="Save"></a>
+        <a href="#/modal/close"     class="close-modal btn" data-i18n="Cancel"></a>
+    </div>
+    <a class="close-reveal-modal">&#215;</a>
+</div>
 
 <!--
     Choose or create file dialog
@@ -122,7 +169,3 @@
         <a href="#/database/create"><img src="img/document-new-big.png"><h2 data-i18n="New"></h2></a>
     </div>
 </div>
-
-
-
-<div id="copyright">© 2012 Álan Crístoffer</div>

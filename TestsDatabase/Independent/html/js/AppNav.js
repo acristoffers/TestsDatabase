@@ -1,28 +1,42 @@
 /* (c) 2012 Álan Crístoffer */
 
 var AppNav = {
+    current: {
+        question: 0,
+        category: 0,
+        test:     0
+    },
+    
     execute: function(cmd) {
         cmdlist = {
             database: {
-                choose: AppCore.OpenFileDialog,
-                create: AppCore.SaveFileDialog,
+                choose:     AppCore.OpenFileDialog,
+                create:     AppCore.SaveFileDialog,
                 showdialog: AppUI.showOpenDialog,
-                close:  AppCore.closeDatabase
+                close:      AppCore.closeDatabase
             },
             
             category: {
-                show: AppUI.categoryShow
+                delete: App.categoryDelete,
+                edit:   AppUI.categoryEdit,
+                insert: App.categoryInsert,
+                merge:  App.categoryMerge,
+                show:   AppUI.categoryShow,
+                update: App.categoryUpdate
+            },
+            
+            modal: {
+                close:        AppUI.closeModals,
+                new_category: AppUI.categoryNew
             }
         };
-        if ( cmd.id )
-            cmdlist[cmd.model][cmd.action]([cmd.id]);
-        else
-            cmdlist[cmd.model][cmd.action]();
+        
+        cmdlist[cmd.model][cmd.action]([cmd.id]);
     },
     
     navigated: function(hash) {
-        var cmd = this.parseCommand(hash);
-        if ( cmd.model ) this.execute(cmd);
+        var cmd = AppNav.parseCommand(hash);
+        if ( cmd.model ) AppNav.execute(cmd);
     },
     
     parseCommand: function(hash) {
@@ -35,7 +49,7 @@ var AppNav = {
             if ( split[2] )
                 cmd.action = split[2];
             if ( split[3] )
-                cmd.id     = parseInt(split[3]);
+                cmd.id     = split[3];
         }
         
         return cmd;

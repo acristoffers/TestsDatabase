@@ -87,11 +87,13 @@ int selectCallback(void *p_data, int num_fields, char **p_fields, char **p_col_n
     SqlRow row;
     
     for(int i=0; i < num_fields; i++) {
-        if ( p_fields[i] == NULL ) continue;
+        if ( p_fields[i] == NULL )
+            continue;
         row[p_col_names[i]] = p_fields[i];
     }
     
-    if ( row.empty() ) return 0;
+    if ( row.empty() )
+        return 0;
     
     result->push_back(row);
     

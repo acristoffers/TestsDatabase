@@ -84,10 +84,21 @@ void ClientHandler::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<Ce
      // Add the function to the object
      cpp->SetValue("ChangeTextInJS", function, V8_PROPERTY_ATTRIBUTE_NONE);
      */
-#define ADD_FUNCTION_TO_JS(FUNCTION) cpp->SetValue(FUNCTION, CefV8Value::CreateFunction(FUNCTION, handler), V8_PROPERTY_ATTRIBUTE_NONE);
+#define ADD_FUNCTION_TO_JS(FUNCTION) cpp->SetValue(FUNCTION, CefV8Value::CreateFunction(FUNCTION, handler), V8_PROPERTY_ATTRIBUTE_NONE)
     
     ADD_FUNCTION_TO_JS("checkDatabase");
+    
+    ADD_FUNCTION_TO_JS("categoryDelete");
+    ADD_FUNCTION_TO_JS("categoryInsert");
+    ADD_FUNCTION_TO_JS("categorySelect");
+    ADD_FUNCTION_TO_JS("categoryUpdate");
+
     ADD_FUNCTION_TO_JS("listCategories");
+    ADD_FUNCTION_TO_JS("listQuestions");
+    
+    ADD_FUNCTION_TO_JS("questionDelete");
+    ADD_FUNCTION_TO_JS("questionUpdate");
+    
     ADD_FUNCTION_TO_JS("OpenFileDialog");
     ADD_FUNCTION_TO_JS("SaveFileDialog");
 }
@@ -99,11 +110,88 @@ void ClientHandler::OnContextReleased(CefRefPtr<CefBrowser> browser, CefRefPtr<C
 
 bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object, const CefV8ValueList& arguments, CefRefPtr<CefV8Value>& retval, CefString& exception)
 {
+    if (name == "checkDatabase") {
+        retval = CefV8Value::CreateBool(AppHandler::instance()->getDataBase()->isValid());
+        return true;
+    }
+    
+    if (name == "categoryDelete") {
+        int id = arguments[0]->GetIntValue();
+        
+        AppHandler::instance()->getDataBase()->category_delete(id);
+        
+        return true;
+    }
+    
+    if (name == "categoryInsert") {
+        CefString name = arguments[0]->GetStringValue();
+        int parent = arguments[1]->GetIntValue();
+        
+        if ( name.empty() ) {
+            retval = CefV8Value::CreateInt(-1);
+            return true;
+        }
+        
+        int id = AppHandler::instance()->getDataBase()->category_insert(name, parent);
+        retval = CefV8Value::CreateInt(id);
+        
+        return true;
+    }
+    
+    if (name == "categorySelect") {
+        int id = arguments[0]->GetIntValue();
+        
+        SqlRow result = AppHandler::instance()->getDataBase()->category_select(id);
+        retval = AppHandler::SqlRowToJSObject(result);
+        
+        return true;
+    }
+    
+    if (name == "categoryUpdate") {
+        int id = arguments[0]->GetIntValue();
+        CefString name = arguments[1]->GetStringValue();
+        int parent = arguments[2]->GetIntValue();
+        
+        AppHandler::instance()->getDataBase()->category_update(id, name, parent);
+        
+        return true;
+    }
+    
     if (name == "listCategories") {
         int id = arguments[0]->GetIntValue();
         
         SqlResult result = AppHandler::instance()->getDataBase()->category_select_where("parent=" + IntToString(id));
         retval = AppHandler::SqlResultToJSArray(result);
+        
+        return true;
+    }
+    
+    if (name == "listQuestions") {
+        int id = arguments[0]->GetIntValue();
+        
+        SqlResult result = AppHandler::instance()->getDataBase()->question_select_where("category=" + IntToString(id));
+        retval = AppHandler::SqlResultToJSArray(result);
+        
+        return true;
+    }
+    
+    if (name == "questionDelete") {
+        int id = arguments[0]->GetIntValue();
+        
+        AppHandler::instance()->getDataBase()->question_delete(id);
+        
+        return true;
+    }
+
+    if (name == "questionUpdate") {
+        int       id    = arguments[0]->GetIntValue();
+        CefString title = arguments[1]->GetStringValue();
+        CefString ref   = arguments[2]->GetStringValue();
+        int       dif   = arguments[3]->GetIntValue();
+        CefString body  = arguments[4]->GetStringValue();
+        int       cat   = arguments[5]->GetIntValue();
+        
+        AppHandler::instance()->getDataBase()->question_update(id, title, ref, dif, body, cat);
         
         return true;
     }
@@ -115,11 +203,6 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
     
     if (name == "SaveFileDialog") {
         AppHandler::instance()->openDataBase(SaveFileDialog());
-        return true;
-    }
-    
-    if (name == "checkDatabase") {
-        retval = CefV8Value::CreateBool(AppHandler::instance()->getDataBase()->isValid());
         return true;
     }
     

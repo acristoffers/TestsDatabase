@@ -372,8 +372,8 @@
 				E7A6B9D716487A2100F93EFA /* AppHandler.h */,
 				E7A6B9D31648681C00F93EFA /* FileDialog.mm */,
 				E738E8991647BFFB00B83357 /* AppDelegate.mm */,
-				E738E89A1647BFFB00B83357 /* main.mm */,
 				E738E8871647BE3A00B83357 /* AppDelegate.h */,
+				E738E89A1647BFFB00B83357 /* main.mm */,
 				E738E88A1647BE3A00B83357 /* TestsDatabase-Prefix.pch */,
 				E738E86B1647BC2900B83357 /* Supporting Files */,
 			);

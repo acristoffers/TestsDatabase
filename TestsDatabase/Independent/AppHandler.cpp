@@ -25,6 +25,9 @@ DataBase* AppHandler::getDataBase() const
 
 void AppHandler::openDataBase(std::string file)
 {
+    if ( file.empty() )
+        return;
+    
     if (_db)
         delete _db;
     
@@ -43,20 +46,19 @@ CefRefPtr<CefV8Value> AppHandler::SqlResultToJSArray(SqlResult sql)
 {
     CefRefPtr<CefV8Value> jsarray = CefV8Value::CreateArray(sql.size());
     
-    int i = 0;
-    SqlResult::iterator it;
-    for ( it = sql.begin() ; it < sql.end(); it++ ) {
-        SqlRow row = *it;
-        
-        CefRefPtr<CefV8Value> obj = CefV8Value::CreateObject(NULL);
-        
-        SqlRow::iterator map;
-        for ( map=row.begin() ; map != row.end(); map++ )
-            obj->SetValue(CefString((*map).first), CefV8Value::CreateString((*map).second), V8_PROPERTY_ATTRIBUTE_NONE);
-        
-        jsarray->SetValue(i, obj);
-        i++;
-    }
+    for ( int i = 0; i < sql.size(); i++)
+        jsarray->SetValue(i, SqlRowToJSObject(sql[i]));
     
     return jsarray;
+}
+
+CefRefPtr<CefV8Value> AppHandler::SqlRowToJSObject(SqlRow sql)
+{
+    CefRefPtr<CefV8Value> obj = CefV8Value::CreateObject(NULL);
+    
+    SqlRow::iterator map;
+    for ( map=sql.begin() ; map != sql.end(); map++ )
+        obj->SetValue(CefString((*map).first), CefV8Value::CreateString((*map).second), V8_PROPERTY_ATTRIBUTE_NONE);
+    
+    return obj;
 }
