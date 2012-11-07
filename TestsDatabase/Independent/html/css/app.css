@@ -131,6 +131,7 @@ Alert modal
 }
 
 #alert-modal-buttons {
+    margin-top: 20px;
     text-align: right;
 }
 

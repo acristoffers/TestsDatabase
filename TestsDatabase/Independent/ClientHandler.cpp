@@ -86,6 +86,8 @@ void ClientHandler::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<Ce
      */
 #define ADD_FUNCTION_TO_JS(FUNCTION) cpp->SetValue(FUNCTION, CefV8Value::CreateFunction(FUNCTION, handler), V8_PROPERTY_ATTRIBUTE_NONE)
     
+    ADD_FUNCTION_TO_JS("ArrayHaveElement");
+    
     ADD_FUNCTION_TO_JS("checkDatabase");
     
     ADD_FUNCTION_TO_JS("categoryDelete");
@@ -110,6 +112,23 @@ void ClientHandler::OnContextReleased(CefRefPtr<CefBrowser> browser, CefRefPtr<C
 
 bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object, const CefV8ValueList& arguments, CefRefPtr<CefV8Value>& retval, CefString& exception)
 {
+    if (name == "ArrayHaveElement") {
+        CefRefPtr<CefV8Value> array = arguments[0];
+        std::string compare = arguments[1]->GetStringValue();
+        
+        retval = CefV8Value::CreateBool(false);
+        
+        for (int i=0; i<array->GetArrayLength(); i++) {
+            std::string val = array->GetValue(i)->GetStringValue();
+            if ( compare == val) {
+                retval = CefV8Value::CreateBool(true);
+                break;
+            }
+        }
+        
+        return true;
+    }
+    
     if (name == "checkDatabase") {
         retval = CefV8Value::CreateBool(AppHandler::instance()->getDataBase()->isValid());
         return true;
@@ -182,7 +201,7 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
         
         return true;
     }
-
+    
     if (name == "questionUpdate") {
         int       id    = arguments[0]->GetIntValue();
         CefString title = arguments[1]->GetStringValue();

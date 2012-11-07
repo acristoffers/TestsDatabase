@@ -16,7 +16,7 @@ void DataBase::category_delete(int id)
 
 int DataBase::category_insert(std::string name, int parent)
 {
-    int id = 0;
+    int id = 1;
     
     SqlResult r = executeSql("SELECT MAX(id) FROM categories");
     if ( !r.empty() )

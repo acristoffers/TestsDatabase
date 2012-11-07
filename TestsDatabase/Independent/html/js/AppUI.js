@@ -84,7 +84,7 @@ var AppUI = {
         
         if (categories && categories.length > 0) {
             html = '<li class="nav-header" data-i18n="Categories"></li>';
-        
+            
             sortArrayByObjectKey(categories, 'name');
             
             for (var i = categories.length - 1; i >= 0; i--){
@@ -104,7 +104,38 @@ var AppUI = {
             }
         }
         
-        $('#categories-list').html(html);
+        if ( id == AppNav.current.category ) {
+            $("#categories-list").html(html);
+        } else {
+            if ( id == 0 ) {
+                $("#categories-list").parent().hide("slide",{ direction: "right" },200, function() {
+                    $("#categories-list").html(html);
+                    AppUI.translate();
+                }).show("slide", {},200);
+            } else {
+                var eltern = [];
+                if ( AppNav.current.category != 0 ) {
+                    var cat = AppCore.categorySelect(AppNav.current.category);
+                    eltern.push(parseInt(cat.id));
+                    while( cat.parent != 0 ) {
+                        eltern.push(parseInt(cat.parent));
+                        cat = AppCore.categorySelect(cat.parent);
+                    }
+                }
+
+                if ( AppCore.ArrayHaveElement(eltern, id) ) {
+                    $("#categories-list").parent().hide("slide",{ direction: "right" },200, function() {
+                        $("#categories-list").html(html);
+                        AppUI.translate();
+                    }).show("slide", {},200);
+                } else {
+                    $("#categories-list").parent().hide("slide",{},200, function() {
+                        $("#categories-list").html(html);
+                        AppUI.translate();
+                    }).show("slide", { direction: "right" },200);
+                }
+            }
+        }
         
         AppUI.showBreadCrumb(id);
         

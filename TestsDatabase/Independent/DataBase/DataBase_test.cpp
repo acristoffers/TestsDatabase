@@ -16,7 +16,7 @@ void DataBase::test_delete(int id)
 
 int DataBase::test_insert(std::string title, std::string body, std::string header)
 {
-    int id = 0;
+    int id = 1;
     
     SqlResult r = executeSql("SELECT MAX(id) FROM tests");
     if ( !r.empty() )

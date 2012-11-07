@@ -20,7 +20,7 @@ void DataBase::question_delete(int id)
 
 int DataBase::question_insert(std::string title, std::string reference, int difficulty, std::string body, int category)
 {
-    int id = 0;
+    int id = 1;
     
     SqlResult r = executeSql("SELECT MAX(id) FROM questions");
     if ( !r.empty() )

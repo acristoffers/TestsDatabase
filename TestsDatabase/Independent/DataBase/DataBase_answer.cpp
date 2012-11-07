@@ -16,7 +16,7 @@ void DataBase::answer_delete(int question_id)
 
 int DataBase::answer_insert(std::string body, int question, bool right)
 {
-    int id = 0;
+    int id = 1;
     
     SqlResult r = executeSql("SELECT MAX(id) FROM answers");
     if ( !r.empty() )
