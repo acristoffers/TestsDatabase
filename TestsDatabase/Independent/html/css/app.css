@@ -93,11 +93,13 @@ Content div
     padding: 10px;
 }
 
-#category-edit-form-parent-tree div {
+#category-edit-form-parent-tree div,
+#question-form-category-tree div {
     margin-left: 10px;
 }
 
-#category-edit-form-parent-tree input {
+#category-edit-form-parent-tree input,
+#question-form-category-tree input {
     margin-right: 10px;
 }
 
@@ -133,6 +135,23 @@ Alert modal
 #alert-modal-buttons {
     margin-top: 20px;
     text-align: right;
+}
+
+/*
+Question form
+*/
+#question-form-answers input[type=radio] {
+    margin: 5px;
+}
+
+#question-form-difficulty {
+    width: 500px;
+    display: inline-block;
+    margin-right: 1em;
+}
+
+#question-form-category-tree {
+    margin-top: 10px;
 }
 
 

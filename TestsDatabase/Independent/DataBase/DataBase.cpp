@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <bzlib.h>
+
 #define DB_VERSION  1
 
 int         SqlInt (std::string value) { return atoi(value.c_str()); }
@@ -40,6 +42,54 @@ DataBase::~DataBase()
     delete _p;
 }
 
+char* DataBase::compress(std::string str, unsigned int* len)
+{
+    char* source = (char*) str.data();
+    unsigned int srcLen = str.size();
+    
+    unsigned int destLen = ((unsigned int)(srcLen * 1.01)) + 600;
+    char* dest = (char*)malloc(destLen + 8);
+    
+    dest += 8;
+    
+    BZ2_bzBuffToBuffCompress(dest, &destLen, source, srcLen, 9, 0, 30);
+    
+    dest -= 8;
+    
+    // compressed length
+    dest[0] = (destLen & 0xff000000) >> 24;
+    dest[1] = (destLen & 0x00ff0000) >> 16;
+    dest[2] = (destLen & 0x0000ff00) >> 8;
+    dest[3] = (destLen & 0x000000ff);
+    // uncompressed length
+    dest[4] = (srcLen & 0xff000000) >> 24;
+    dest[5] = (srcLen & 0x00ff0000) >> 16;
+    dest[6] = (srcLen & 0x0000ff00) >> 8;
+    dest[7] = (srcLen & 0x000000ff);
+    
+    (*len) = destLen + 8;
+    
+    return dest;
+}
+
+std::string DataBase::uncompress(char* data)
+{
+    unsigned int enSize = (data[0] << 24) | (data[1] << 16) | (data[2] <<  8) | ((unsigned char)data[3]);
+    unsigned int deSize = (data[4] << 24) | (data[5] << 16) | (data[6] <<  8) | ((unsigned char)data[7]);
+    
+    char* dest = (char*)malloc(deSize);
+    
+    data += 8;
+    BZ2_bzBuffToBuffDecompress(dest, &deSize, data, enSize, 0, 0);
+    data -= 8;
+    
+    std::string str(dest, deSize);
+    
+    free(dest);
+    
+    return str;
+}
+
 bool DataBase::isValid() const
 {
     return this->valid;
@@ -51,9 +101,9 @@ void DataBase::createDatabase()
 
     executeSql("CREATE TABLE IF NOT EXISTS version(version INT)");
     executeSql("CREATE TABLE IF NOT EXISTS categories(id INT PRIMARY KEY, name TEXT, parent INT)");
-    executeSql("CREATE TABLE IF NOT EXISTS questions(id INT PRIMARY KEY, title TEXT, body TEXT, difficulty INT, reference TEXT, category INT)");
-    executeSql("CREATE TABLE IF NOT EXISTS answers(id INT PRIMARY KEY, body TEXT, question INT, right INT)");
-    executeSql("CREATE TABLE IF NOT EXISTS tests(id INT PRIMARY KEY, date DATE, title TEXT, html TEXT)");
+    executeSql("CREATE TABLE IF NOT EXISTS questions(id INT PRIMARY KEY, title TEXT, body BLOB, difficulty INT, reference TEXT, category INT)");
+    executeSql("CREATE TABLE IF NOT EXISTS answers(id INT PRIMARY KEY, text BLOB, question INT, right INT)");
+    executeSql("CREATE TABLE IF NOT EXISTS tests(id INT PRIMARY KEY, date DATE, title TEXT, body BLOB)");
     executeSql("CREATE TABLE IF NOT EXISTS test_header(header TEXT)");
 
     std::string query = "INSERT INTO version VALUES(";
@@ -89,6 +139,12 @@ int selectCallback(void *p_data, int num_fields, char **p_fields, char **p_col_n
     for(int i=0; i < num_fields; i++) {
         if ( p_fields[i] == NULL )
             continue;
+        
+        if ( std::string(p_col_names[i]) == std::string("body") ) {
+            row[p_col_names[i]] = DataBase::uncompress(p_fields[i]);
+            continue;
+        }
+        
         row[p_col_names[i]] = p_fields[i];
     }
     

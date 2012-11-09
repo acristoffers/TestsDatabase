@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
 <title data-i18n="Tests Database"></title>
+<link rel="stylesheet" href="css/blitzer/jquery-ui-1.9.0.custom.min.css">
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/reveal.css">
 <link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="CLEditor1_3_0/jquery.cleditor.css">
 <script src="js/jquery-1.8.2.min.js"></script>
 <script src="js/jquery-ui-1.9.0.custom.min.js"></script>
 <script src="js/jquery.reveal.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="CLEditor1_3_0/jquery.cleditor.min.js"></script>
+<script src="CLEditor1_3_0/jquery.cleditor.emmbedimage.js"></script>
+<script src="CLEditor1_3_0/jquery.cleditor.advancedtable.min.js"></script>
 <script src="js/App.js"></script>
 <script src="js/AppNav.js"></script>
 <script src="js/AppUI.js"></script>
@@ -122,6 +127,54 @@
             </div>
         </form>
     </div>
+    
+    <!--
+        Question Form
+    -->
+    <div id="question-form-wrapper">
+        <form>
+            <legend>
+                <span id="question-add-span" data-i18n="Add Question"></span>
+                <span id="question-edit-span" data-i18n="Edit Question"></span>
+            </legend>
+		
+            <label for="question-form-title" data-i18n="Title"></label>
+            <input type="text" id="question-form-title" class="input-xxlarge">
+		
+            <label for="question-form-difficulty" data-i18n="Dificulty"></label>
+            <div id="question-form-difficulty" class="slider"></div>
+            <span id="question-form-difficulty-span">6</span>
+		
+            <label for="question-form-reference" data-i18n="Reference"></label>
+            <input type="text" id="question-form-reference" class="input-xxlarge">
+		
+            <textarea id="question-form-body"></textarea><br>
+		
+            <label data-i18n="Answers"></label>
+            <div id="question-form-answers"></div>
+		    
+            <div id="question-form-category-tree"></div><br>
+            
+            <a href="#/question/insert" class="btn btn-primary" data-i18n="Save"></a>
+        </form>
+    </div>
+    
+    <!--
+        Question Show
+    -->
+    <div id="question-show">
+        <h2 id="question-show-title"></h2>
+        <div id="question-show-reference"></div>
+        <div id="question-show-difficulty"></div>
+        
+        <p id="question-show-body" class="light-well"></p>
+        <ul id="question-show-answers"></ul>
+        <div class="btn-toolbar">
+            <a href="#/question/edit" class="btn" data-i18n="Edit"></a>
+            <a href="#/question/delete" class="btn btn-danger" data-i18n="Delete"></a>
+        </div>
+    </div>
+    
 </div>
 
 
@@ -134,7 +187,7 @@
         <div id="alert-modal-title"><h1></h1></div>
         <div id="alert-modal-content"></div>
         <div id="alert-modal-buttons">
-            <a href="#/modal/close" class="btn" data-i18n='Cancel'></a>
+            <a id="alert-modal-btn-cancel" href="#/modal/close" class="btn" data-i18n='Cancel'></a>
             <a id="alert-modal-btn-primary" class="btn btn-primary" data-i18n='Continue'></a>
             <a id="alert-modal-btn-danger" class="btn btn-danger" data-i18n='Continue'></a>
         </div>

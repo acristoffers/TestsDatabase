@@ -19,6 +19,8 @@ function sortArrayByObjectKey(array, key)
 
 var AppUI = {
     categoryEdit: function() {
+        AppNav.navigated('#/category/show/' + AppNav.current.category);
+        
         var id = AppNav.current.category;
         
         $('#category-edit-form-parent-tree').html(AppUI.categoryHTMLTree(id));
@@ -104,7 +106,7 @@ var AppUI = {
             }
         }
         
-        if ( id == AppNav.current.category ) {
+        if ( parseInt(id) == parseInt(AppNav.current.category) ) {
             $("#categories-list").html(html);
         } else {
             if ( id == 0 ) {
@@ -151,17 +153,111 @@ var AppUI = {
         $('#open-dialog').hide();
         
         $('#path-navigator').hide();
+        $('#categories-list-wrapper').hide();
         $('#test-list-toolbar').hide();
         $('#category-list-btn-toolbar').hide();
         
+        // category edit
         $('#category-edit-wrapper').hide();
-        $('#categories-list-wrapper').hide();
+        $('#question-form-answers').html('');
+        $('#category-edit-form-parent-tree').html('');
+        
+        // question form
+        $('#question-form-category-tree').html('');
+        $('#question-form-answers').html('');
+        $("#question-form-body").val('');
+        $('#question-form-wrapper').hide();
+        
+        // question show
+        $('#question-show').hide('');
+        $('#question-show-answers').html('');
+        $('#question-show-body').html('');
     },
     
     closeModals: function() {
         $(".reveal-modal").trigger("reveal:close");
         $('#open-dialog-bg').hide('fade');
         $('#alert-modal').hide('fade');
+    },
+    
+    questionEdit: function() {
+        AppNav.navigated('#/category/show/' + AppNav.current.category);
+        
+        var q = AppCore.questionSelect(AppNav.current.question);
+        
+		$("#question-form-title").val(q.title);
+		$('#question-form-difficulty').slider('value', q.difficulty);
+		$("#question-form-reference").val(q.reference);
+		$("#question-form-body").val(q.body);
+		
+		var as = AppCore.answerSelect(AppNav.current.question);
+        var anw = '';
+		for (var i = 0; i < as.length; i++)
+			anw += '<div class="input-prepend"><input class="add-on" type="radio" name="question-form-rigth-answer" ' + (parseInt(as[i].right)?'checked':'') + '><input type="text" name="question-form-answers-fields[]" class="input-xxlarge" value="' + as[i].body + '"></div>';
+
+        $('#question-form-answers').html(anw);
+        
+        $('#question-form-category-tree').html(AppUI.categoryHTMLTree());
+        $('#question-form-category-tree input[value=' + q.category + ']').click();
+        
+        $('#question-add-span').hide();
+        $('#question-edit-span').show();
+        $('#question-form-wrapper').show('fade');
+        
+    	$("#question-form-body").cleditor()[0].refresh();
+    	$("#question-form-body").cleditor()[0].updateFrame();
+        
+        $('#question-form-title').focus();
+    },
+    
+    questionNew: function() {
+        AppNav.navigated('#/category/show/' + AppNav.current.category);
+        
+        AppNav.current.question = -1;
+        
+		$("#question-form-title").val('');
+		$('#question-form-difficulty').slider('value', 6);
+		$("#question-form-reference").val('');
+        
+        $('#question-form-category-tree').html(AppUI.categoryHTMLTree());
+        $('#question-form-category-tree input[value=' + AppNav.current.category + ']').click();
+        
+        var anw = '';
+        for(var i=0; i<4; i++)
+            anw += '<div class="input-prepend"><input class="add-on" type="radio" name="question-form-rigth-answer"><input type="text" name="question-form-answers-fields[]" class="input-xxlarge"></div>';
+        
+        $('#question-form-answers').html(anw);
+        
+        $('#question-add-span').show();
+        $('#question-edit-span').hide();
+        $('#question-form-wrapper').show('fade');
+        
+    	$("#question-form-body").cleditor()[0].refresh();
+    	$("#question-form-body").cleditor()[0].updateFrame();
+        
+        $('#question-form-title').focus();
+    },
+    
+    questionShow: function(id) {
+        AppNav.navigated('#/category/show/' + AppNav.current.category);
+        AppNav.current.question = id;
+        
+        var q = AppCore.questionSelect(id);
+	    
+    	$('#question-show-title').html(q.title);
+    	$('#question-show-reference').html ('<b data-i18n="Reference: "></b>' + q.reference);
+    	$('#question-show-difficulty').html('<b data-i18n="Difficulty: "></b>' + q.difficulty);
+    	$('#question-show-body').html(q.body);
+	
+    	var as = AppCore.answerSelect(id);
+    	var html = '';
+    	for (var i = 0; i < as.length; i++) {
+    		html += '<li>' + (parseInt(as[i].right)?'<b>':'') + as[i].body + (parseInt(as[i].right)?'</b>':'') + '</li>';
+    	}
+    	$('#question-show-answers').html(html);
+        
+        AppUI.translate();
+        $('#question-show').show('fade');
     },
     
     listAvailableTranslations: function() {
@@ -241,6 +337,12 @@ var AppUI = {
             $('#alert-modal-btn-primary').data('i18n', conf.button.text);
         }
         
+        if ( conf.cancel == false ) {
+            $('#alert-modal-btn-cancel').hide();
+        } else {
+            $('#alert-modal-btn-cancel').show();
+        }
+        
         $('#alert-modal-btn-primary').unbind();
         $('#alert-modal-btn-danger').unbind();
         
@@ -286,3 +388,17 @@ var AppUI = {
         }
     }
 };
+
+$(document).ready(function() {
+	$("#question-form-difficulty").slider({animate:true, max:10, value:6});
+	$("#question-form-difficulty" ).bind( "slidechange", function(event, ui) {
+		$("#question-form-difficulty-span").html(ui.value);
+	});
+    
+    $("#test-form-difficulty").slider({animate:true, max:10, values:[0,6], range:true});
+    
+    $("#test-form-number-questions").spinner({min:0,max:50});
+    $("#test-form-number-tests").spinner({min:1});
+	
+    $("textarea").cleditor({width: 600, height: 400});
+});

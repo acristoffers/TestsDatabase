@@ -7,7 +7,7 @@ var App = {
         
         AppUI.showModalAlert({
             title: 'Are you sure?',
-            content: 'This operation can\'t be undone. Are you sure you want to delete this category?',
+            content: 'Are you sure you want to delete this category?\nThis operation can\'t be undone.',
             button: {
                 class: 'danger',
                 text: 'Delete'
@@ -79,6 +79,83 @@ var App = {
             AppNav.navigated('#/category/show/0');
         else
             AppNav.navigated('#/database/showdialog');
+    },
+    
+    questionDelete: function() {
+        var id = AppNav.current.question;
+        
+        AppUI.showModalAlert({
+            title: 'Are you sure?',
+            content: 'Are you sure you want to delete this question?\nThis operation can\'t be undone.',
+            button: {
+                class: 'danger',
+                text: 'Delete'
+            }
+        }, function() {
+            AppCore.questionDelete(id);
+            AppNav.navigated('#/category/show/' + AppNav.current.category);
+        });
+    },
+    
+    questionInsert: function() {
+        AppNav.blank();
+        
+		var id = AppNav.current.question;
+		var title = $("#question-form-title").val();
+		var difficulty = $('#question-form-difficulty').slider('value');
+		var reference = $("#question-form-reference").val();
+		var body = $("#question-form-body").val();
+		var category = $('input[name=category-tree-radio]:checked').val();
+        
+        if ( title == '' ) {
+            AppUI.showModalAlert({
+                title: 'No title',
+                content: 'You forgot to type the question title...',
+                cancel: false,
+                button: {
+                    text: 'Ok'
+                }
+            }, AppUI.closeModals);
+            return;
+        }
+		
+		var answers = [];
+		var right_answer = null;
+		
+		$('input[name^=question-form-answers-fields]').each(function() {
+			var r = $(this).prev('input').is(':checked');
+			if ( r ) {
+				right_answer = $(this).val();
+			} else {
+				answers.push($(this).val());
+			}
+		});
+		
+		if ( right_answer == null ) {
+            AppUI.showModalAlert({
+                title: 'No right answer',
+                content: 'You forgot to select the right answer...',
+                cancel: false,
+                button: {
+                    text: 'Ok'
+                }
+            }, AppUI.closeModals);
+			return;
+		}
+		
+		if ( id < 0 ) {
+			id = AppCore.questionInsert(title, reference, difficulty, body, category);
+		} else {
+			AppCore.questionUpdate(id, title, reference, difficulty, body, category);
+			AppCore.answerDelete(id);
+		}
+        AppCore.answerInsert(right_answer, id, true);
+		for (var i = 0; i < answers.length; i++ ) {
+			AppCore.answerInsert(answers[i], id, false);
+		}
+		
+		AppNav.current.category = category;
+        AppNav.navigated('#/question/show/'+id);
     },
     
     modelChanged: function() {

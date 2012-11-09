@@ -3,6 +3,11 @@
 #include "AppHandler.h"
 #include "ClientHandler.h"
 
+#include <iostream>
+#include <istream>
+#include <sstream>
+#include <string>
+
 AppHandler* AppHandler::_self = 0;
 
 AppHandler::AppHandler()

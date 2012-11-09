@@ -7,6 +7,10 @@ var AppNav = {
         test:     0
     },
     
+    blank: function() {
+        location.hash = '#blank';
+    },
+    
     execute: function(cmd) {
         cmdlist = {
             database: {
@@ -25,6 +29,14 @@ var AppNav = {
                 update: App.categoryUpdate
             },
             
+            question: {
+                delete: App.questionDelete,
+                edit: AppUI.questionEdit,
+                insert: App.questionInsert,
+                new: AppUI.questionNew,
+                show: AppUI.questionShow
+            },
+            
             modal: {
                 close:        AppUI.closeModals,
                 new_category: AppUI.categoryNew
@@ -35,6 +47,9 @@ var AppNav = {
     },
     
     navigated: function(hash) {
+        if ( hash == '#/blank' )
+            return;
+        
         var cmd = AppNav.parseCommand(hash);
         if ( cmd.model ) AppNav.execute(cmd);
     },

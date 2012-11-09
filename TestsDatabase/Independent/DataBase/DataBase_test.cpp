@@ -24,10 +24,13 @@ int DataBase::test_insert(std::string title, std::string body, std::string heade
     
     sqlite3_stmt* stmt;
     sqlite3_prepare(_p->db, "INSERT INTO tests VALUES (:id,datetime(),:title,:body)", -1, &stmt, 0 ); SQL_ERROR
+    
+    unsigned int len;
+    char* blob = compress(body, &len);
 
     sqlite3_bind_int ( stmt, sql_param(":id"), id ); SQL_ERROR
     sqlite3_bind_text( stmt, sql_param(":title"), title.c_str(), title.length(), SQLITE_STATIC ); SQL_ERROR
-    sqlite3_bind_text( stmt, sql_param(":body"), body.c_str(), body.length(), SQLITE_STATIC ); SQL_ERROR
+    sqlite3_bind_blob( stmt, sql_param(":body"), blob, len, SQLITE_STATIC ); SQL_ERROR
 
     if ( sqlite3_step(stmt) != SQLITE_DONE )
         return -1;

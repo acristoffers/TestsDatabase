@@ -92,7 +92,7 @@ HWND RegisterWindow(HINSTANCE hInstance, int nCmdShow)
 	HWND hwnd = CreateWindowEx(
 		0,                              // Optional window styles.
 		CLASS_NAME,                     // Window class
-		L"Tests Database",    // Window title
+		L"Tests Database",              // Window title
 		WS_OVERLAPPEDWINDOW,            // Window style
 
 		// Size and position

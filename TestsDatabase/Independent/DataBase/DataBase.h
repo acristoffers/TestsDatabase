@@ -10,16 +10,24 @@ class DataBasePrivate;
 typedef std::map<std::string,std::string> SqlRow;
 typedef std::vector<SqlRow> SqlResult;
 
+        int SqlInt (std::string);
+       bool SqlBool(std::string);
+
+std::string IntToStdString(int);
+
 class DataBase {
 public:
               DataBase(std::string path);
               ~DataBase();
     
+    static char* compress(std::string, unsigned int* len);
+    static std::string uncompress(char*);
+    
          bool isValid() const;
     
          void answer_delete(int question_id);
           int answer_insert(std::string body, int question, bool right);
-       SqlRow answer_select(int question_id);
+    SqlResult answer_select(int question_id);
     SqlResult answer_select_where(std::string WHERE_CLAUSE);
     
          void category_delete(int id);
@@ -52,10 +60,5 @@ protected:
 private:
     DataBasePrivate* _p;
 };
-
-        int SqlInt (std::string);
-       bool SqlBool(std::string);
-
-std::string IntToStdString(int);
 
 #endif
