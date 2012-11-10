@@ -65,7 +65,7 @@ SqlRow DataBase::question_select(int id)
 
 SqlResult DataBase::question_select_where(std::string where_clause)
 {
-    std::string query = "SELECT * FROM questions";
+    std::string query = "SELECT id, title FROM questions";
     
     if ( !where_clause.empty() ) {
         query += " WHERE ";
