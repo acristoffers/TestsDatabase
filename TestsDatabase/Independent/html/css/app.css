@@ -157,6 +157,27 @@ Question form
 
 
 /*
+Test form
+*/
+input[type=number] {
+    width: 3em;
+    margin: 0 5px;
+}
+
+#test-form-question-difficulties {
+    margin-top: 20px;
+}
+
+#test-form-add-difficulty {
+    margin-bottom: 20px;
+}
+
+#test-form-total-questions {
+    margin-top: 5px;
+}
+
+
+/*
 Open file dialog
 */
 #open-dialog-bg {

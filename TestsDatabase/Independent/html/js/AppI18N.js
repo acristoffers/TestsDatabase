@@ -17,23 +17,11 @@ var AppI18N = {
     },
     
     translate: function(text, numbers) {
-        var tr;
-        
-        if( AppI18N.languages[AppI18N.currentLanguage][text] ){
-            tr = AppI18N.languages[AppI18N.currentLanguage][text];
-        } else {
-            tr = text;
-        }
-        
-        if ( numbers ) {
-            if ( numbers instanceof Array ) {
-                for (var i = numbers.length - 1; i >= 0; i--){
-                    tr = tr.replace('%d', AppI18N.languages[AppI18N.currentLanguage].formatNumber(numbers[i]));
-                }
-            } else {
-                tr = tr.replace('%d', AppI18N.languages[AppI18N.currentLanguage].formatNumber(numbers));
-            }
-        }
-        return tr;
+        if( AppI18N.languages[AppI18N.currentLanguage][text] instanceof Function )
+            return AppI18N.languages[AppI18N.currentLanguage][text](numbers)
+        else if( AppI18N.languages[AppI18N.currentLanguage][text] )
+            return AppI18N.languages[AppI18N.currentLanguage][text];
+        else
+            return text;
     }
 };

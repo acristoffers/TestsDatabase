@@ -31,10 +31,15 @@ var AppNav = {
             
             question: {
                 delete: App.questionDelete,
-                edit: AppUI.questionEdit,
+                edit:   AppUI.questionEdit,
                 insert: App.questionInsert,
-                new: AppUI.questionNew,
-                show: AppUI.questionShow
+                new:    AppUI.questionNew,
+                show:   AppUI.questionShow
+            },
+            
+            test: {
+                list: AppUI.testList,
+                new:  AppUI.testNew
             },
             
             modal: {

@@ -94,6 +94,7 @@ void ClientHandler::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<Ce
 
     ADD_FUNCTION_TO_JS("listCategories");
     ADD_FUNCTION_TO_JS("listQuestions");
+    ADD_FUNCTION_TO_JS("listTests");
     
     ADD_FUNCTION_TO_JS("questionDelete");
     ADD_FUNCTION_TO_JS("questionInsert");
@@ -218,6 +219,13 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
         int id = arguments[0]->GetIntValue();
         
         SqlResult result = _DB_->question_select_where("category=" + IntToStdString(id));
+        retval = AppHandler::SqlResultToJSArray(result);
+        
+        return true;
+    }
+    
+    if (name == "listTests") {
+        SqlResult result = _DB_->test_select_where("");
         retval = AppHandler::SqlResultToJSArray(result);
         
         return true;

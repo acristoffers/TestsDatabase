@@ -56,7 +56,7 @@
             <a class="dropdown-toggle" data-toggle="dropdown"><span data-i18n="Show"></span><b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li id="header-menu-show-categories"><a href="#/category/show/0" data-i18n="Categories/Questions" data-icon="folder-close"></a></li>
-                <li id="header-menu-show-tests"><a href="#/tests/list" data-i18n="Tests" data-icon="book"></a></li>
+                <li id="header-menu-show-tests"><a href="#/test/list" data-i18n="Tests" data-icon="book"></a></li>
             </ul>
         </li>
         
@@ -95,7 +95,7 @@
         <a href="#/question/new" class="btn pull-right" data-i18n="New Question"></a>
     </div>
     <div id="test-list-toolbar" class="btn-toolbar">
-        <button id="test-new" class="btn" data-i18n="New Test"></button>
+        <a href="#/test/new" class="btn" data-i18n="New Test"></a>
     </div>
     <div id="categories-list-wrapper" class="light-well">
         <ul id="categories-list" class="nav nav-list">
@@ -116,9 +116,9 @@
     -->
     <div id="category-edit-wrapper">
         <form>
-            <legend data-i18n='Edit Category'></legend>
-            <label data-i18n='Name'></label>
-            <input id='category-edit-form-name' type="text" />
+            <legend data-i18n="Edit Category"></legend>
+            <label data-i18n="Name"></label>
+            <input id="category-edit-form-name" type="text" />
             <div   id="category-edit-form-parent-tree"></div>
             <div class="btn-toolbar">
                 <a href="#/category/update" class="btn btn-primary" data-i18n="Save" ></a>
@@ -175,6 +175,35 @@
         </div>
     </div>
     
+    <!--
+        Test Form
+    -->
+    <div id="test-form">
+        <form>
+            <legend>
+                <span data-i18n="Create Test"></span>
+            </legend>
+            
+            <label for="test-form-title" data-i18n="Title"></label>
+            <input id="test-form-title" type="text">
+            
+            <label for="test-form-number-tests" data-i18n="Number of tests"></label>
+            <input id="test-form-number-tests" value="4">
+            
+            <div id="test-form-question-difficulties"></div>
+            <div id="test-form-total-questions" data-i18n="Totalizing %d questions" data-i18n-numbers="0"></div>
+            <a id="test-form-add-difficulty" data-i18n="Add difficulty" class="btn"></a>
+                        
+            <label data-i18n="Page header"></label>
+            <textarea id="test-form-header"></textarea><br>
+            
+            <label data-i18n="Categories"></label>
+            <div id="test-form-categories" class="light-well"></div>
+            
+            <a id="test-form-save" class="btn btn-primary" data-i18n="Generate"></a>
+        </form>                
+    </div>
+    
 </div>
 
 
@@ -187,9 +216,9 @@
         <div id="alert-modal-title"><h1></h1></div>
         <div id="alert-modal-content"></div>
         <div id="alert-modal-buttons">
-            <a id="alert-modal-btn-cancel" href="#/modal/close" class="btn" data-i18n='Cancel'></a>
-            <a id="alert-modal-btn-primary" class="btn btn-primary" data-i18n='Continue'></a>
-            <a id="alert-modal-btn-danger" class="btn btn-danger" data-i18n='Continue'></a>
+            <a id="alert-modal-btn-cancel" href="#/modal/close" class="btn" data-i18n="Cancel"></a>
+            <a id="alert-modal-btn-primary" class="btn btn-primary" data-i18n="Continue"></a>
+            <a id="alert-modal-btn-danger" class="btn btn-danger" data-i18n="Continue"></a>
         </div>
     </div>
 </div>

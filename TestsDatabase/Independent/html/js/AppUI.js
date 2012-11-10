@@ -89,9 +89,8 @@ var AppUI = {
             
             sortArrayByObjectKey(categories, 'name');
             
-            for (var i = categories.length - 1; i >= 0; i--){
+            for (var i = categories.length - 1; i >= 0; i--)
                 html += '<li><a href="#/category/show/' + categories[i]['id'] + '">' + categories[i]['name'] + '</a></li>';
-            }
         }
         
         var questions = AppCore.listQuestions(id);
@@ -101,9 +100,8 @@ var AppUI = {
             
             sortArrayByObjectKey(questions, 'title');
             
-            for (var i = questions.length - 1; i >= 0; i--){
+            for (var i = questions.length - 1; i >= 0; i--)
                 html += '<li><a href="#/question/show/' + questions[i]['id'] + '">' + questions[i]['title'] + '</a></li>';
-            }
         }
         
         if ( parseInt(id) == parseInt(AppNav.current.category) ) {
@@ -172,6 +170,9 @@ var AppUI = {
         $('#question-show').hide('');
         $('#question-show-answers').html('');
         $('#question-show-body').html('');
+        
+        // test form
+        $('#test-form').hide();
     },
     
     closeModals: function() {
@@ -355,6 +356,53 @@ var AppUI = {
         $('#alert-modal').show('fade');
     },
     
+    testList: function() {
+        AppUI.clean();
+        $('#test-list-toolbar').show();
+        $('#categories-list-wrapper').show();
+        
+        var html = '';
+        
+        var tests = AppCore.listTests();
+        
+        if( tests && tests.length > 0 ) {
+            html += '<li class="nav-header" data-i18n="Questions"></li>';
+            
+            sortArrayByObjectKey(tests, 'title');
+            
+            for (var i = tests.length - 1; i >= 0; i--)
+                html += '<li><a href="#/test/show/' + tests[i]['id'] + '">' + tests[i]['title'] + '</a></li>';
+        }
+        
+        $('#categories-list-wrapper ul').html(html);
+    },
+    
+    testNew: function() {
+        AppNav.navigated('#/test/list');
+        AppNav.blank();
+        
+        $('#test-form').show('fade');
+        
+        $('#test-form-question-difficulties').html('');
+        
+        function addDiff() {
+            var h = '<div><span data-i18n="Number of questions"></span>' +
+                    '<input type="number" min="0" max="50">' +
+                    '<span data-i18n="Difficulty from"></span>' +
+                    '<input type="number" min="0" max="9">' +
+                    '<span data-i18n="to"></span>' +
+                    '<input type="number" min="1" max="10"></div>';
+            $('#test-form-question-difficulties').append(h);
+            AppUI.translate();
+        }
+        
+        addDiff();
+        addDiff();
+        
+        $('#test-form-add-difficulty').unbind();
+        $('#test-form-add-difficulty').click(addDiff);
+    },
+    
     translate: function() {
         var elements = $("*").filter(function() {
             return $(this).data("i18n") != undefined; 
@@ -366,7 +414,7 @@ var AppUI = {
             var text = $(e).data('i18n');
             var numbers = null;
             
-            if ( $(e).data('i18n-numbers') ) {
+            if ( $(e).data('i18n-numbers') != undefined) {
                 numbers = $(e).data('i18n-numbers').toString().split(';');
             }
             
