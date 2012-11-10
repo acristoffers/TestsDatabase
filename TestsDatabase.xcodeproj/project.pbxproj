@@ -135,8 +135,6 @@
 		E7905D1C164C5BE300AF556A /* decompress.c in Sources */ = {isa = PBXBuildFile; fileRef = E7905D15164C5BE300AF556A /* decompress.c */; };
 		E7905D1D164C5BE300AF556A /* huffman.c in Sources */ = {isa = PBXBuildFile; fileRef = E7905D16164C5BE300AF556A /* huffman.c */; };
 		E7905D1E164C5BE300AF556A /* randtable.c in Sources */ = {isa = PBXBuildFile; fileRef = E7905D17164C5BE300AF556A /* randtable.c */; };
-		E7905D28164C949C00AF556A /* cdecode.c in Sources */ = {isa = PBXBuildFile; fileRef = E7905D22164C949C00AF556A /* cdecode.c */; };
-		E7905D29164C949C00AF556A /* cencode.c in Sources */ = {isa = PBXBuildFile; fileRef = E7905D23164C949C00AF556A /* cencode.c */; };
 		E7A6B9D41648681C00F93EFA /* FileDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = E7A6B9D31648681C00F93EFA /* FileDialog.mm */; };
 		E7A6B9D816487A2100F93EFA /* AppHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7A6B9D616487A2100F93EFA /* AppHandler.cpp */; };
 /* End PBXBuildFile section */
@@ -301,8 +299,6 @@
 		E7905D15164C5BE300AF556A /* decompress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decompress.c; path = TestsDatabase/bzip/decompress.c; sourceTree = "<group>"; };
 		E7905D16164C5BE300AF556A /* huffman.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = huffman.c; path = TestsDatabase/bzip/huffman.c; sourceTree = "<group>"; };
 		E7905D17164C5BE300AF556A /* randtable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = randtable.c; path = TestsDatabase/bzip/randtable.c; sourceTree = "<group>"; };
-		E7905D22164C949C00AF556A /* cdecode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cdecode.c; path = TestsDatabase/libb64/src/cdecode.c; sourceTree = "<group>"; };
-		E7905D23164C949C00AF556A /* cencode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cencode.c; path = TestsDatabase/libb64/src/cencode.c; sourceTree = "<group>"; };
 		E7A6B9D31648681C00F93EFA /* FileDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FileDialog.mm; path = Mac/FileDialog.mm; sourceTree = "<group>"; };
 		E7A6B9D616487A2100F93EFA /* AppHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppHandler.cpp; path = Independent/AppHandler.cpp; sourceTree = "<group>"; };
 		E7A6B9D716487A2100F93EFA /* AppHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppHandler.h; path = Independent/AppHandler.h; sourceTree = "<group>"; };
@@ -414,7 +410,6 @@
 		E738E89D1647C83A00B83357 /* Platform Independent files */ = {
 			isa = PBXGroup;
 			children = (
-				E7905D1F164C948E00AF556A /* base64 */,
 				E7905D0E164C5BCD00AF556A /* zlib */,
 				E71028431647FE54007DF484 /* SQLite */,
 				E71028331647FE2E007DF484 /* DataBase */,
@@ -558,15 +553,6 @@
 				E7905D17164C5BE300AF556A /* randtable.c */,
 			);
 			name = zlib;
-			sourceTree = "<group>";
-		};
-		E7905D1F164C948E00AF556A /* base64 */ = {
-			isa = PBXGroup;
-			children = (
-				E7905D22164C949C00AF556A /* cdecode.c */,
-				E7905D23164C949C00AF556A /* cencode.c */,
-			);
-			name = base64;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -760,8 +746,6 @@
 				E7905D1C164C5BE300AF556A /* decompress.c in Sources */,
 				E7905D1D164C5BE300AF556A /* huffman.c in Sources */,
 				E7905D1E164C5BE300AF556A /* randtable.c in Sources */,
-				E7905D28164C949C00AF556A /* cdecode.c in Sources */,
-				E7905D29164C949C00AF556A /* cencode.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -870,7 +854,6 @@
 					"$(SRCROOT)/TestsDatabase/Independent/DataBase",
 					"$(SRCROOT)/TestsDatabase/Independent/sqlite",
 					"$(SRCROOT)/TestsDatabase/zlib",
-					"$(SRCROOT)/TestsDatabase/libb64/include",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/TestsDatabase/Mac/resources/TestsDatabase-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -878,6 +861,7 @@
 					"\"$(SRCROOT)/TestsDatabase/CEF/Mac/lib\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx10.7;
 				VALID_ARCHS = i386;
@@ -900,7 +884,6 @@
 					"$(SRCROOT)/TestsDatabase/Independent/DataBase",
 					"$(SRCROOT)/TestsDatabase/Independent/sqlite",
 					"$(SRCROOT)/TestsDatabase/zlib",
-					"$(SRCROOT)/TestsDatabase/libb64/include",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/TestsDatabase/Mac/resources/TestsDatabase-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -908,6 +891,7 @@
 					"\"$(SRCROOT)/TestsDatabase/CEF/Mac/lib\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx10.7;
 				VALID_ARCHS = i386;

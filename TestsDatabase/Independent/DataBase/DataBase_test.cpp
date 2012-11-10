@@ -44,6 +44,9 @@ int DataBase::test_insert(std::string title, std::string body, std::string heade
     sqlite3_step(stmt);
     
     sqlite3_finalize(stmt);
+    
+    free(blob);
+    
     return id;
 }
 

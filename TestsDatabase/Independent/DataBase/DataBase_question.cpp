@@ -44,6 +44,9 @@ int DataBase::question_insert(std::string title, std::string reference, int diff
         return -1;
     
     sqlite3_finalize(stmt);
+    
+    free(blob);
+    
     return id;
 }
 
@@ -92,6 +95,8 @@ bool DataBase::question_update(int id, std::string title, std::string reference,
     bool result = (sqlite3_step(stmt) == SQLITE_DONE);
     
     sqlite3_finalize(stmt);
+    
+    free(blob);
     
     return result;
 }

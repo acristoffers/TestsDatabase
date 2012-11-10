@@ -38,7 +38,6 @@ DataBase::DataBase(std::string path)
 
 DataBase::~DataBase()
 {
-    executeSql("VACUUM");
     delete _p;
 }
 
@@ -74,8 +73,8 @@ char* DataBase::compress(std::string str, unsigned int* len)
 
 std::string DataBase::uncompress(char* data)
 {
-    unsigned int enSize = (data[0] << 24) | (data[1] << 16) | (data[2] <<  8) | ((unsigned char)data[3]);
-    unsigned int deSize = (data[4] << 24) | (data[5] << 16) | (data[6] <<  8) | ((unsigned char)data[7]);
+    unsigned int enSize = (((unsigned char)data[0]) << 24) | (((unsigned char)data[1]) << 16) | (((unsigned char)data[2]) <<  8) | (((unsigned char)data[3]));
+    unsigned int deSize = (((unsigned char)data[4]) << 24) | (((unsigned char)data[5]) << 16) | (((unsigned char)data[6]) <<  8) | (((unsigned char)data[7]));
     
     char* dest = (char*)malloc(deSize);
     
@@ -97,12 +96,12 @@ bool DataBase::isValid() const
 
 void DataBase::createDatabase()
 {
-    //executeSql("PRAGMA auto_vacuum = 1");
+    executeSql("PRAGMA auto_vacuum = 1");
 
     executeSql("CREATE TABLE IF NOT EXISTS version(version INT)");
     executeSql("CREATE TABLE IF NOT EXISTS categories(id INT PRIMARY KEY, name TEXT, parent INT)");
     executeSql("CREATE TABLE IF NOT EXISTS questions(id INT PRIMARY KEY, title TEXT, body BLOB, difficulty INT, reference TEXT, category INT)");
-    executeSql("CREATE TABLE IF NOT EXISTS answers(id INT PRIMARY KEY, text BLOB, question INT, right INT)");
+    executeSql("CREATE TABLE IF NOT EXISTS answers(id INT PRIMARY KEY, text TEXT, question INT, right INT)");
     executeSql("CREATE TABLE IF NOT EXISTS tests(id INT PRIMARY KEY, date DATE, title TEXT, body BLOB)");
     executeSql("CREATE TABLE IF NOT EXISTS test_header(header TEXT)");
 
