@@ -41,12 +41,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)Independent\DataBase;$(ProjectDir)Independent\sqlite;$(ProjectDir)Independent;$(ProjectDir)CEF\Win;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Independent\DataBase;$(ProjectDir)Independent\bzip;$(ProjectDir)Independent\sqlite;$(ProjectDir)Independent;$(ProjectDir)CEF\Win;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)CEF\Win\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)Independent\DataBase;$(ProjectDir)Independent\sqlite;$(ProjectDir)Independent;$(ProjectDir)CEF\Win;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Independent\DataBase;$(ProjectDir)Independent\bzip;$(ProjectDir)Independent\sqlite;$(ProjectDir)Independent;$(ProjectDir)CEF\Win;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)CEF\Win\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -101,6 +101,13 @@ XCOPY /I /E /Y "$(ProjectDir)Independent\html" "$(OutputPath)html"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Independent\AppHandler.cpp" />
+    <ClCompile Include="Independent\bzip\blocksort.c" />
+    <ClCompile Include="Independent\bzip\bzlib.c" />
+    <ClCompile Include="Independent\bzip\compress.c" />
+    <ClCompile Include="Independent\bzip\crctable.c" />
+    <ClCompile Include="Independent\bzip\decompress.c" />
+    <ClCompile Include="Independent\bzip\huffman.c" />
+    <ClCompile Include="Independent\bzip\randtable.c" />
     <ClCompile Include="Independent\ClientHandler.cpp" />
     <ClCompile Include="Independent\DataBase\DataBase.cpp" />
     <ClCompile Include="Independent\DataBase\DataBasePrivate.cpp" />
@@ -114,6 +121,8 @@ XCOPY /I /E /Y "$(ProjectDir)Independent\html" "$(OutputPath)html"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Independent\AppHandler.h" />
+    <ClInclude Include="Independent\bzip\bzlib.h" />
+    <ClInclude Include="Independent\bzip\bzlib_private.h" />
     <ClInclude Include="Independent\ClientHandler.h" />
     <ClInclude Include="Independent\DataBase\DataBase.h" />
     <ClInclude Include="Independent\DataBase\DataBasePrivate.h" />
