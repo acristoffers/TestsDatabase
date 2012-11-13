@@ -19,7 +19,7 @@ function sortArrayByObjectKey(array, key)
 
 var AppUI = {
     categoryEdit: function() {
-        AppNav.navigated('#/category/show/' + AppNav.current.category);
+        AppNav.navigate('#/category/show/' + AppNav.current.category);
         
         var id = AppNav.current.category;
         
@@ -40,7 +40,7 @@ var AppUI = {
                 return '';
 	        
         	if ( id == 0 ) {
-        		cat = {id: 0, name: AppI18N.translate('Root')};
+        		cat = {id: 0, name: AppI18N.tr('Root')};
         	} else {
         		cat = AppCore.categorySelect(id);
         	}
@@ -105,13 +105,13 @@ var AppUI = {
         }
         
         if ( parseInt(id) == parseInt(AppNav.current.category) ) {
-            $("#categories-list").html(html);
+            $('#categories-list').html(html);
         } else {
             if ( id == 0 ) {
-                $("#categories-list").parent().hide("slide",{ direction: "right" },200, function() {
-                    $("#categories-list").html(html);
-                    AppUI.translate();
-                }).show("slide", {},200);
+                $('#categories-list').parent().hide('slide',{ direction: 'right' },200, function() {
+                    $('#categories-list').html(html);
+                    AppI18N.translate();
+                }).show('slide', {},200);
             } else {
                 var eltern = [];
                 if ( AppNav.current.category != 0 ) {
@@ -124,15 +124,15 @@ var AppUI = {
                 }
 
                 if ( AppCore.ArrayHaveElement(eltern, id) ) {
-                    $("#categories-list").parent().hide("slide",{ direction: "right" },200, function() {
-                        $("#categories-list").html(html);
-                        AppUI.translate();
-                    }).show("slide", {},200);
+                    $('#categories-list').parent().hide('slide',{ direction: 'right' },200, function() {
+                        $('#categories-list').html(html);
+                        AppI18N.translate();
+                    }).show('slide', {},200);
                 } else {
-                    $("#categories-list").parent().hide("slide",{},200, function() {
-                        $("#categories-list").html(html);
-                        AppUI.translate();
-                    }).show("slide", { direction: "right" },200);
+                    $('#categories-list').parent().hide('slide',{},200, function() {
+                        $('#categories-list').html(html);
+                        AppI18N.translate();
+                    }).show('slide', { direction: 'right' },200);
                 }
             }
         }
@@ -141,7 +141,7 @@ var AppUI = {
         
         AppNav.current.category = id;
         
-        AppUI.translate();
+        AppI18N.translate();
     },
     
     clean: function() {
@@ -163,7 +163,7 @@ var AppUI = {
         // question form
         $('#question-form-category-tree').html('');
         $('#question-form-answers').html('');
-        $("#question-form-body").val('');
+        $('#question-form-body').val('');
         $('#question-form-wrapper').hide();
         
         // question show
@@ -173,28 +173,37 @@ var AppUI = {
         
         // test form
         $('#test-form').hide();
+        
+        // test show
+        $('#test-show').hide();
+        $('#test-show-body').empty();
+        
+        // answer sheet print
+        $('#answers-sheet').hide();
+        $('#answers-header').empty();
+        $('#answers').empty();
     },
     
     closeModals: function() {
-        $(".reveal-modal").trigger("reveal:close");
+        $('.reveal-modal').trigger('reveal:close');
         $('#open-dialog-bg').hide('fade');
         $('#alert-modal').hide('fade');
     },
     
     questionEdit: function() {
-        AppNav.navigated('#/category/show/' + AppNav.current.category);
+        AppNav.navigate('#/category/show/' + AppNav.current.category);
         
         var q = AppCore.questionSelect(AppNav.current.question);
         
-		$("#question-form-title").val(q.title);
+		$('#question-form-title').val(q.title);
 		$('#question-form-difficulty').slider('value', q.difficulty);
-		$("#question-form-reference").val(q.reference);
-		$("#question-form-body").val(q.body);
+		$('#question-form-reference').val(q.reference);
+		$('#question-form-body').val(q.body);
 		
 		var as = AppCore.answerSelect(AppNav.current.question);
         var anw = '';
 		for (var i = 0; i < as.length; i++)
-			anw += '<div class="input-prepend"><input class="add-on" type="radio" name="question-form-rigth-answer" ' + (parseInt(as[i].right)?'checked':'') + '><input type="text" name="question-form-answers-fields[]" class="input-xxlarge" value="' + as[i].text + '"></div>';
+			anw += '<div class="input-prepend"><input class="add-on" type="radio" name="question-form-rigth-answer" ' + (parseInt(as[i].right)?'checked':'') + '><input type="text" name="question-form-answers-fields[]" class="input-xxlarge" value="' + as[i].text + '""></div>';
 
         $('#question-form-answers').html(anw);
         
@@ -205,20 +214,47 @@ var AppUI = {
         $('#question-edit-span').show();
         $('#question-form-wrapper').show('fade');
         
-    	$("#question-form-body").cleditor()[0].refresh();
-    	$("#question-form-body").cleditor()[0].updateFrame();
+    	$('#question-form-body').cleditor()[0].refresh();
+    	$('#question-form-body').cleditor()[0].updateFrame();
         
         $('#question-form-title').focus();
     },
     
     questionNew: function() {
-        AppNav.navigated('#/category/show/' + AppNav.current.category);
+        function addCat(id, i) {
+            if ( id == undefined )
+                id = 0;
+            
+            if ( i == undefined )
+                i = 1;
+        
+            if ( i > 3)
+                return;
+        
+            id = AppCore.categoryInsert('Cat on ' + id, id);
+            for (var f=0; f < 3; f++)
+                addCat(id, i+1);
+            
+            for ( var f=0; f<100; f++ ) {
+                var dif = Math.floor(Math.random()*11);
+                if ( dif == 0 ) dif = 10;
+                var q = AppCore.questionInsert('Question dif=' + dif + ' on ' + id, 'ref', dif, 'blalblfllbalbaljlbajlj', id);
+                AppCore.answerInsert('right', q, true);
+                AppCore.answerInsert('wrong', q, false);
+                AppCore.answerInsert('wrong', q, false);
+                AppCore.answerInsert('wrong', q, false);
+            }
+        }
+    
+        addCat();
+        
+        AppNav.navigate('#/category/show/' + AppNav.current.category);
         
         AppNav.current.question = -1;
         
-		$("#question-form-title").val('');
+		$('#question-form-title').val('');
 		$('#question-form-difficulty').slider('value', 6);
-		$("#question-form-reference").val('');
+		$('#question-form-reference').val('');
         
         $('#question-form-category-tree').html(AppUI.categoryHTMLTree());
         $('#question-form-category-tree input[value=' + AppNav.current.category + ']').click();
@@ -233,14 +269,14 @@ var AppUI = {
         $('#question-edit-span').hide();
         $('#question-form-wrapper').show('fade');
         
-    	$("#question-form-body").cleditor()[0].refresh();
-    	$("#question-form-body").cleditor()[0].updateFrame();
+    	$('#question-form-body').cleditor()[0].refresh();
+    	$('#question-form-body').cleditor()[0].updateFrame();
         
         $('#question-form-title').focus();
     },
     
     questionShow: function(id) {
-        AppNav.navigated('#/category/show/' + AppNav.current.category);
+        AppNav.navigate('#/category/show/' + AppNav.current.category);
         AppNav.current.question = id;
         
         var q = AppCore.questionSelect(id);
@@ -257,7 +293,7 @@ var AppUI = {
     	}
     	$('#question-show-answers').html(html);
         
-        AppUI.translate();
+        AppI18N.translate();
         $('#question-show').show('fade');
     },
     
@@ -279,15 +315,15 @@ var AppUI = {
             html += '<li><a data-lang="' + langs[key] + '">' + key + '</a></li>';
         }
         
-        $("#language-dropdown").html(html);
+        $('#language-dropdown').html(html);
         
-    	var elements = $("*").filter(function() {
-    		return $(this).data("lang") != undefined; 
+    	var elements = $('*').filter(function() {
+    		return $(this).data('lang') != undefined; 
     	});
         
         $(elements).click(function() {
             AppI18N.currentLanguage = ($(this).data('lang'));
-            AppUI.translate();
+            AppI18N.translate();
         });
     },
     
@@ -305,17 +341,17 @@ var AppUI = {
         var sep = '';
         while(cat.id > 0) {
             categories.push('<li><a href="#/category/show/' + cat.id + '">' + cat.name + '</a>' + sep + '</li>');
-            sep = "<span class='divider'>/</span>";
+            sep = '<span class="divider">/</span>';
             cat = AppCore.categorySelect(cat.parent);
         }
         categories.push('<li><a href="#/category/show/0" data-i18n="Root"></a><span class="divider">/</span></li>');
         categories.reverse();
         
-		var html = "";
+		var html = '';
 		for (var i = 0; i < categories.length; i++) {
 			html += categories[i];
 		}
-		$("#path-navigator ul").html(html);
+		$('#path-navigator ul').html(html);
     },
     
     showOpenDialog: function() {
@@ -350,7 +386,7 @@ var AppUI = {
         $('#alert-modal-btn-primary').click(callback);
         $('#alert-modal-btn-danger').click(callback);
         
-        AppUI.translate();
+        AppI18N.translate();
         
         $('#open-dialog-bg').show('fade');
         $('#alert-modal').show('fade');
@@ -366,7 +402,7 @@ var AppUI = {
         var tests = AppCore.listTests();
         
         if( tests && tests.length > 0 ) {
-            html += '<li class="nav-header" data-i18n="Questions"></li>';
+            html += '<li class="nav-header" data-i18n="Tests"></li>';
             
             sortArrayByObjectKey(tests, 'title');
             
@@ -375,10 +411,37 @@ var AppUI = {
         }
         
         $('#categories-list-wrapper ul').html(html);
+        AppI18N.translate();
+    },
+    
+    testCategories: function(id) {
+        if ( id == undefined ) id = 0;
+        
+    	var cat;
+	    
+    	if ( id == 0 )
+    		cat = {id:0, name:AppI18N.tr('Root')};
+        else
+    		cat = AppCore.categorySelect(id);
+        
+        var html = '<div>' + 
+                   '<label class="checkbox" for="test-category-checkbox-' + cat.id + '">' +
+                   '<input data-id="' + cat.id + '" id="test-category-checkbox-' + cat.id + '" type="checkbox"> ' + cat.name +
+                   '<a data-icon="check" data-i18n="" class="btn btn-link select-all-subitems"></a>' +
+                   '</label>';
+        
+        var children = AppCore.listCategories(id);
+    	for (var i = 0; i < children.length; i++ ) {
+            html += AppUI.testCategories(children[i].id);
+    	}
+        
+        html += '</div>';
+        
+        return html;
     },
     
     testNew: function() {
-        AppNav.navigated('#/test/list');
+        AppNav.navigate('#/test/list');
         AppNav.blank();
         
         $('#test-form').show('fade');
@@ -386,67 +449,82 @@ var AppUI = {
         $('#test-form-question-difficulties').html('');
         
         function addDiff() {
-            var h = '<div><span data-i18n="Number of questions"></span>' +
-                    '<input type="number" min="0" max="50">' +
-                    '<span data-i18n="Difficulty from"></span>' +
-                    '<input type="number" min="0" max="9">' +
+            function changeQTotal() {
+                var i = 0;
+                $('#test-form-question-difficulties .questions').each(function() {
+                    i += parseInt($(this).val());
+                });
+                $('#test-form-total-questions').data('i18n-numbers', i);
+                AppI18N.translate();
+            }
+            
+            var h = '<div class="difficulty-setup"><span data-i18n="Number of questions"></span>' +
+                    '<input class="questions" type="number" min="0" max="50" value="10">' +
+                    '<span data-i18n="Difficulty from""></span>' +
+                    '<input class="diff-from" type="number" min="0" max="9" value="6">' +
                     '<span data-i18n="to"></span>' +
-                    '<input type="number" min="1" max="10"></div>';
+                    '<input class="diff-to" type="number" min="1" max="10" value="7">' +
+                    '<a class="btn test-form-diff-remove" data-i18n="Remove"></a></div>';
             $('#test-form-question-difficulties').append(h);
-            AppUI.translate();
+            
+            $('.test-form-diff-remove').unbind().click(function() {
+                $(this).parent().remove();
+                changeQTotal();
+            });
+            
+            $('#test-form-question-difficulties input[type=number]').unbind().change(changeQTotal);
+            
+            changeQTotal();
+            
+            AppI18N.translate();
         }
         
         addDiff();
         addDiff();
         
-        $('#test-form-add-difficulty').unbind();
-        $('#test-form-add-difficulty').click(addDiff);
+        $('#test-form-add-difficulty').unbind().click(addDiff);
+        
+        $('#test-form-diff-remove').unbind();
+        
+        $('#test-form-categories').html(AppUI.testCategories());
+        $('#test-form-categories .select-all-subitems').click(function(e) {
+            e.preventDefault();
+            $(this).parent().parent().find('input').attr('checked',true);
+        });
+        
+        $('#test-form-header').val(AppCore.testHeader());
+    	$('#test-form-header').cleditor()[0].refresh();
+    	$('#test-form-header').cleditor()[0].updateFrame();
+        
+        AppI18N.translate();
     },
     
-    translate: function() {
-        var elements = $("*").filter(function() {
-            return $(this).data("i18n") != undefined; 
-        });
-	    
-        for( var i   = 0; i < elements.length; i++) {
-            var e    = elements[i];
-            
-            var text = $(e).data('i18n');
-            var numbers = null;
-            
-            if ( $(e).data('i18n-numbers') != undefined) {
-                numbers = $(e).data('i18n-numbers').toString().split(';');
-            }
-            
-            if ( $(e).html ) {
-                $(e).html(AppI18N.translate(text, numbers));
-            } else if ( $(e).val ) {
-                $(e).val(AppI18N.translate(text, numbers));
-            }
-        }
+    testShow: function(id) {
+        AppNav.navigate('#/test/list');
         
-    	// begin add-icons
-        var elements = $("*").filter(function() {
-    		return $(this).data("icon") != undefined; 
-    	});
-    	for( var i = 0; i < elements.length; i++) {
-            var e = elements[i];
+        AppNav.current.test = id;
         
-            $(e).html( '<i class="icon-' + $(e).data('icon') + '"></i> ' + $(e).html());
-        }
+        if ( id == undefined )
+            AppNav.navigate('#/category/show/0');
+        
+        var t = AppCore.testSelect(id);
+        
+        $('#test-show-title').html(t.title);
+        $('#test-show-date').html(t.date);
+        $('#test-show-body').html(t.body);
+        
+        $('#test-show').show('fade');
+        AppI18N.translate();
     }
 };
 
 $(document).ready(function() {
-	$("#question-form-difficulty").slider({animate:true, max:10, value:6});
-	$("#question-form-difficulty" ).bind( "slidechange", function(event, ui) {
-		$("#question-form-difficulty-span").html(ui.value);
+	$('#question-form-difficulty').slider({animate:true, max:10, value:6});
+	$('#question-form-difficulty' ).bind( 'slidechange', function(event, ui) {
+		$('#question-form-difficulty-span').html(ui.value);
 	});
     
-    $("#test-form-difficulty").slider({animate:true, max:10, values:[0,6], range:true});
-    
-    $("#test-form-number-questions").spinner({min:0,max:50});
-    $("#test-form-number-tests").spinner({min:1});
+    $('#test-form-difficulty').slider({animate:true, max:10, values:[0,6], range:true});
 	
-    $("textarea").cleditor({width: 600, height: 400});
+    $('textarea').cleditor({width: 600, height: 400});
 });

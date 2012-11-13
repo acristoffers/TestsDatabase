@@ -99,7 +99,13 @@ void ClientHandler::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<Ce
     ADD_FUNCTION_TO_JS("questionDelete");
     ADD_FUNCTION_TO_JS("questionInsert");
     ADD_FUNCTION_TO_JS("questionSelect");
+    ADD_FUNCTION_TO_JS("questionSelectIds");
     ADD_FUNCTION_TO_JS("questionUpdate");
+    
+    ADD_FUNCTION_TO_JS("testDelete");
+    ADD_FUNCTION_TO_JS("testHeader");
+    ADD_FUNCTION_TO_JS("testInsert");
+    ADD_FUNCTION_TO_JS("testSelect");
     
     ADD_FUNCTION_TO_JS("OpenFileDialog");
     ADD_FUNCTION_TO_JS("SaveFileDialog");
@@ -148,7 +154,7 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
         
         retval = CefV8Value::CreateBool(false);
         
-        for (int i=0; i<array->GetArrayLength(); i++) {
+        for (int i=0; i < array->GetArrayLength(); i++) {
             std::string val = array->GetValue(i)->GetStringValue();
             if ( compare == val) {
                 retval = CefV8Value::CreateBool(true);
@@ -263,6 +269,36 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
         return true;
     }
     
+    if (name == "questionSelectIds") {
+        int l = arguments[0]->GetArrayLength();
+        int from = arguments[1]->GetIntValue();
+        int to = arguments[2]->GetIntValue();
+        
+        if ( from > to ) {
+            int z = from;
+            from = to;
+            to = z;
+        }
+        
+        std::string ids = arguments[0]->GetValue(0)->GetStringValue();
+        
+        for (int i=1; i < l; i++)
+            ids +=  std::string(",") + std::string(arguments[0]->GetValue(i)->GetStringValue());
+        
+        SqlResult r = _DB_->question_select_where("category in (" + ids + ") AND difficulty BETWEEN " + IntToStdString(from) + " AND " + IntToStdString(to));
+        
+        CefRefPtr<CefV8Value> array = CefV8Value::CreateArray(r.size());
+        
+        SqlResult::iterator it;
+        int i = 0;
+        for ( it = r.begin() ; it < r.end(); it++ )
+            array->SetValue(i++, CefV8Value::CreateString((*it)["id"]));
+        
+        retval = array;
+        
+        return true;
+    }
+    
     if (name == "questionUpdate") {
         int       id    = arguments[0]->GetIntValue();
         CefString title = arguments[1]->GetStringValue();
@@ -272,6 +308,44 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
         int       cat   = arguments[5]->GetIntValue();
         
         _DB_->question_update(id, title, ref, dif, body, cat);
+        
+        return true;
+    }
+    
+    if (name == "testDelete") {
+        int id = arguments[0]->GetIntValue();
+        
+        _DB_->test_delete(id);
+        
+        return true;
+    }
+    
+    if (name == "testHeader") {
+        SqlRow r = _DB_->test_header();
+        
+        retval = CefV8Value::CreateString(r["body"]);
+        
+        return true;
+    }
+    
+    if (name == "testInsert") {
+        std::string title = arguments[0]->GetStringValue();
+        std::string body  = arguments[1]->GetStringValue();
+        std::string header = arguments[2]->GetStringValue();
+        
+        int r = _DB_->test_insert(title, body, header);
+        
+        retval = CefV8Value::CreateInt(r);
+        
+        return true;
+    }
+    
+    if (name == "testSelect") {
+        int id = arguments[0]->GetIntValue();
+        
+        SqlRow r = _DB_->test_select(id);
+        
+        retval = AppHandler::SqlRowToJSObject(r);
         
         return true;
     }

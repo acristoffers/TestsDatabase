@@ -27,7 +27,7 @@ var App = {
             
             recursive_delete(id);
             
-            AppNav.navigated('#/category/show/' + parent);
+            AppNav.navigate('#/category/show/' + parent);
         });
     },
     
@@ -39,29 +39,38 @@ var App = {
         
         AppUI.closeModals();
         
-        AppNav.navigated('#/category/show/' + AppNav.current.category);
+        AppNav.navigate('#/category/show/' + AppNav.current.category);
     },
     
     categoryMerge: function() {
-        var id = AppNav.current.category;
-        
-        var np = $("input[name=category-tree-radio]:checked").val();
-        
-        var subcats = AppCore.listCategories(id);
-        for (var i = subcats.length - 1; i >= 0; i--) {
-            var cat = subcats[i];
-            AppCore.categoryUpdate(cat.id, cat.name, np);
-        }
-        
-        var subqtns = AppCore.listQuestions(id);
-        for (var i = subqtns.length - 1; i >= 0; i--){
-            var q = subqtns[i];
-            AppCore.questionUpdate(q.id, q.title, q.reference, q.difficulty, q.body, np);
-        }
-        
-        AppCore.categoryDelete(id);
-        
-        AppNav.navigated('#/category/show/' + np);
+        AppUI.showModalAlert({
+            title: 'Are you sure?',
+            content: 'Are you sure you want to merge this category?\nThis operation can\'t be undone.',
+            button: {
+                class: 'danger',
+                text: 'Merge'
+            }
+        }, function() {
+            var id = AppNav.current.category;
+            
+            var np = $("input[name=category-tree-radio]:checked").val();
+            
+            var subcats = AppCore.listCategories(id);
+            for (var i = subcats.length - 1; i >= 0; i--) {
+                var cat = subcats[i];
+                AppCore.categoryUpdate(cat.id, cat.name, np);
+            }
+            
+            var subqtns = AppCore.listQuestions(id);
+            for (var i = subqtns.length - 1; i >= 0; i--){
+                var q = subqtns[i];
+                AppCore.questionUpdate(q.id, q.title, q.reference, q.difficulty, q.body, np);
+            }
+            
+            AppCore.categoryDelete(id);
+            
+            AppNav.navigate('#/category/show/' + np);
+        });
     },
     
     categoryUpdate: function() {
@@ -71,14 +80,35 @@ var App = {
         
         AppCore.categoryUpdate(id, name, parent);
         
-        AppNav.navigated('#/category/show/'+id);
+        AppNav.navigate('#/category/show/'+id);
     },
     
     databaseChanged: function() {
         if ( AppCore.checkDatabase() )
-            AppNav.navigated('#/category/show/0');
+            AppNav.navigate('#/category/show/0');
         else
-            AppNav.navigated('#/database/showdialog');
+            AppNav.navigate('#/database/showdialog');
+    },
+    
+    printTests: function() {
+        $('#tests-wrapper').removeClass('dont-print');
+        $('#test-answers-sheets').addClass('dont-print');
+        $('#clean-answers-sheets').addClass('dont-print');
+        print();
+    },
+    
+    printAnswers: function() {
+        $('#tests-wrapper').addClass('dont-print');
+        $('#test-answers-sheets').removeClass('dont-print');
+        $('#clean-answers-sheets').addClass('dont-print');
+        print();
+    },
+    
+    printAnswerSheets: function() {
+        $('#tests-wrapper').addClass('dont-print');
+        $('#test-answers-sheets').addClass('dont-print');
+        $('#clean-answers-sheets').removeClass('dont-print');
+        print();
     },
     
     questionDelete: function() {
@@ -93,8 +123,12 @@ var App = {
             }
         }, function() {
             AppCore.questionDelete(id);
-            AppNav.navigated('#/category/show/' + AppNav.current.category);
+            AppNav.navigate('#/category/show/' + AppNav.current.category);
         });
+    },
+    
+    modelChanged: function() {
+        App.databaseChanged();
     },
     
     questionInsert: function() {
@@ -149,24 +183,236 @@ var App = {
 			AppCore.questionUpdate(id, title, reference, difficulty, body, category);
 			AppCore.answerDelete(id);
 		}
+        
         AppCore.answerInsert(right_answer, id, true);
 		for (var i = 0; i < answers.length; i++ ) {
 			AppCore.answerInsert(answers[i], id, false);
 		}
 		
 		AppNav.current.category = category;
-        AppNav.navigated('#/question/show/'+id);
+        AppNav.navigate('#/question/show/'+id);
     },
     
-    modelChanged: function() {
-        App.databaseChanged();
+    testDelete: function() {
+        AppUI.showModalAlert({
+            title: 'Delete test',
+            content: 'Are you sure you want to delete this test?',
+            button: {
+                class: 'danger',
+                text: 'Delete'
+            }
+        }, function() {
+            AppCore.testDelete(AppNav.current.test);
+            AppNav.navigate('#/test/list'); 
+        });
+    },
+    
+    testInsert: function() {
+        AppNav.blank();
+        
+        var title = $('#test-form-title').val();
+        var numOfTests = $('#test-form-number-tests').val();
+        
+        var numberOfQuestions = 0;
+        var difficulties = [];
+        $('#test-form-question-difficulties .difficulty-setup').each(function() {
+            var n = $( $(this).children('.questions')[0] ).val();
+            var f = $( $(this).children('.diff-from')[0] ).val();
+            var t = $( $(this).children('.diff-to')[0]   ).val();
+            
+            difficulties.push( {
+                questions: n,
+                from: f,
+                to: t
+            });
+            
+            numberOfQuestions += parseInt(n);
+        });
+        
+        var header = $('#test-form-header').val();
+        
+        var categories = [];
+        $('#test-form-categories input:checked').each(function(i) {
+            categories.push($(this).data('id'));
+        });
+        
+        if ( title == '' ) {
+            AppUI.showModalAlert({
+                title: 'No title...',
+                content: 'You forgot to type the title...',
+                cancel: false,
+                button: {
+                    text: 'Ok'
+                }
+            }, function() {
+                AppUI.closeModals();
+                $('#test-form-title').focus();
+            });
+            return;
+        }
+        
+        if ( numberOfQuestions < 0 || numberOfQuestions > 50 ) {
+            AppUI.showModalAlert({
+                title: 'Invalid number of questions',
+                content: 'Did you forget to select questions and difficulties?',
+                cancel: false,
+                button: {
+                    text: 'Ok'
+                }
+            }, AppUI.closeModals);
+            return;
+        }
+        
+        // generates a pool of random, unique numbers
+        function randomPool(i, n)
+        {
+            var pool = [];
+            
+            for(var j=0; j<i; j++) {
+                pool.push(Math.floor(Math.random()*n));
+            }
+            
+            pool = pool.filter(function(elem, pos) {
+                return pool.indexOf(elem) == pos;
+            });
+            
+            while ( pool.length < i ) {
+                pool.push(Math.floor(Math.random()*n));
+                
+                pool = pool.filter(function(elem, pos) {
+                    return pool.indexOf(elem) == pos;
+                });
+            }
+            
+            return pool;
+        }
+        
+        var selectedQuestions = [];
+        
+        for (var i = difficulties.length - 1; i >= 0; i--) {
+            var d = difficulties[i];
+            var questions = AppCore.questionSelectIds(categories, d.from, d.to);
+            if ( questions.length < d.questions ) {
+                AppUI.showModalAlert({
+                    title: 'Not enough questions.',
+                    content: AppI18N.tr('There is not %d questions with difficulty between %d and %d on the selected categories', [d.questions, d.from, d.to]),
+                    button: {
+                        text: 'Ok'
+                    }
+                }, AppUI.closeModals);
+                return;
+            }
+            
+            var rp = randomPool(d.questions, questions.length);
+
+            for (var j=0; j < d.questions; j++)
+                selectedQuestions.push( questions[rp[j]] );
+        }
+        
+        var tests = '<div id="tests-wrapper">';
+        
+        var answerSheets = '';
+        
+        for (var i=0; i < numOfTests; i++) {
+            var test = '<div class="test">';
+            test += '<div class="test-header">' + header + '</div>';
+            test += '<div class="test-number" data-i18n="Test %d" data-i18n-numbers="' + (i+1) + '"></div>';
+            test += '<ol class="test-questions">';
+            
+            var as   = '<div class="answers-sheet"><div id="answers-header">' + header + '</div><div class="test-number" data-i18n="Test %d" data-i18n-numbers="' + (i+1) + '"></div><div id="answers"><div class="col">';
+            
+            var qp = randomPool(selectedQuestions.length, selectedQuestions.length);
+            for (var j = 0; j < selectedQuestions.length; j++) {
+                var q = AppCore.questionSelect(selectedQuestions[qp[j]]);
+                
+                var question = '<li class="test-question"><span>' +
+                               '<div class="dont-print question-meta">';
+                
+                question +=  AppI18N.tr('<span data-i18n="Title:"></span> ') + q.title +
+                             AppI18N.tr('<br><span data-i18n="Reference:"></span> ') + q.reference +
+                             AppI18N.tr('<br><span data-i18n="Difficulty:"></span> ') + q.difficulty;
+                
+                question += '</div>' + q.body;
+                
+                question += '<ol class="question-answers">';
+                
+                if ( j == 10 || j == 20 || j == 30 || j == 40 )
+                    as += '</div><div class="col">';
+                    
+                as += '<div class="row"><div class="question-number">' + (j+1) + '</div>';
+                
+                var answers = AppCore.answerSelect(q.id);
+                var ap = randomPool(answers.length, answers.length);
+                var aa = ['a', 'b', 'c', 'd'];
+                for (var k = 0; k < answers.length; k++) {
+                    question += '<li><span>' + answers[ap[k]].text + '</span></li>';
+                    as += '<div class="alternative ' + (parseInt(answers[ap[k]].right) == 1 ?  'right' :  '') + '">' + aa[k] + '</div>';
+                }
+                
+                as += '</div>';
+                
+                question += '</ol></span></li>';
+                
+                test += question;
+            }
+            
+            for (var j = selectedQuestions.length; j < 50; j++ ) {
+                if ( j == 10 || j == 20 || j == 30 || j == 40 )
+                    as += '</div><div class="col">';
+                    
+                as += '<div class="row"><div class="question-number">' + (j+1) + '</div>';
+                    
+                var aa = ['a', 'b', 'c', 'd'];
+                for (var k = 0; k < 4; k++)
+                    as += '<div class="alternative">' + aa[k] + '</div>';
+                    
+                as += '</div>';
+            }
+            
+            as += '</div></div></div>';
+            
+            test += '</ol>';
+            test += '</div>';
+            
+            tests += test;
+            
+            answerSheets += as;
+        }
+        
+        tests += '</div>';
+        
+        tests += '<div id="test-answers-sheets">' + answerSheets + '</div>';
+        
+        tests += '<div id="clean-answers-sheets">';
+        for ( var i = 0; i < numOfTests; i++) {
+            tests += '<div class="answers-sheet"><div id="answers-header">' + header + '</div><div class="test-number" data-i18n="Test %d" data-i18n-numbers="' + (i+1) + '"></div><div id="answers"><div class="col">';
+            
+            for (var j = 0; j < 50; j++ ) {
+                if ( j == 10 || j == 20 || j == 30 || j == 40 )
+                    tests += '</div><div class="col">';
+                
+                tests += '<div class="row"><div class="question-number">' + (j+1) + '</div>';
+                
+                var aa = ['a', 'b', 'c', 'd'];
+                for (var k = 0; k < 4; k++)
+                    tests += '<div class="alternative">' + aa[k] + '</div>';
+                
+                tests += '</div>';
+            }
+            tests += '</div></div>';
+        }
+        
+        tests += '</div></div>';
+        
+        var id = AppCore.testInsert(title, tests, header);
+        AppNav.navigate('#/test/show/' + id);
     }
 };
 
 $(document).ready(function() {
     AppUI.clean();
     AppUI.listAvailableTranslations();
-    AppUI.translate();
+    AppI18N.translate();
     
     $('#open-dialog-bg').show();
     $('#open-dialog').show();

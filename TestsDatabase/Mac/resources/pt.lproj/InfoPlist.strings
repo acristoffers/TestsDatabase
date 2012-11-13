@@ -1,0 +1,11 @@
+/* 
+  InfoPlist.strings
+  TestsDatabase
+
+  Created by Álan Crístoffer on 11/12/12.
+  Copyright (c) 2012 Álan Crístoffer. All rights reserved.
+*/
+
+CFBundleName = "Fragen Bank";
+CFBundleDisplayName = "Banco de Questões";
+NSHumanReadableCopyright = "© Álan Crístoffer. Todos os direitos reservados.";

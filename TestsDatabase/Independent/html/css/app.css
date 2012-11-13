@@ -94,7 +94,8 @@ Content div
 }
 
 #category-edit-form-parent-tree div,
-#question-form-category-tree div {
+#question-form-category-tree div,
+#test-form-categories div {
     margin-left: 10px;
 }
 
@@ -222,4 +223,88 @@ Open file dialog
 
 #open-dialog div h2 {
 	text-align: center;
+}
+
+/*
+Test Show and Print
+*/
+@media print {
+    body {
+        font-size: 10pt;
+    }
+    
+    .dont-print,
+    #header, 
+    #header-menu,
+    #path-navigator,
+    #navigation {
+        display: none;
+    }
+    
+    #content {
+        margin-left: 0;
+    }
+}
+
+.test-header {
+    margin-bottom: 4em;
+}
+
+.answers-sheet {
+    page-break-before: always;
+}
+
+.answers-sheet .col {
+    width: 20%;
+    display: inline-block;
+}
+
+.answers-sheet .row div {
+    display: inline-block;
+    text-align: center;
+    width: 1.5em;
+    height: 1.5em;
+    margin: 1px;
+    font-size: 1em;
+}
+
+.answers-sheet .row .right {
+    background: black;
+}
+
+.answers-sheet .row .question-number {
+    font-weight: bold;
+    padding-right: .5em;
+}
+
+.answers-sheet .row .alternative {
+    border: 1px solid black;
+}
+
+#tests-wrapper ol {
+    margin-top: 1em;
+}
+
+#tests-wrapper li {
+    font-weight: bold;
+}
+
+#tests-wrapper li span {
+    font-weight: normal;
+}
+
+.question-meta {
+    font-style: italic;
+}
+
+.test-question {
+    page-break-inside: avoid;
+}
+
+.question-answers {
+    list-style-type: lower-alpha;
+}
+
+.test-number {
+    text-align: right;
 }

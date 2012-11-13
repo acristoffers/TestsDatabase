@@ -37,9 +37,12 @@ int DataBase::test_insert(std::string title, std::string body, std::string heade
     
     executeSql("DELETE FROM test_header");
     
-    sqlite3_prepare(_p->db, "INSERT INTO test_header VALUES (:header)", -1, &stmt, 0 ); SQL_ERROR
+    len = 0;
+    blob = compress(header, &len);
     
-    sqlite3_bind_text( stmt, sql_param(":title"), header.c_str(), header.length(), SQLITE_STATIC ); SQL_ERROR
+    sqlite3_prepare(_p->db, "INSERT INTO test_header VALUES (:body)", -1, &stmt, 0 ); SQL_ERROR
+    
+    sqlite3_bind_blob( stmt, sql_param(":body"), blob, len, SQLITE_STATIC ); SQL_ERROR
     
     sqlite3_step(stmt);
     

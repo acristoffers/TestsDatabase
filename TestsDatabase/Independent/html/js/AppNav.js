@@ -38,8 +38,15 @@ var AppNav = {
             },
             
             test: {
-                list: AppUI.testList,
-                new:  AppUI.testNew
+                delete: App.testDelete,
+                insert: App.testInsert,
+                list:   AppUI.testList,
+                new:    AppUI.testNew,
+                show:   AppUI.testShow,
+                
+                printTests:        App.printTests,
+                printAnswers:      App.printAnswers,
+                printAnswerSheets: App.printAnswerSheets
             },
             
             modal: {
@@ -51,7 +58,7 @@ var AppNav = {
         cmdlist[cmd.model][cmd.action]([cmd.id]);
     },
     
-    navigated: function(hash) {
+    navigate: function(hash) {
         if ( hash == '#/blank' )
             return;
         
@@ -77,5 +84,5 @@ var AppNav = {
 };
 
 window.onhashchange = function() {
-    AppNav.navigated(location.hash);
+    AppNav.navigate(location.hash);
 };

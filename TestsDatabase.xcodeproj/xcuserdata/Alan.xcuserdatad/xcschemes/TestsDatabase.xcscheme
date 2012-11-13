@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E738E85F1647BC2900B83357"
-               BuildableName = "TestsDatabase.app"
-               BlueprintName = "TestsDatabase"
+               BuildableName = "Tests Database.app"
+               BlueprintName = "Tests Database"
                ReferencedContainer = "container:TestsDatabase.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,8 +33,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E738E85F1647BC2900B83357"
-            BuildableName = "TestsDatabase.app"
-            BlueprintName = "TestsDatabase"
+            BuildableName = "Tests Database.app"
+            BlueprintName = "Tests Database"
             ReferencedContainer = "container:TestsDatabase.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -52,8 +52,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E738E85F1647BC2900B83357"
-            BuildableName = "TestsDatabase.app"
-            BlueprintName = "TestsDatabase"
+            BuildableName = "Tests Database.app"
+            BlueprintName = "Tests Database"
             ReferencedContainer = "container:TestsDatabase.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -70,8 +70,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E738E85F1647BC2900B83357"
-            BuildableName = "TestsDatabase.app"
-            BlueprintName = "TestsDatabase"
+            BuildableName = "Tests Database.app"
+            BlueprintName = "Tests Database"
             ReferencedContainer = "container:TestsDatabase.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

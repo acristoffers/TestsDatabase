@@ -103,7 +103,7 @@ void DataBase::createDatabase()
     executeSql("CREATE TABLE IF NOT EXISTS questions(id INT PRIMARY KEY, title TEXT, body BLOB, difficulty INT, reference TEXT, category INT)");
     executeSql("CREATE TABLE IF NOT EXISTS answers(id INT PRIMARY KEY, text TEXT, question INT, right INT)");
     executeSql("CREATE TABLE IF NOT EXISTS tests(id INT PRIMARY KEY, date DATE, title TEXT, body BLOB)");
-    executeSql("CREATE TABLE IF NOT EXISTS test_header(header TEXT)");
+    executeSql("CREATE TABLE IF NOT EXISTS test_header(body BLOB)");
 
     std::string query = "INSERT INTO version VALUES(";
     query += IntToStdString(DB_VERSION);

@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E709C0DA1648126B009EE317 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E709C0DC1648126B009EE317 /* Localizable.strings */; };
 		E709C0DF16481308009EE317 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E709C0E116481308009EE317 /* MainMenu.xib */; };
+		E70C542F1650AE3D009C4205 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E70C54311650AE3D009C4205 /* InfoPlist.strings */; };
+		E70C81FC1650B017006E510C /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E70C81FB1650B017006E510C /* Info.plist */; };
 		E710283D1647FE3D007DF484 /* DataBase_answer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E71028351647FE3D007DF484 /* DataBase_answer.cpp */; };
 		E710283E1647FE3D007DF484 /* DataBase_category.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E71028361647FE3D007DF484 /* DataBase_category.cpp */; };
 		E710283F1647FE3D007DF484 /* DataBase_question.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E71028371647FE3D007DF484 /* DataBase_question.cpp */; };
@@ -16,6 +17,13 @@
 		E71028411647FE3D007DF484 /* DataBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E71028391647FE3D007DF484 /* DataBase.cpp */; };
 		E71028421647FE3D007DF484 /* DataBasePrivate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E710283B1647FE3D007DF484 /* DataBasePrivate.cpp */; };
 		E71028461647FE62007DF484 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = E71028441647FE62007DF484 /* sqlite3.c */; };
+		E71B987B164FF3510042603B /* blocksort.c in Sources */ = {isa = PBXBuildFile; fileRef = E71B9872164FF3510042603B /* blocksort.c */; };
+		E71B987C164FF3510042603B /* bzlib.c in Sources */ = {isa = PBXBuildFile; fileRef = E71B9874164FF3510042603B /* bzlib.c */; };
+		E71B987D164FF3510042603B /* compress.c in Sources */ = {isa = PBXBuildFile; fileRef = E71B9876164FF3510042603B /* compress.c */; };
+		E71B987E164FF3510042603B /* crctable.c in Sources */ = {isa = PBXBuildFile; fileRef = E71B9877164FF3510042603B /* crctable.c */; };
+		E71B987F164FF3510042603B /* decompress.c in Sources */ = {isa = PBXBuildFile; fileRef = E71B9878164FF3510042603B /* decompress.c */; };
+		E71B9880164FF3510042603B /* huffman.c in Sources */ = {isa = PBXBuildFile; fileRef = E71B9879164FF3510042603B /* huffman.c */; };
+		E71B9881164FF3510042603B /* randtable.c in Sources */ = {isa = PBXBuildFile; fileRef = E71B987A164FF3510042603B /* randtable.c */; };
 		E738E8651647BC2900B83357 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E738E8641647BC2900B83357 /* Cocoa.framework */; };
 		E738E89B1647BFFB00B83357 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = E738E8991647BFFB00B83357 /* AppDelegate.mm */; };
 		E738E89C1647BFFB00B83357 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = E738E89A1647BFFB00B83357 /* main.mm */; };
@@ -128,13 +136,6 @@
 		E738EAC41647CE1600B83357 /* zh_TW.lproj in Resources */ = {isa = PBXBuildFile; fileRef = E738EA5D1647CE1500B83357 /* zh_TW.lproj */; };
 		E738EAC51647CE1600B83357 /* zoomInCursor.png in Resources */ = {isa = PBXBuildFile; fileRef = E738EA5E1647CE1500B83357 /* zoomInCursor.png */; };
 		E738EAC61647CE1600B83357 /* zoomOutCursor.png in Resources */ = {isa = PBXBuildFile; fileRef = E738EA5F1647CE1500B83357 /* zoomOutCursor.png */; };
-		E7905D18164C5BE300AF556A /* blocksort.c in Sources */ = {isa = PBXBuildFile; fileRef = E7905D0F164C5BE300AF556A /* blocksort.c */; };
-		E7905D19164C5BE300AF556A /* bzlib.c in Sources */ = {isa = PBXBuildFile; fileRef = E7905D11164C5BE300AF556A /* bzlib.c */; };
-		E7905D1A164C5BE300AF556A /* compress.c in Sources */ = {isa = PBXBuildFile; fileRef = E7905D13164C5BE300AF556A /* compress.c */; };
-		E7905D1B164C5BE300AF556A /* crctable.c in Sources */ = {isa = PBXBuildFile; fileRef = E7905D14164C5BE300AF556A /* crctable.c */; };
-		E7905D1C164C5BE300AF556A /* decompress.c in Sources */ = {isa = PBXBuildFile; fileRef = E7905D15164C5BE300AF556A /* decompress.c */; };
-		E7905D1D164C5BE300AF556A /* huffman.c in Sources */ = {isa = PBXBuildFile; fileRef = E7905D16164C5BE300AF556A /* huffman.c */; };
-		E7905D1E164C5BE300AF556A /* randtable.c in Sources */ = {isa = PBXBuildFile; fileRef = E7905D17164C5BE300AF556A /* randtable.c */; };
 		E7A6B9D41648681C00F93EFA /* FileDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = E7A6B9D31648681C00F93EFA /* FileDialog.mm */; };
 		E7A6B9D816487A2100F93EFA /* AppHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7A6B9D616487A2100F93EFA /* AppHandler.cpp */; };
 /* End PBXBuildFile section */
@@ -153,15 +154,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		E709C0DB1648126B009EE317 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E709C0DD164812D6009EE317 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E709C0DE164812DA009EE317 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E709C0E016481308009EE317 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		E709C0E21648130E009EE317 /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		E709C0E31648130F009EE317 /* pt */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = pt; path = pt.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		E709C0E41648187C009EE317 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = "en.lproj/TestsDatabase-Info.plist"; sourceTree = "<group>"; };
-		E709C0E616481882009EE317 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = pt; path = "pt.lproj/TestsDatabase-Info.plist"; sourceTree = "<group>"; };
-		E709C0E716481882009EE317 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = de; path = "de.lproj/TestsDatabase-Info.plist"; sourceTree = "<group>"; };
+		E70C54211650AB04009C4205 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		E70C54301650AE3D009C4205 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E70C54321650AE4C009C4205 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E70C54331650AE58009C4205 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E70C81FB1650B017006E510C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Mac/resources/Info.plist; sourceTree = "<group>"; };
 		E71028351647FE3D007DF484 /* DataBase_answer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataBase_answer.cpp; path = TestsDatabase/Independent/DataBase/DataBase_answer.cpp; sourceTree = "<group>"; };
 		E71028361647FE3D007DF484 /* DataBase_category.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataBase_category.cpp; path = TestsDatabase/Independent/DataBase/DataBase_category.cpp; sourceTree = "<group>"; };
 		E71028371647FE3D007DF484 /* DataBase_question.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DataBase_question.cpp; path = TestsDatabase/Independent/DataBase/DataBase_question.cpp; sourceTree = "<group>"; };
@@ -172,7 +169,16 @@
 		E710283C1647FE3D007DF484 /* DataBasePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataBasePrivate.h; path = TestsDatabase/Independent/DataBase/DataBasePrivate.h; sourceTree = "<group>"; };
 		E71028441647FE62007DF484 /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sqlite3.c; path = TestsDatabase/Independent/sqlite/sqlite3.c; sourceTree = "<group>"; };
 		E71028451647FE62007DF484 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sqlite3.h; path = TestsDatabase/Independent/sqlite/sqlite3.h; sourceTree = "<group>"; };
-		E738E8601647BC2900B83357 /* TestsDatabase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestsDatabase.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E71B9872164FF3510042603B /* blocksort.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = blocksort.c; path = TestsDatabase/Independent/bzip/blocksort.c; sourceTree = "<group>"; };
+		E71B9873164FF3510042603B /* bzlib_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bzlib_private.h; path = TestsDatabase/Independent/bzip/bzlib_private.h; sourceTree = "<group>"; };
+		E71B9874164FF3510042603B /* bzlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bzlib.c; path = TestsDatabase/Independent/bzip/bzlib.c; sourceTree = "<group>"; };
+		E71B9875164FF3510042603B /* bzlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bzlib.h; path = TestsDatabase/Independent/bzip/bzlib.h; sourceTree = "<group>"; };
+		E71B9876164FF3510042603B /* compress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = compress.c; path = TestsDatabase/Independent/bzip/compress.c; sourceTree = "<group>"; };
+		E71B9877164FF3510042603B /* crctable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = crctable.c; path = TestsDatabase/Independent/bzip/crctable.c; sourceTree = "<group>"; };
+		E71B9878164FF3510042603B /* decompress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decompress.c; path = TestsDatabase/Independent/bzip/decompress.c; sourceTree = "<group>"; };
+		E71B9879164FF3510042603B /* huffman.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = huffman.c; path = TestsDatabase/Independent/bzip/huffman.c; sourceTree = "<group>"; };
+		E71B987A164FF3510042603B /* randtable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = randtable.c; path = TestsDatabase/Independent/bzip/randtable.c; sourceTree = "<group>"; };
+		E738E8601647BC2900B83357 /* Tests Database.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tests Database.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E738E8641647BC2900B83357 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E738E8671647BC2900B83357 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		E738E8681647BC2900B83357 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -290,15 +296,6 @@
 		E738EA5D1647CE1500B83357 /* zh_TW.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zh_TW.lproj; path = TestsDatabase/CEF/Mac/resources/zh_TW.lproj; sourceTree = "<group>"; };
 		E738EA5E1647CE1500B83357 /* zoomInCursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = zoomInCursor.png; path = TestsDatabase/CEF/Mac/resources/zoomInCursor.png; sourceTree = "<group>"; };
 		E738EA5F1647CE1500B83357 /* zoomOutCursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = zoomOutCursor.png; path = TestsDatabase/CEF/Mac/resources/zoomOutCursor.png; sourceTree = "<group>"; };
-		E7905D0F164C5BE300AF556A /* blocksort.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = blocksort.c; path = TestsDatabase/bzip/blocksort.c; sourceTree = "<group>"; };
-		E7905D10164C5BE300AF556A /* bzlib_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bzlib_private.h; path = TestsDatabase/bzip/bzlib_private.h; sourceTree = "<group>"; };
-		E7905D11164C5BE300AF556A /* bzlib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bzlib.c; path = TestsDatabase/bzip/bzlib.c; sourceTree = "<group>"; };
-		E7905D12164C5BE300AF556A /* bzlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bzlib.h; path = TestsDatabase/bzip/bzlib.h; sourceTree = "<group>"; };
-		E7905D13164C5BE300AF556A /* compress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = compress.c; path = TestsDatabase/bzip/compress.c; sourceTree = "<group>"; };
-		E7905D14164C5BE300AF556A /* crctable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = crctable.c; path = TestsDatabase/bzip/crctable.c; sourceTree = "<group>"; };
-		E7905D15164C5BE300AF556A /* decompress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decompress.c; path = TestsDatabase/bzip/decompress.c; sourceTree = "<group>"; };
-		E7905D16164C5BE300AF556A /* huffman.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = huffman.c; path = TestsDatabase/bzip/huffman.c; sourceTree = "<group>"; };
-		E7905D17164C5BE300AF556A /* randtable.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = randtable.c; path = TestsDatabase/bzip/randtable.c; sourceTree = "<group>"; };
 		E7A6B9D31648681C00F93EFA /* FileDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FileDialog.mm; path = Mac/FileDialog.mm; sourceTree = "<group>"; };
 		E7A6B9D616487A2100F93EFA /* AppHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppHandler.cpp; path = Independent/AppHandler.cpp; sourceTree = "<group>"; };
 		E7A6B9D716487A2100F93EFA /* AppHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppHandler.h; path = Independent/AppHandler.h; sourceTree = "<group>"; };
@@ -357,7 +354,7 @@
 		E738E8611647BC2900B83357 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E738E8601647BC2900B83357 /* TestsDatabase.app */,
+				E738E8601647BC2900B83357 /* Tests Database.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -400,9 +397,9 @@
 			isa = PBXGroup;
 			children = (
 				E709C0E116481308009EE317 /* MainMenu.xib */,
-				E709C0DC1648126B009EE317 /* Localizable.strings */,
 				E738E9811647CB9800B83357 /* icon.icns */,
-				E709C0E51648187C009EE317 /* TestsDatabase-Info.plist */,
+				E70C81FB1650B017006E510C /* Info.plist */,
+				E70C54311650AE3D009C4205 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -410,12 +407,12 @@
 		E738E89D1647C83A00B83357 /* Platform Independent files */ = {
 			isa = PBXGroup;
 			children = (
+				E738E8A01647C85D00B83357 /* html */,
 				E7905D0E164C5BCD00AF556A /* zlib */,
 				E71028431647FE54007DF484 /* SQLite */,
 				E71028331647FE2E007DF484 /* DataBase */,
 				E738E89E1647C85D00B83357 /* ClientHandler.cpp */,
 				E738E89F1647C85D00B83357 /* ClientHandler.h */,
-				E738E8A01647C85D00B83357 /* html */,
 			);
 			name = "Platform Independent files";
 			sourceTree = "<group>";
@@ -542,15 +539,15 @@
 		E7905D0E164C5BCD00AF556A /* zlib */ = {
 			isa = PBXGroup;
 			children = (
-				E7905D0F164C5BE300AF556A /* blocksort.c */,
-				E7905D10164C5BE300AF556A /* bzlib_private.h */,
-				E7905D11164C5BE300AF556A /* bzlib.c */,
-				E7905D12164C5BE300AF556A /* bzlib.h */,
-				E7905D13164C5BE300AF556A /* compress.c */,
-				E7905D14164C5BE300AF556A /* crctable.c */,
-				E7905D15164C5BE300AF556A /* decompress.c */,
-				E7905D16164C5BE300AF556A /* huffman.c */,
-				E7905D17164C5BE300AF556A /* randtable.c */,
+				E71B9872164FF3510042603B /* blocksort.c */,
+				E71B9873164FF3510042603B /* bzlib_private.h */,
+				E71B9874164FF3510042603B /* bzlib.c */,
+				E71B9875164FF3510042603B /* bzlib.h */,
+				E71B9876164FF3510042603B /* compress.c */,
+				E71B9877164FF3510042603B /* crctable.c */,
+				E71B9878164FF3510042603B /* decompress.c */,
+				E71B9879164FF3510042603B /* huffman.c */,
+				E71B987A164FF3510042603B /* randtable.c */,
 			);
 			name = zlib;
 			sourceTree = "<group>";
@@ -558,9 +555,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E738E85F1647BC2900B83357 /* TestsDatabase */ = {
+		E738E85F1647BC2900B83357 /* Tests Database */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E738E87E1647BC2A00B83357 /* Build configuration list for PBXNativeTarget "TestsDatabase" */;
+			buildConfigurationList = E738E87E1647BC2A00B83357 /* Build configuration list for PBXNativeTarget "Tests Database" */;
 			buildPhases = (
 				E738E85C1647BC2900B83357 /* Sources */,
 				E738E85D1647BC2900B83357 /* Frameworks */,
@@ -571,9 +568,9 @@
 			);
 			dependencies = (
 			);
-			name = TestsDatabase;
+			name = "Tests Database";
 			productName = TestsDatabase;
-			productReference = E738E8601647BC2900B83357 /* TestsDatabase.app */;
+			productReference = E738E8601647BC2900B83357 /* Tests Database.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -600,7 +597,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E738E85F1647BC2900B83357 /* TestsDatabase */,
+				E738E85F1647BC2900B83357 /* Tests Database */,
 			);
 		};
 /* End PBXProject section */
@@ -715,7 +712,8 @@
 				E738EAC51647CE1600B83357 /* zoomInCursor.png in Resources */,
 				E738EAC61647CE1600B83357 /* zoomOutCursor.png in Resources */,
 				E709C0DF16481308009EE317 /* MainMenu.xib in Resources */,
-				E709C0DA1648126B009EE317 /* Localizable.strings in Resources */,
+				E70C542F1650AE3D009C4205 /* InfoPlist.strings in Resources */,
+				E70C81FC1650B017006E510C /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -739,49 +737,36 @@
 				E71028461647FE62007DF484 /* sqlite3.c in Sources */,
 				E7A6B9D41648681C00F93EFA /* FileDialog.mm in Sources */,
 				E7A6B9D816487A2100F93EFA /* AppHandler.cpp in Sources */,
-				E7905D18164C5BE300AF556A /* blocksort.c in Sources */,
-				E7905D19164C5BE300AF556A /* bzlib.c in Sources */,
-				E7905D1A164C5BE300AF556A /* compress.c in Sources */,
-				E7905D1B164C5BE300AF556A /* crctable.c in Sources */,
-				E7905D1C164C5BE300AF556A /* decompress.c in Sources */,
-				E7905D1D164C5BE300AF556A /* huffman.c in Sources */,
-				E7905D1E164C5BE300AF556A /* randtable.c in Sources */,
+				E71B987B164FF3510042603B /* blocksort.c in Sources */,
+				E71B987C164FF3510042603B /* bzlib.c in Sources */,
+				E71B987D164FF3510042603B /* compress.c in Sources */,
+				E71B987E164FF3510042603B /* crctable.c in Sources */,
+				E71B987F164FF3510042603B /* decompress.c in Sources */,
+				E71B9880164FF3510042603B /* huffman.c in Sources */,
+				E71B9881164FF3510042603B /* randtable.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		E709C0DC1648126B009EE317 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E709C0DB1648126B009EE317 /* en */,
-				E709C0DD164812D6009EE317 /* de */,
-				E709C0DE164812DA009EE317 /* pt */,
-			);
-			name = Localizable.strings;
-			path = Mac/resources;
-			sourceTree = "<group>";
-		};
 		E709C0E116481308009EE317 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E709C0E016481308009EE317 /* en */,
-				E709C0E21648130E009EE317 /* de */,
-				E709C0E31648130F009EE317 /* pt */,
+				E70C54211650AB04009C4205 /* Base */,
 			);
 			name = MainMenu.xib;
 			path = Mac/resources;
 			sourceTree = "<group>";
 		};
-		E709C0E51648187C009EE317 /* TestsDatabase-Info.plist */ = {
+		E70C54311650AE3D009C4205 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E709C0E41648187C009EE317 /* en */,
-				E709C0E616481882009EE317 /* pt */,
-				E709C0E716481882009EE317 /* de */,
+				E70C54301650AE3D009C4205 /* en */,
+				E70C54321650AE4C009C4205 /* de */,
+				E70C54331650AE58009C4205 /* pt */,
 			);
-			name = "TestsDatabase-Info.plist";
+			name = InfoPlist.strings;
 			path = Mac/resources;
 			sourceTree = "<group>";
 		};
@@ -844,6 +829,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++11";
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TestsDatabase/Mac/TestsDatabase-Prefix.pch";
@@ -855,7 +841,8 @@
 					"$(SRCROOT)/TestsDatabase/Independent/sqlite",
 					"$(SRCROOT)/TestsDatabase/zlib",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/TestsDatabase/Mac/resources/TestsDatabase-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/TestsDatabase/Mac/resources/Info.plist";
+				INFOPLIST_PREPROCESS = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/TestsDatabase/CEF/Mac/lib\"",
@@ -874,6 +861,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++11";
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TestsDatabase/Mac/TestsDatabase-Prefix.pch";
@@ -885,7 +873,8 @@
 					"$(SRCROOT)/TestsDatabase/Independent/sqlite",
 					"$(SRCROOT)/TestsDatabase/zlib",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/TestsDatabase/Mac/resources/TestsDatabase-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/TestsDatabase/Mac/resources/Info.plist";
+				INFOPLIST_PREPROCESS = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/TestsDatabase/CEF/Mac/lib\"",
@@ -911,7 +900,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E738E87E1647BC2A00B83357 /* Build configuration list for PBXNativeTarget "TestsDatabase" */ = {
+		E738E87E1647BC2A00B83357 /* Build configuration list for PBXNativeTarget "Tests Database" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E738E87F1647BC2A00B83357 /* Debug */,

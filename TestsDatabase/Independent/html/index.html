@@ -188,7 +188,7 @@
             <input id="test-form-title" type="text">
             
             <label for="test-form-number-tests" data-i18n="Number of tests"></label>
-            <input id="test-form-number-tests" value="4">
+            <input id="test-form-number-tests" type="number" min="1" value="4">
             
             <div id="test-form-question-difficulties"></div>
             <div id="test-form-total-questions" data-i18n="Totalizing %d questions" data-i18n-numbers="0"></div>
@@ -200,8 +200,26 @@
             <label data-i18n="Categories"></label>
             <div id="test-form-categories" class="light-well"></div>
             
-            <a id="test-form-save" class="btn btn-primary" data-i18n="Generate"></a>
+            <a href="#/test/insert" class="btn btn-primary" data-i18n="Generate"></a>
         </form>                
+    </div>
+    
+    <!--
+        Test Show
+    -->
+    <div id="test-show">
+        <div class="btn-toolbar">
+            <a class="btn" data-i18n="Print Tests"></a>
+            <a class="btn" data-i18n="Print Answers Sheet"></a>
+            <a class="btn" data-i18n="Print Answers"></a>
+            <a class="btn" data-i18n="Generate HTML"></a>
+            <a href="#/test/delete" class="btn btn-danger" data-i18n="Delete"></a>
+        </div>
+                
+        <h2 id="test-show-title"></h2>
+        <h3 id="test-show-date"></h3>
+        <br />
+        <div id="test-show-body"></div>
     </div>
     
 </div>
