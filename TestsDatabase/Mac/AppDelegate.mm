@@ -51,6 +51,12 @@ extern std::string SaveFileDialog();
     CefRunMessageLoop();
 }
 
+- (BOOL)application:(NSApplication *)sender openFile:(NSString *)filename
+{
+    AppHandler::instance()->openDataBase([filename cStringUsingEncoding:NSUTF8StringEncoding]);
+    return true;
+}
+
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
 {
     return YES;

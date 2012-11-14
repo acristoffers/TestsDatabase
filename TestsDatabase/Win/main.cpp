@@ -115,7 +115,7 @@ HWND RegisterWindow(HINSTANCE hInstance, int nCmdShow)
 	return hwnd;
 }
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int nCmdShow)
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 {
 	if ( __argc > 1 ) {
 		AppHandler::instance()->openDataBase(__argv[1]);
