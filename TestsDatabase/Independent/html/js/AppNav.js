@@ -13,6 +13,10 @@ var AppNav = {
     
     execute: function(cmd) {
         cmdlist = {
+            about: {
+                show: AppUI.about
+            },
+            
             database: {
                 choose:     AppCore.OpenFileDialog,
                 create:     AppCore.SaveFileDialog,

@@ -18,6 +18,11 @@ function sortArrayByObjectKey(array, key)
 }
 
 var AppUI = {
+    about: function() {
+        AppNav.blank();
+        $('#about-dialog').reveal();
+    },
+    
     categoryEdit: function() {
         AppNav.navigate('#/category/show/' + AppNav.current.category);
         

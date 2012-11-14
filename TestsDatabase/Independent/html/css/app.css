@@ -321,3 +321,7 @@ Test Show and Print
 	margin-top: 1em;
 	margin-bottom: 1em;
 }
+
+#about-dialog {
+    text-align: center;
+}

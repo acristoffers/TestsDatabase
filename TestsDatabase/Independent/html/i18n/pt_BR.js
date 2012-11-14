@@ -16,8 +16,13 @@
             return  'Totalizando ' + n + ' quest' + (n==1?'ão':'ões');
         },
         
+        'Version %d': function(n) {
+            return 'Versão ' + n;
+        },
+        
         '__lang__': 'Português Brasileiro',
         
+        '© Álan Crístoffer. All rights reserved.': '© Álan Crístoffer. Todos os direitos reservados.',
         'About': 'Sobre',
         'Add category': 'Adicionar categoria',
         'Add difficulty': 'Adicionar dificuldade',

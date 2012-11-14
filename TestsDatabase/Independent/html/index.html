@@ -42,7 +42,7 @@
         <li class="dropdown">
             <a class="dropdown-toggle" href="#" data-toggle="dropdown" data-i18n="Tests Database"></a>
             <ul class="dropdown-menu">
-                <li id="about"></i><a data-i18n="About" data-icon="info-sign"></a></li>
+                <li id="about"></i><a href="#/about/show" data-i18n="About" data-icon="info-sign"></a></li>
             </ul>
         </li>
         <li class="dropdown">
@@ -137,22 +137,22 @@
                 <span id="question-add-span" data-i18n="Add Question"></span>
                 <span id="question-edit-span" data-i18n="Edit Question"></span>
             </legend>
-		
+        
             <label for="question-form-title" data-i18n="Title:"></label>
             <input type="text" id="question-form-title" class="input-xxlarge">
-		
+        
             <label for="question-form-difficulty" data-i18n="Difficulty:"></label>
             <div id="question-form-difficulty" class="slider"></div>
             <span id="question-form-difficulty-span">6</span>
-		
+        
             <label for="question-form-reference" data-i18n="Reference:"></label>
             <input type="text" id="question-form-reference" class="input-xxlarge">
-		
+        
             <textarea id="question-form-body"></textarea><br>
-		
+        
             <label data-i18n="Answers:"></label>
             <div id="question-form-answers"></div>
-		    
+            
             <div id="question-form-category-tree"></div><br>
             
             <a href="#/question/insert" class="btn btn-primary" data-i18n="Save"></a>
@@ -212,7 +212,6 @@
             <a class="btn" href="#/test/printTests" data-i18n="Print Tests"></a>
             <a class="btn" href="#/test/printAnswerSheets" data-i18n="Print Answers Sheet"></a>
             <a class="btn" href="#/test/printAnswers" data-i18n="Print Answers"></a>
-            <a class="btn" data-i18n="Generate HTML"></a>
             <a href="#/test/delete" class="btn btn-danger" data-i18n="Delete"></a>
         </div>
                 
@@ -225,6 +224,17 @@
 </div>
 
 
+
+<!--
+    About
+-->
+<div id="about-dialog" class="reveal-modal">
+    <img src="img/icon.png"><br>
+    <h2 data-i18n="Tests Database"></h2>
+    <div data-i18n="Version %d" data-i18n-numbers="1.0"></div>
+    <div data-i18n="© Álan Crístoffer. All rights reserved."></div>
+    <a class="close-reveal-modal">&#215;</a>
+</div>
 
 <!--
     Alert modal

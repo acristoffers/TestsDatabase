@@ -16,6 +16,10 @@
             return  'Totalizing ' + n + ' question' + (n==1?'':'s');
         },
         
+        'Version %d': function(n) {
+            return 'Version ' + n;
+        },
+        
         '__lang__': 'English'
     };
     

@@ -16,9 +16,13 @@
             return  'Insgesamt ' + n + ' Frage' + (n==1?'':'n');
         },
         
-        '__lang__': 'Deutsch',
-        'Language': 'Sprache',
+        'Version %d': function(n) {
+            return 'Version ' + n;
+        },
         
+        '__lang__': 'Deutsch',
+        
+        '© Álan Crístoffer. All rights reserved.': '© Álan Crístoffer. Alle Rechte vorbehalten.',
         'About': 'Über',
         'Add category': 'Kategorie hinzufügen',
         'Add difficulty': 'Schwierigkeit hinzufügen',
