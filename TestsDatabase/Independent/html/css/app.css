@@ -242,7 +242,8 @@ Test Show and Print
     }
     
     #content {
-        margin-left: 0;
+        margin: 0 0;
+		padding: 0 0;
     }
 }
 
@@ -250,34 +251,42 @@ Test Show and Print
     margin-bottom: 4em;
 }
 
-.answers-sheet {
+.answers-sheet,
+.test {
     page-break-before: always;
 }
 
-.answers-sheet .col {
-    width: 20%;
-    display: inline-block;
+.answers {
+	margin: auto;
 }
 
-.answers-sheet .row div {
+.answers-sheet .acol {
+    display: inline-block;
+	width: 20%;
+	margin: 0 0;
+	padding: 0 0;
+}
+
+.answers-sheet .arow div {
     display: inline-block;
     text-align: center;
     width: 1.5em;
     height: 1.5em;
-    margin: 1px;
+    margin: 1px 1px;
     font-size: 1em;
 }
 
-.answers-sheet .row .right {
+.answers-sheet .arow .right {
     background: black;
+	-webkit-print-color-adjust: exact;
 }
 
-.answers-sheet .row .question-number {
+.answers-sheet .arow .question-number {
     font-weight: bold;
-    padding-right: .5em;
+    margin-right: .5em;
 }
 
-.answers-sheet .row .alternative {
+.answers-sheet .arow .alternative {
     border: 1px solid black;
 }
 
@@ -298,6 +307,7 @@ Test Show and Print
 }
 
 .test-question {
+	margin-top: 2em;
     page-break-inside: avoid;
 }
 
@@ -306,5 +316,8 @@ Test Show and Print
 }
 
 .test-number {
-    text-align: right;
+    text-align: center;
+	font-weight: bold;
+	margin-top: 1em;
+	margin-bottom: 1em;
 }

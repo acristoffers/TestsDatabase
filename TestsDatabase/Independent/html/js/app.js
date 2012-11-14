@@ -91,6 +91,7 @@ var App = {
     },
     
     printTests: function() {
+		AppNav.blank();
         $('#tests-wrapper').removeClass('dont-print');
         $('#test-answers-sheets').addClass('dont-print');
         $('#clean-answers-sheets').addClass('dont-print');
@@ -98,6 +99,7 @@ var App = {
     },
     
     printAnswers: function() {
+		AppNav.blank();
         $('#tests-wrapper').addClass('dont-print');
         $('#test-answers-sheets').removeClass('dont-print');
         $('#clean-answers-sheets').addClass('dont-print');
@@ -105,6 +107,7 @@ var App = {
     },
     
     printAnswerSheets: function() {
+		AppNav.blank();
         $('#tests-wrapper').addClass('dont-print');
         $('#test-answers-sheets').addClass('dont-print');
         $('#clean-answers-sheets').removeClass('dont-print');
@@ -319,7 +322,7 @@ var App = {
             test += '<div class="test-number" data-i18n="Test %d" data-i18n-numbers="' + (i+1) + '"></div>';
             test += '<ol class="test-questions">';
             
-            var as   = '<div class="answers-sheet"><div id="answers-header">' + header + '</div><div class="test-number" data-i18n="Test %d" data-i18n-numbers="' + (i+1) + '"></div><div id="answers"><div class="col">';
+            var as   = '<div class="answers-sheet"><div id="answers-header">' + header + '</div><div class="test-number" data-i18n="Test %d" data-i18n-numbers="' + (i+1) + '"></div><div class="answers"><div class="acol">';
             
             var qp = randomPool(selectedQuestions.length, selectedQuestions.length);
             for (var j = 0; j < selectedQuestions.length; j++) {
@@ -337,9 +340,9 @@ var App = {
                 question += '<ol class="question-answers">';
                 
                 if ( j == 10 || j == 20 || j == 30 || j == 40 )
-                    as += '</div><div class="col">';
-                    
-                as += '<div class="row"><div class="question-number">' + (j+1) + '</div>';
+                    as += '</div><div class="acol">';
+                
+                as += '<div class="arow"><div class="question-number">' + (j+1) + '</div>';
                 
                 var answers = AppCore.answerSelect(q.id);
                 var ap = randomPool(answers.length, answers.length);
@@ -358,9 +361,9 @@ var App = {
             
             for (var j = selectedQuestions.length; j < 50; j++ ) {
                 if ( j == 10 || j == 20 || j == 30 || j == 40 )
-                    as += '</div><div class="col">';
-                    
-                as += '<div class="row"><div class="question-number">' + (j+1) + '</div>';
+                    as += '</div><div class="acol">';
+                
+                as += '<div class="arow"><div class="question-number">' + (j+1) + '</div>';
                     
                 var aa = ['a', 'b', 'c', 'd'];
                 for (var k = 0; k < 4; k++)
@@ -385,13 +388,13 @@ var App = {
         
         tests += '<div id="clean-answers-sheets">';
         for ( var i = 0; i < numOfTests; i++) {
-            tests += '<div class="answers-sheet"><div id="answers-header">' + header + '</div><div class="test-number" data-i18n="Test %d" data-i18n-numbers="' + (i+1) + '"></div><div id="answers"><div class="col">';
+            tests += '<div class="answers-sheet"><div id="answers-header">' + header + '</div><div class="test-number" data-i18n="Test %d" data-i18n-numbers="' + (i+1) + '"></div><div class="answers"><div class="acol">';
             
             for (var j = 0; j < 50; j++ ) {
                 if ( j == 10 || j == 20 || j == 30 || j == 40 )
-                    tests += '</div><div class="col">';
+                    tests += '</div><div class="acol">';
                 
-                tests += '<div class="row"><div class="question-number">' + (j+1) + '</div>';
+                tests += '<div class="arow"><div class="question-number">' + (j+1) + '</div>';
                 
                 var aa = ['a', 'b', 'c', 'd'];
                 for (var k = 0; k < 4; k++)
@@ -399,10 +402,10 @@ var App = {
                 
                 tests += '</div>';
             }
-            tests += '</div></div>';
+            tests += '</div></div></div>';
         }
         
-        tests += '</div></div>';
+        tests += '</div>';
         
         var id = AppCore.testInsert(title, tests, header);
         AppNav.navigate('#/test/show/' + id);
@@ -414,6 +417,7 @@ $(document).ready(function() {
     AppUI.listAvailableTranslations();
     AppI18N.translate();
     
-    $('#open-dialog-bg').show();
-    $('#open-dialog').show();
+    //$('#open-dialog-bg').show();
+    //$('#open-dialog').show();
+	App.databaseChanged();
 });

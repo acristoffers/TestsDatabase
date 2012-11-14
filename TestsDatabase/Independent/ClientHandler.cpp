@@ -166,7 +166,12 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
     }
     
     if (name == "checkDatabase") {
-        retval = CefV8Value::CreateBool(_DB_->isValid());
+		bool ret = false;
+
+		if ( _DB_ )
+			ret = _DB_->isValid();
+
+        retval = CefV8Value::CreateBool(ret);
         return true;
     }
     

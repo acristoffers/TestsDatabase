@@ -12,6 +12,8 @@
 #include "include/cef_web_urlrequest.h"
 
 #include "ClientHandler.h"
+#include "AppHandler.h"
+#include "resources.h"
 
 ClientHandler* g_handler = 0;
 
@@ -86,7 +88,8 @@ HWND RegisterWindow(HINSTANCE hInstance, int nCmdShow)
 	wc.lpfnWndProc   = WindowProc;
 	wc.hInstance     = hInstance;
 	wc.lpszClassName = CLASS_NAME;
-
+	wc.hIcon         = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MYICON));
+	
 	RegisterClass(&wc);
 
 	HWND hwnd = CreateWindowEx(
@@ -112,8 +115,12 @@ HWND RegisterWindow(HINSTANCE hInstance, int nCmdShow)
 	return hwnd;
 }
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR cmdLine, int nCmdShow)
 {
+	if ( __argc > 1 ) {
+		AppHandler::instance()->openDataBase(__argv[1]);
+	}
+
 	// Register the window class.
 	HWND hwnd = RegisterWindow(hInstance, nCmdShow);
 	if( hwnd == 0 )

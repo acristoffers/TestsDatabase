@@ -12,6 +12,7 @@ AppHandler* AppHandler::_self = 0;
 AppHandler::AppHandler()
 {
     _db = 0;
+	clientHandler = 0;
 }
 
 AppHandler* AppHandler::instance()
