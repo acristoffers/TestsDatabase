@@ -78,6 +78,18 @@ var App = {
         var name = $('#category-edit-form-name').val();
         var parent = $("input[name=category-tree-radio]:checked").val();
         
+        if ( name == '' ) {
+            AppUI.showModalAlert({
+                title: 'No name...',
+                content: 'You forgot to type the name...',
+                cancel: false,
+                button: {
+                    text: 'Ok'
+                }
+            }, AppUI.closeModals);
+            return;
+        }
+        
         AppCore.categoryUpdate(id, name, parent);
         
         AppNav.navigate('#/category/show/'+id);
@@ -146,8 +158,8 @@ var App = {
         
         if ( title == '' ) {
             AppUI.showModalAlert({
-                title: 'No title',
-                content: 'You forgot to type the question title...',
+                title: 'No title...',
+                content: 'You forgot to type the title...',
                 cancel: false,
                 button: {
                     text: 'Ok'
@@ -417,7 +429,5 @@ $(document).ready(function() {
     AppUI.listAvailableTranslations();
     AppI18N.translate();
     
-    //$('#open-dialog-bg').show();
-    //$('#open-dialog').show();
 	App.databaseChanged();
 });

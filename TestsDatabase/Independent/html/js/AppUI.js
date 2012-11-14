@@ -246,7 +246,7 @@ var AppUI = {
             }
         }
     
-        addCat();
+        //addCat();
         
         AppNav.navigate('#/category/show/' + AppNav.current.category);
         
@@ -282,8 +282,8 @@ var AppUI = {
         var q = AppCore.questionSelect(id);
 	    
     	$('#question-show-title').html(q.title);
-    	$('#question-show-reference').html ('<b data-i18n="Reference: "></b>' + q.reference);
-    	$('#question-show-difficulty').html('<b data-i18n="Difficulty: "></b>' + q.difficulty);
+    	$('#question-show-reference').html ('<b data-i18n="Reference:"></b> ' + q.reference);
+    	$('#question-show-difficulty').html('<b data-i18n="Difficulty:"></b> ' + q.difficulty);
     	$('#question-show-body').html(q.body);
 	
     	var as = AppCore.answerSelect(id);

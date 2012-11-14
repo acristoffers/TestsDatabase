@@ -8,7 +8,7 @@ var AppI18N = {
         return langs;
     },
     
-    currentLanguage: 'en',
+    currentLanguage: 'pt_BR',
     
     languages: {},
     
