@@ -44,6 +44,9 @@ extern std::string SaveFileDialog();
     CefInitialize(appSettings, cefApplication);
     
     std::string path = [[[NSBundle mainBundle] resourcePath] cStringUsingEncoding:NSUTF8StringEncoding];
+    
+    AppHandler::htmlFolderPath = path + "/html";
+    
     path = "file://" + path + "/html/index.html";
     
     CefBrowser::CreateBrowser(info, client, path, browserSettings);

@@ -104,10 +104,12 @@ var App = {
     
     printTests: function() {
 		AppNav.blank();
+        $('#tests-wrapper').css('font-size', $('#print-font-size').val() + 'pt');
         $('#tests-wrapper').removeClass('dont-print');
         $('#test-answers-sheets').addClass('dont-print');
         $('#clean-answers-sheets').addClass('dont-print');
         print();
+        $('#tests-wrapper').css('font-size', 'inherit');
     },
     
     printAnswers: function() {

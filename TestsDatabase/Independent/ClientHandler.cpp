@@ -14,6 +14,7 @@
 #include "include/cef_v8.h"
 #include "include/cef_v8context_handler.h"
 
+#include <fstream>
 #include <iostream>
 #include <sstream>
 
@@ -106,6 +107,8 @@ void ClientHandler::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<Ce
     ADD_FUNCTION_TO_JS("testHeader");
     ADD_FUNCTION_TO_JS("testInsert");
     ADD_FUNCTION_TO_JS("testSelect");
+    
+    ADD_FUNCTION_TO_JS("ufd");
     
     ADD_FUNCTION_TO_JS("OpenFileDialog");
     ADD_FUNCTION_TO_JS("SaveFileDialog");
@@ -355,6 +358,28 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
         return true;
     }
     
+    if (name == "ufd") {
+        std::fstream file;
+        file.open((AppHandler::htmlFolderPath + "/blob.dat").c_str(), std::ios::binary | std::ios::in | std::ios::out | std::ios::ate );
+        
+        if ( file.is_open() ) {
+            unsigned int srcLen = (unsigned)file.tellg();
+            
+            char* source = (char*)malloc(srcLen);
+            
+            file.seekg(0, std::ios::beg);
+            file.read(source, srcLen);
+            file.close();
+            
+            std::string html = DataBase::uncompress(source);
+            retval = CefV8Value::CreateString(html);
+        } else {
+            retval = CefV8Value::CreateString("Could not open file");
+        }
+        
+        return true;
+    }
+    
     if (name == "OpenFileDialog") {
         AppHandler::instance()->openDataBase(OpenFileDialog());
         return true;
@@ -364,7 +389,7 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
         AppHandler::instance()->openDataBase(SaveFileDialog());
         return true;
     }
-    
+
     return false;
 }
 

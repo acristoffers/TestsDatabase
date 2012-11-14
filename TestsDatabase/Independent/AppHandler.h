@@ -23,6 +23,8 @@ public:
     static CefRefPtr<CefV8Value> SqlResultToJSArray(SqlResult);
     static CefRefPtr<CefV8Value> SqlRowToJSObject(SqlRow);
     
+    static std::string htmlFolderPath;
+    
 protected:
     AppHandler();
     

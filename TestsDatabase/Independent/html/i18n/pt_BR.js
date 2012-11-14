@@ -39,6 +39,7 @@
         'Edit Category': 'Editar Categoria',
         'Edit Question': 'Editar Questão',
         'File': 'Arquivo',
+        'Font size:': 'Tamanho da fonte:',
         'Generate': 'Gerar', 
         'Language': 'Idioma',
         'Merge': 'Mesclar', 

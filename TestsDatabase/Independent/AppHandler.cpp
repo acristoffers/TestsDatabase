@@ -9,6 +9,8 @@
 
 AppHandler* AppHandler::_self = 0;
 
+std::string AppHandler::htmlFolderPath;
+
 AppHandler::AppHandler()
 {
     _db = 0;
