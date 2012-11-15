@@ -41,12 +41,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)Independent\DataBase;$(ProjectDir)Independent\bzip;$(ProjectDir)Independent\sqlite;$(ProjectDir)Independent;$(ProjectDir)CEF\Win;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Independent\DataBase;$(ProjectDir)Independent\bzip;$(ProjectDir)Independent\sqlite;$(ProjectDir)Independent;$(ProjectDir)CEF\Win;$(ProjectDir)Independent\MD5;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)CEF\Win\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)Independent\DataBase;$(ProjectDir)Independent\bzip;$(ProjectDir)Independent\sqlite;$(ProjectDir)Independent;$(ProjectDir)CEF\Win;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Independent\DataBase;$(ProjectDir)Independent\bzip;$(ProjectDir)Independent\sqlite;$(ProjectDir)Independent;$(ProjectDir)CEF\Win;$(ProjectDir)Independent\MD5;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)CEF\Win\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -55,7 +55,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -115,6 +115,7 @@ XCOPY /I /E /Y "$(ProjectDir)Independent\html" "$(OutputPath)html"</Command>
     <ClCompile Include="Independent\DataBase\DataBase_category.cpp" />
     <ClCompile Include="Independent\DataBase\DataBase_question.cpp" />
     <ClCompile Include="Independent\DataBase\DataBase_test.cpp" />
+    <ClCompile Include="Independent\MD5\md5.cpp" />
     <ClCompile Include="Independent\sqlite\sqlite3.c" />
     <ClCompile Include="Win\FileDialog.cpp" />
     <ClCompile Include="Win\main.cpp" />
@@ -126,6 +127,7 @@ XCOPY /I /E /Y "$(ProjectDir)Independent\html" "$(OutputPath)html"</Command>
     <ClInclude Include="Independent\ClientHandler.h" />
     <ClInclude Include="Independent\DataBase\DataBase.h" />
     <ClInclude Include="Independent\DataBase\DataBasePrivate.h" />
+    <ClInclude Include="Independent\MD5\md5.h" />
     <ClInclude Include="Independent\sqlite\sqlite3.h" />
   </ItemGroup>
   <ItemGroup>

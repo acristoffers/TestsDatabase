@@ -66,7 +66,7 @@ ClientHandler::ClientHandler() : m_Browser(NULL), m_BrowserHwnd(NULL)
             
             std::vector<std::string> fm = split(fileMD5, '=');
             
-            std::ifstream t((AppHandler::htmlFolderPath + "/" + fm[0]).c_str());
+			std::ifstream t((AppHandler::htmlFolderPath + "/" + fm[0]).c_str(), std::ios::binary);
             std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
             
             std::string filemd5str = md5(str);
