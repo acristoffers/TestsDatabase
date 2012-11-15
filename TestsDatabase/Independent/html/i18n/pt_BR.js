@@ -57,6 +57,7 @@
         'Page header': 'Cabeçalho', 
         'Print Answers': 'Imprimir Respostas',
         'Print Answers Sheet': 'Imprimir Gabaritos',
+		'Print test number ': 'Imprir prova número',
         'Print Tests': 'Imprimir Provas',
         'Questions': 'Questões',
         'Reference:': 'Referência:',

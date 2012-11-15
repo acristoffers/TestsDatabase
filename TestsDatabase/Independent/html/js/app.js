@@ -105,11 +105,19 @@ var App = {
     printTests: function() {
 		AppNav.blank();
         $('#tests-wrapper').css('font-size', $('#print-font-size').val() + 'pt');
+		$('#tests-wrapper *').css('line-height', ( parseInt($('#print-font-size').val()) * 1.2 ) + 'pt');
+		
+		$('.test').addClass('dont-print');
+		$($('.test')[$('#print-test-num').val()-1]).removeClass('dont-print');
+		
         $('#tests-wrapper').removeClass('dont-print');
         $('#test-answers-sheets').addClass('dont-print');
         $('#clean-answers-sheets').addClass('dont-print');
-        print();
+		
+		print();
+		
         $('#tests-wrapper').css('font-size', 'inherit');
+		$('#tests-wrapper *').css('line-height', 'inherit');
     },
     
     printAnswers: function() {
@@ -334,7 +342,7 @@ var App = {
             var test = '<div class="test">';
             test += '<div class="test-header">' + header + '</div>';
             test += '<div class="test-number" data-i18n="Test %d" data-i18n-numbers="' + (i+1) + '"></div>';
-            test += '<ol class="test-questions">';
+            test += '<div class="test-questions">';
             
             var as   = '<div class="answers-sheet"><div id="answers-header">' + header + '</div><div class="test-number" data-i18n="Test %d" data-i18n-numbers="' + (i+1) + '"></div><div class="answers"><div class="acol">';
             
@@ -342,7 +350,7 @@ var App = {
             for (var j = 0; j < selectedQuestions.length; j++) {
                 var q = AppCore.questionSelect(selectedQuestions[qp[j]]);
                 
-                var question = '<li class="test-question"><span>' +
+                var question = '<div class="test-question"><span class="bullet">' + (j+1) + '. </span> <span class="question-body">' +
                                '<div class="dont-print question-meta">';
                 
                 question +=  AppI18N.tr('<span data-i18n="Title:"></span> ') + q.title +
@@ -351,7 +359,7 @@ var App = {
                 
                 question += '</div>' + q.body;
                 
-                question += '<ol class="question-answers">';
+                question += '<div class="question-answers">';
                 
                 if ( j == 10 || j == 20 || j == 30 || j == 40 )
                     as += '</div><div class="acol">';
@@ -362,13 +370,13 @@ var App = {
                 var ap = randomPool(answers.length, answers.length);
                 var aa = ['a', 'b', 'c', 'd'];
                 for (var k = 0; k < answers.length; k++) {
-                    question += '<li><span>' + answers[ap[k]].text + '</span></li>';
+                    question += '<div class="question-alternative"><span class="bullet">' + aa[k] + ') </span> <span> ' + answers[ap[k]].text + '</span></div>';
                     as += '<div class="alternative ' + (parseInt(answers[ap[k]].right) == 1 ?  'right' :  '') + '">' + aa[k] + '</div>';
                 }
                 
                 as += '</div>';
                 
-                question += '</ol></span></li>';
+                question += '</div></span></div>';
                 
                 test += question;
             }
@@ -388,7 +396,7 @@ var App = {
             
             as += '</div></div></div>';
             
-            test += '</ol>';
+            test += '</div>';
             test += '</div>';
             
             tests += test;

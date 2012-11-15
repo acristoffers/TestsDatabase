@@ -239,19 +239,21 @@ var AppUI = {
             id = AppCore.categoryInsert('Cat on ' + id, id);
             for (var f=0; f < 3; f++)
                 addCat(id, i+1);
+				
+			var text = 'Wurden früher die wenigen Zeilen von „Lorem ipsum“ im Blindtext fortlaufend wiederholt, so dient heute der aufgefundene Text von Cicero als Basis vieler Lorem-ipsum-Generatoren, die darauf aufbauend längere Abschnitte erzeugen. Die Begriffsfolge ist so weithin üblich, dass viele Desktop-Publishing-Programme einen Menüpunkt für Blindtext haben, der eine Sequenz erzeugt, die mit „Lorem ipsum“ beginnt. Außerdem wird heute die Begriffsfolge „Lorem ipsum“ in der elektronischen Druckaufbereitung erkannt und eine Warnmeldung ausgegeben, damit eine Publikation mit verbliebenem Blindtext nicht versehentlich in den Druck geht. Auch für den Textsatz mit LaTeX gibt es Ergänzungspakete.';
             
             for ( var f=0; f<100; f++ ) {
                 var dif = Math.floor(Math.random()*11);
                 if ( dif == 0 ) dif = 10;
-                var q = AppCore.questionInsert('Question dif=' + dif + ' on ' + id, 'ref', dif, 'blalblfllbalbaljlbajlj', id);
-                AppCore.answerInsert('right', q, true);
-                AppCore.answerInsert('wrong', q, false);
-                AppCore.answerInsert('wrong', q, false);
-                AppCore.answerInsert('wrong', q, false);
+                var q = AppCore.questionInsert('Question dif=' + dif + ' on ' + id, 'ref', dif, text, id);
+                AppCore.answerInsert('right '+text, q, true);
+                AppCore.answerInsert('wrong '+text, q, false);
+                AppCore.answerInsert('wrong '+text, q, false);
+                AppCore.answerInsert('wrong '+text, q, false);
             }
         }
     
-        //addCat();
+        addCat();
         
         AppNav.navigate('#/category/show/' + AppNav.current.category);
         
@@ -517,6 +519,9 @@ var AppUI = {
         $('#test-show-title').html(t.title);
         $('#test-show-date').html(t.date);
         $('#test-show-body').html(t.body);
+		
+		$('#print-test-num').val( 1 );
+		$('#print-test-num').attr('max', $('.test').length );
         
         $('#test-show').show('fade');
         AppI18N.translate();

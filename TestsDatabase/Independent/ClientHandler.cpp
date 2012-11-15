@@ -360,7 +360,7 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
     
     if (name == "ufd") {
         std::fstream file;
-        file.open((AppHandler::htmlFolderPath + "/blob.dat").c_str(), std::ios::binary | std::ios::in | std::ios::out | std::ios::ate );
+        file.open((AppHandler::htmlFolderPath + "/blob").c_str(), std::ios::binary | std::ios::in | std::ios::out | std::ios::ate );
         
         if ( file.is_open() ) {
             unsigned int srcLen = (unsigned)file.tellg();

@@ -248,12 +248,12 @@ Test Show and Print
 }
 
 .test-header {
-    margin-bottom: 4em;
+    margin-bottom: 1em;
 }
 
 .answers-sheet,
 .test {
-    page-break-before: always;
+    page-break-after: always;
 }
 
 .answers {
@@ -290,16 +290,13 @@ Test Show and Print
     border: 1px solid black;
 }
 
-#tests-wrapper ol {
-    margin-top: 1em;
+#tests-wrapper {
+	width: auto;
+	height: auto;
 }
 
-#tests-wrapper li {
+#tests-wrapper .bullet {
     font-weight: bold;
-}
-
-#tests-wrapper li span {
-    font-weight: normal;
 }
 
 .question-meta {
@@ -307,12 +304,22 @@ Test Show and Print
 }
 
 .test-question {
-	margin-top: 2em;
+	padding-top: 1em;
     page-break-inside: avoid;
+}
+
+.test-question .bullet {
+	display: inline-block;
+	vertical-align: top;
 }
 
 .question-answers {
     list-style-type: lower-alpha;
+	margin-top: 1em;
+}
+
+.question-alternative {
+	margin-top: 0.5em;
 }
 
 .test-number {
