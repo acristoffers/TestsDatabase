@@ -399,7 +399,7 @@ var App = {
                 var ap = randomPool(answers.length, answers.length);
                 var aa = ['a', 'b', 'c', 'd'];
                 for (var k = 0; k < answers.length; k++) {
-                    question += '<div class="question-alternative"><span class="bullet">' + aa[k] + ') </span> <span> ' + answers[ap[k]].text + '</span></div>';
+                    question += '<div class="question-alternative"><span class="bullet">' + aa[k] + ') </span> <span> ' + answers[ap[k]].body + '</span></div>';
                     as += '<div class="alternative ' + (parseInt(answers[ap[k]].right) == 1 ?  'right' :  '') + '">' + aa[k] + '</div>';
                 }
                 

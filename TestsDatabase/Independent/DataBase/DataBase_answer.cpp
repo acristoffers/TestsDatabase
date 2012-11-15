@@ -14,7 +14,7 @@ void DataBase::answer_delete(int question_id)
     executeSql(query.c_str());
 }
 
-int DataBase::answer_insert(std::string text, int question, bool right)
+int DataBase::answer_insert(std::string body, int question, bool right)
 {
     int id = 1;
     
@@ -25,8 +25,11 @@ int DataBase::answer_insert(std::string text, int question, bool right)
     sqlite3_stmt* stmt;
     sqlite3_prepare(_p->db, "INSERT INTO answers VALUES (:id, :text, :question, :right)", -1, &stmt, 0 ); SQL_ERROR
 
+    unsigned int len;
+    char* blob = compress(body, &len);
+    
     sqlite3_bind_int ( stmt, sql_param(":id"), id ); SQL_ERROR
-    sqlite3_bind_text( stmt, sql_param(":text"), text.c_str(), text.length(), SQLITE_STATIC ); SQL_ERROR
+    sqlite3_bind_blob( stmt, sql_param(":text"), blob, len, SQLITE_STATIC ); SQL_ERROR
     sqlite3_bind_int ( stmt, sql_param(":question"), question ); SQL_ERROR
     sqlite3_bind_int( stmt, sql_param(":right"), (right?1:0) ); SQL_ERROR
 

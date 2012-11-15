@@ -208,7 +208,7 @@ var AppUI = {
 		var as = AppCore.answerSelect(AppNav.current.question);
         var anw = '';
 		for (var i = 0; i < as.length; i++)
-			anw += '<div class="input-prepend"><input class="add-on" type="radio" name="question-form-rigth-answer" ' + (parseInt(as[i].right)?'checked':'') + '><input type="text" name="question-form-answers-fields[]" class="input-xxlarge" value="' + as[i].text + '""></div>';
+			anw += '<div class="input-prepend"><input class="add-on" type="radio" name="question-form-rigth-answer" ' + (parseInt(as[i].right)?'checked':'') + '><input type="text" name="question-form-answers-fields[]" class="input-xxlarge" value="' + as[i].body + '""></div>';
 
         $('#question-form-answers').html(anw);
         
@@ -267,7 +267,7 @@ var AppUI = {
     	var as = AppCore.answerSelect(id);
     	var html = '';
     	for (var i = 0; i < as.length; i++) {
-    		html += '<li>' + (parseInt(as[i].right)?'<b>':'') + as[i].text + (parseInt(as[i].right)?'</b>':'') + '</li>';
+    		html += '<li>' + (parseInt(as[i].right)?'<b>':'') + as[i].body + (parseInt(as[i].right)?'</b>':'') + '</li>';
     	}
     	$('#question-show-answers').html(html);
         

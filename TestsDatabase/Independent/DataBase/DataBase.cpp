@@ -101,7 +101,7 @@ void DataBase::createDatabase()
     executeSql("CREATE TABLE IF NOT EXISTS version(version INT)");
     executeSql("CREATE TABLE IF NOT EXISTS categories(id INT PRIMARY KEY, name TEXT, parent INT)");
     executeSql("CREATE TABLE IF NOT EXISTS questions(id INT PRIMARY KEY, title TEXT, body BLOB, difficulty INT, reference TEXT, category INT)");
-    executeSql("CREATE TABLE IF NOT EXISTS answers(id INT PRIMARY KEY, text TEXT, question INT, right INT)");
+    executeSql("CREATE TABLE IF NOT EXISTS answers(id INT PRIMARY KEY, body BLOB, question INT, right INT)");
     executeSql("CREATE TABLE IF NOT EXISTS tests(id INT PRIMARY KEY, date DATE, title TEXT, body BLOB)");
     executeSql("CREATE TABLE IF NOT EXISTS test_header(body BLOB)");
 
