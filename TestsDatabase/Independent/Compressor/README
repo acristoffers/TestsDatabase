@@ -1,0 +1,19 @@
+This is the executable that compresses blob.txt into blob
+It actually compresses to stdout so you need to call it like
+
+./compressor blob.txt > blob
+
+It needs to be compiled manually as I won't provide any makefile for it, but it's rather simple.
+Compile BZLib without linking
+
+gcc -c *.c
+
+them compile the cpp without linking
+
+g++ -c main.cpp
+
+them link it all together
+
+g++ *.o -o compressor
+
+That should do, if not, compile BZLib as a static library and link main.cpp against it

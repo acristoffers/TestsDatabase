@@ -9,7 +9,7 @@
 
 // I implement the same class as the CEFClient, but won't get into the implementation of methods
 // The idea here is to keep it minimal, if you want details, check ou CEFClient
-class ClientHandler : public CefClient, public CefLifeSpanHandler, public CefPrintHandler, public CefV8ContextHandler, public CefV8Handler {
+class ClientHandler : public CefClient, public CefLifeSpanHandler, public CefLoadHandler, public CefPrintHandler, public CefV8ContextHandler, public CefV8Handler {
 
 public:
     ClientHandler();
@@ -19,6 +19,10 @@ public:
     
     // CefClient methods
     virtual CefRefPtr<CefLifeSpanHandler> GetLifeSpanHandler() OVERRIDE {
+        return this;
+    }
+    
+    virtual CefRefPtr<CefLoadHandler> GetLoadHandler() {
         return this;
     }
 
@@ -35,6 +39,9 @@ public:
     virtual bool OnBeforePopup(CefRefPtr<CefBrowser> parentBrowser, const CefPopupFeatures& popupFeatures, CefWindowInfo& windowInfo, const CefString& url, CefRefPtr<CefClient>& client, CefBrowserSettings& settings) OVERRIDE;
     virtual void OnAfterCreated(CefRefPtr<CefBrowser> browser) OVERRIDE;
     virtual void OnBeforeClose(CefRefPtr<CefBrowser> browser) OVERRIDE;
+    
+    // Virtual on CefLoadHandler
+    virtual void OnLoadEnd(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, int httpStatusCode);
         
     // Virutal on CefV8ContextHandler
     void OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context) OVERRIDE;

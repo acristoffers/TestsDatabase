@@ -20,12 +20,64 @@
 
 #include <AppHandler.h>
 #include <DataBase.h>
+#include <md5.h>
 
 extern std::string OpenFileDialog();
 extern std::string SaveFileDialog();
 
+/* std::string.split BEGIN */
+std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems) {
+    std::stringstream ss(s);
+    std::string item;
+    while(std::getline(ss, item, delim)) {
+        elems.push_back(item);
+    }
+    return elems;
+}
+
+std::vector<std::string> split(const std::string &s, char delim) {
+    std::vector<std::string> elems;
+    return split(s, delim, elems);
+}
+/* std::string.split END */
+
 ClientHandler::ClientHandler() : m_Browser(NULL), m_BrowserHwnd(NULL)
 {
+#ifndef DEBUG
+    std::fstream file;
+    file.open((AppHandler::htmlFolderPath + "/blob").c_str(), std::ios::binary | std::ios::in | std::ios::ate );
+    
+    if ( file.is_open() ) {
+        unsigned int srcLen = (unsigned)file.tellg();
+        
+        char* source = (char*)malloc(srcLen);
+        
+        file.seekg(0, std::ios::beg);
+        file.read(source, srcLen);
+        file.close();
+        
+        std::string md5list = DataBase::uncompress(source);
+        
+        std::vector<std::string> fileMD5List = split(md5list, '\n');
+        
+        std::vector<std::string>::iterator it;
+        for ( it=fileMD5List.begin() ; it < fileMD5List.end(); it++ ) {
+            std::string fileMD5 = *it;
+            
+            std::vector<std::string> fm = split(fileMD5, '=');
+            
+            std::ifstream t((AppHandler::htmlFolderPath + "/" + fm[0]).c_str());
+            std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
+            
+            std::string filemd5str = md5(str);
+            
+            if ( filemd5str != fm[1] )
+                exit(0);
+        }
+    } else {
+        exit(0);
+    }
+#endif
     AppHandler::instance()->clientHandler = this;
 }
 
@@ -37,7 +89,6 @@ bool ClientHandler::DoClose(CefRefPtr<CefBrowser> browser)
 void ClientHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser)
 {
     if (!m_Browser.get())   {
-		// We need to keep the main child window, but not popup windows
         m_Browser = browser;
         m_BrowserHwnd = browser->GetWindowHandle();
     }
@@ -49,6 +100,10 @@ void ClientHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser)
 		// Free the browser pointer so that the browser can be destroyed
         m_Browser = NULL;
     }
+}
+
+void ClientHandler::OnLoadEnd(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, int httpStatusCode)
+{
 }
 
 bool ClientHandler::OnBeforePopup(CefRefPtr<CefBrowser> parentBrowser, const CefPopupFeatures& popupFeatures, CefWindowInfo& windowInfo, const CefString& url, CefRefPtr<CefClient>& client, CefBrowserSettings& settings)
@@ -107,8 +162,6 @@ void ClientHandler::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<Ce
     ADD_FUNCTION_TO_JS("testHeader");
     ADD_FUNCTION_TO_JS("testInsert");
     ADD_FUNCTION_TO_JS("testSelect");
-    
-    ADD_FUNCTION_TO_JS("ufd");
     
     ADD_FUNCTION_TO_JS("OpenFileDialog");
     ADD_FUNCTION_TO_JS("SaveFileDialog");
@@ -354,28 +407,6 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
         SqlRow r = _DB_->test_select(id);
         
         retval = AppHandler::SqlRowToJSObject(r);
-        
-        return true;
-    }
-    
-    if (name == "ufd") {
-        std::fstream file;
-        file.open((AppHandler::htmlFolderPath + "/blob").c_str(), std::ios::binary | std::ios::in | std::ios::out | std::ios::ate );
-        
-        if ( file.is_open() ) {
-            unsigned int srcLen = (unsigned)file.tellg();
-            
-            char* source = (char*)malloc(srcLen);
-            
-            file.seekg(0, std::ios::beg);
-            file.read(source, srcLen);
-            file.close();
-            
-            std::string html = DataBase::uncompress(source);
-            retval = CefV8Value::CreateString(html);
-        } else {
-            retval = CefV8Value::CreateString("Could not open file");
-        }
         
         return true;
     }

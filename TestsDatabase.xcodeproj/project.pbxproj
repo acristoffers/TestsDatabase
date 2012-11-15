@@ -136,6 +136,7 @@
 		E738EAC41647CE1600B83357 /* zh_TW.lproj in Resources */ = {isa = PBXBuildFile; fileRef = E738EA5D1647CE1500B83357 /* zh_TW.lproj */; };
 		E738EAC51647CE1600B83357 /* zoomInCursor.png in Resources */ = {isa = PBXBuildFile; fileRef = E738EA5E1647CE1500B83357 /* zoomInCursor.png */; };
 		E738EAC61647CE1600B83357 /* zoomOutCursor.png in Resources */ = {isa = PBXBuildFile; fileRef = E738EA5F1647CE1500B83357 /* zoomOutCursor.png */; };
+		E7808D65165589DB00FB7FFA /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7808D63165589DB00FB7FFA /* md5.cpp */; };
 		E7A6B9D41648681C00F93EFA /* FileDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = E7A6B9D31648681C00F93EFA /* FileDialog.mm */; };
 		E7A6B9D816487A2100F93EFA /* AppHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7A6B9D616487A2100F93EFA /* AppHandler.cpp */; };
 /* End PBXBuildFile section */
@@ -296,6 +297,8 @@
 		E738EA5D1647CE1500B83357 /* zh_TW.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zh_TW.lproj; path = TestsDatabase/CEF/Mac/resources/zh_TW.lproj; sourceTree = "<group>"; };
 		E738EA5E1647CE1500B83357 /* zoomInCursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = zoomInCursor.png; path = TestsDatabase/CEF/Mac/resources/zoomInCursor.png; sourceTree = "<group>"; };
 		E738EA5F1647CE1500B83357 /* zoomOutCursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = zoomOutCursor.png; path = TestsDatabase/CEF/Mac/resources/zoomOutCursor.png; sourceTree = "<group>"; };
+		E7808D63165589DB00FB7FFA /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = md5.cpp; path = TestsDatabase/Independent/MD5/md5.cpp; sourceTree = "<group>"; };
+		E7808D64165589DB00FB7FFA /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = md5.h; path = TestsDatabase/Independent/MD5/md5.h; sourceTree = "<group>"; };
 		E7A6B9D31648681C00F93EFA /* FileDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FileDialog.mm; path = Mac/FileDialog.mm; sourceTree = "<group>"; };
 		E7A6B9D616487A2100F93EFA /* AppHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppHandler.cpp; path = Independent/AppHandler.cpp; sourceTree = "<group>"; };
 		E7A6B9D716487A2100F93EFA /* AppHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppHandler.h; path = Independent/AppHandler.h; sourceTree = "<group>"; };
@@ -407,6 +410,7 @@
 		E738E89D1647C83A00B83357 /* Platform Independent files */ = {
 			isa = PBXGroup;
 			children = (
+				E7808D61165589CD00FB7FFA /* MD5 */,
 				E738E8A01647C85D00B83357 /* html */,
 				E7905D0E164C5BCD00AF556A /* zlib */,
 				E71028431647FE54007DF484 /* SQLite */,
@@ -534,6 +538,15 @@
 				E738EA5F1647CE1500B83357 /* zoomOutCursor.png */,
 			);
 			name = "CEF Resources";
+			sourceTree = "<group>";
+		};
+		E7808D61165589CD00FB7FFA /* MD5 */ = {
+			isa = PBXGroup;
+			children = (
+				E7808D63165589DB00FB7FFA /* md5.cpp */,
+				E7808D64165589DB00FB7FFA /* md5.h */,
+			);
+			name = MD5;
 			sourceTree = "<group>";
 		};
 		E7905D0E164C5BCD00AF556A /* zlib */ = {
@@ -744,6 +757,7 @@
 				E71B987F164FF3510042603B /* decompress.c in Sources */,
 				E71B9880164FF3510042603B /* huffman.c in Sources */,
 				E71B9881164FF3510042603B /* randtable.c in Sources */,
+				E7808D65165589DB00FB7FFA /* md5.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -839,7 +853,7 @@
 					"$(SRCROOT)/TestsDatabase/Independent",
 					"$(SRCROOT)/TestsDatabase/Independent/DataBase",
 					"$(SRCROOT)/TestsDatabase/Independent/sqlite",
-					"$(SRCROOT)/TestsDatabase/zlib",
+					"$(SRCROOT)/TestsDatabase/Independent/MD5",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/TestsDatabase/Mac/resources/Info.plist";
 				INFOPLIST_PREPROCESS = NO;
@@ -871,7 +885,7 @@
 					"$(SRCROOT)/TestsDatabase/Independent",
 					"$(SRCROOT)/TestsDatabase/Independent/DataBase",
 					"$(SRCROOT)/TestsDatabase/Independent/sqlite",
-					"$(SRCROOT)/TestsDatabase/zlib",
+					"$(SRCROOT)/TestsDatabase/Independent/MD5",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/TestsDatabase/Mac/resources/Info.plist";
 				INFOPLIST_PREPROCESS = NO;

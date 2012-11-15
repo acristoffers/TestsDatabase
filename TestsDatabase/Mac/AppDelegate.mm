@@ -31,7 +31,12 @@ extern std::string SaveFileDialog();
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{   
+{
+    // comes first because ClientHandler needs it when created;
+    std::string path = [[[NSBundle mainBundle] resourcePath] cStringUsingEncoding:NSUTF8StringEncoding];
+    AppHandler::htmlFolderPath = path + "/html";
+    path = "file://" + path + "/html/index.html";
+
     CefSettings appSettings;
     CefBrowserSettings browserSettings;
     
@@ -42,12 +47,6 @@ extern std::string SaveFileDialog();
     info.SetAsChild([window contentView], 0, 0, [[window contentView] frame].size.width, [[window contentView] frame].size.height);
     
     CefInitialize(appSettings, cefApplication);
-    
-    std::string path = [[[NSBundle mainBundle] resourcePath] cStringUsingEncoding:NSUTF8StringEncoding];
-    
-    AppHandler::htmlFolderPath = path + "/html";
-    
-    path = "file://" + path + "/html/index.html";
     
     CefBrowser::CreateBrowser(info, client, path, browserSettings);
     

@@ -117,6 +117,10 @@ HWND RegisterWindow(HINSTANCE hInstance, int nCmdShow)
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 {
+	std::string path = GetApplicationDir();
+    AppHandler::htmlFolderPath = path + "/html";
+	path = "file://" + path + "/html/index.html";
+    
 	if ( __argc > 1 ) {
 		AppHandler::instance()->openDataBase(__argv[1]);
 	}
@@ -140,9 +144,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 	info.SetAsChild(hwnd, rect);
 
 	CefInitialize(appSettings, cefApplication);
-
-	std::string path = GetApplicationDir();
-	path = "file://" + path + "/html/index.html";
 
 	CefBrowser::CreateBrowser(info, client, path, browserSettings);
 

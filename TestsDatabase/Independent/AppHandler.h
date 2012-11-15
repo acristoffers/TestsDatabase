@@ -35,5 +35,4 @@ private:
     DataBase* _db;
 };
 
-
 #endif
