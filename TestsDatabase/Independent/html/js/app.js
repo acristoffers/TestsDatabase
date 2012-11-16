@@ -350,6 +350,7 @@ var App = {
                 AppUI.showModalAlert({
                     title: 'Not enough questions.',
                     content: AppI18N.tr('There is not %d questions with difficulty between %d and %d on the selected categories', [d.questions, d.from, d.to]),
+                    cancel: false,
                     button: {
                         text: 'Ok'
                     }
