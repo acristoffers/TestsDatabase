@@ -136,6 +136,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 	CefSettings appSettings;
 	CefBrowserSettings browserSettings;
 
+#ifndef DEBUG
+	appSettings.log_severity = LOGSEVERITY_DISABLE;
+#endif
+
 	CefRefPtr<CefApp> cefApplication;
 	CefRefPtr<CefClient> client(new ClientHandler());
 	g_handler = (ClientHandler*) client.get();
