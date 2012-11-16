@@ -7,20 +7,61 @@
 #define sql_param(x) sqlite3_bind_parameter_index(stmt,x)
 #define SQL_ERROR if( sqlite3_errcode(_p->db) != SQLITE_OK ) { printf("Error: %s\n", sqlite3_errmsg(_p->db)); return -1; }
 
+void DataBase::recurse_category(int id, std::vector<int> *categories, std::vector<int> *questions)
+{
+    SqlResult::iterator it;
+    
+    SqlResult sub_categories = category_select_where("parent=" + IntToStdString(id));
+    for ( it = sub_categories.begin(); it < sub_categories.end(); it++ ) {
+        SqlRow cat = *it;
+        categories->push_back(SqlInt(cat["id"]));
+        recurse_category(SqlInt(cat["id"]), categories, questions);
+    }
+    
+    SqlResult sub_questions = question_select_where("category=" + IntToStdString(id));
+    for ( it = sub_questions.begin(); it < sub_questions.end(); it++ ) {
+        SqlRow q = *it;
+        questions->push_back(SqlInt(q["id"]));
+    }
+}
+
 void DataBase::category_delete(int id)
 {
-    std::string query = "DELETE FROM categories WHERE id=";
-    query += IntToStdString(id);
+    std::vector<int> categories, questions;
+    
+    recurse_category(id, &categories, &questions);
+    categories.push_back(id);
+    
+    std::vector<int>::iterator it;
+    
+    std::string cids = "(";
+    for ( it = categories.begin(); it < categories.end(); it++ ) {
+        if ( it != categories.begin() ) cids += ",";
+        cids += IntToStdString(*it);
+    }
+    cids += ")";
+    
+    std::string qids = "(";
+    for ( it = questions.begin(); it < questions.end(); it++ ) {
+        if ( it != questions.begin() ) qids += ",";
+        qids += IntToStdString(*it);
+    }
+    qids += ")";
+    
+    std::string
+    query = "DELETE FROM categories WHERE id IN " + cids;
+    executeSql(query.c_str());
+    
+    query = "DELETE FROM answers WHERE question IN " + qids;
+    executeSql(query.c_str());
+    
+    query = "DELETE FROM questions WHERE id IN " + qids;
     executeSql(query.c_str());
 }
 
 int DataBase::category_insert(std::string name, int parent)
 {
-    int id = 1;
-    
-    SqlResult r = executeSql("SELECT MAX(id) FROM categories");
-    if ( !r.empty() )
-        id = SqlInt(r[0]["MAX(id)"]) + 1;
+    int id = getNextVacantID("categories");
     
     sqlite3_stmt* stmt;
     sqlite3_prepare(_p->db, "INSERT INTO categories VALUES (:id, :name, :parent)", -1, &stmt, 0 ); SQL_ERROR

@@ -13,19 +13,7 @@ var App = {
                 text: 'Delete'
             }
         }, function() {
-            function recursive_delete(id){
-                var subcats = AppCore.listCategories(id);
-                var subqstn = AppCore.listQuestions(id);
-                for (var i = subqstn.length - 1; i >= 0; i--){
-                    AppCore.questionDelete(subqstn[i].id);
-                }
-                for (var i = subcats.length - 1; i >= 0; i--){
-                    recursive_delete(subcats[i].id);
-                }
-                AppCore.categoryDelete(id);
-            }
-            
-            recursive_delete(id);
+            AppCore.categoryDelete(id);
             
             AppNav.navigate('#/category/show/' + parent);
         });

@@ -16,11 +16,7 @@ void DataBase::test_delete(int id)
 
 int DataBase::test_insert(std::string title, std::string body, std::string header)
 {
-    int id = 1;
-    
-    SqlResult r = executeSql("SELECT MAX(id) FROM tests");
-    if ( !r.empty() )
-        id = SqlInt(r[0]["MAX(id)"]) + 1;
+    int id = getNextVacantID("tests");
     
     sqlite3_stmt* stmt;
     sqlite3_prepare(_p->db, "INSERT INTO tests VALUES (:id,datetime(),:title,:body)", -1, &stmt, 0 ); SQL_ERROR

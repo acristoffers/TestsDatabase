@@ -21,6 +21,7 @@ var AppNav = {
                 choose:     AppCore.OpenFileDialog,
                 create:     AppCore.SaveFileDialog,
                 dummy:      App.populateDatabase,
+                export:     AppCore.export,
                 showdialog: AppUI.showOpenDialog,
                 close:      AppCore.closeDatabase
             },

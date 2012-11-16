@@ -36,6 +36,8 @@ public:
     SqlResult category_select_where(std::string where_clause);
          bool category_update(int id, std::string name, int parent);
     
+         void exportDB(std::string);
+    
         void  question_delete(int id);
          int  question_insert(std::string title, std::string reference, int difficulty, std::string body, int category);
        SqlRow question_select(int id);
@@ -57,8 +59,14 @@ protected:
          void updateDataBase(int version);
          void verifyVersion();
     
+          int getNextVacantID(std::string table);
+    
+         void recurse_category(int id, std::vector<int>* categories, std::vector<int>* questions);
+    
 private:
     DataBasePrivate* _p;
+    
+         void exportCategory(int thisParent, int foreignParent, DataBase* db);
 };
 
 #endif

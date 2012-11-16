@@ -147,6 +147,8 @@ void ClientHandler::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<Ce
     ADD_FUNCTION_TO_JS("categoryInsert");
     ADD_FUNCTION_TO_JS("categorySelect");
     ADD_FUNCTION_TO_JS("categoryUpdate");
+    
+    ADD_FUNCTION_TO_JS("export");
 
     ADD_FUNCTION_TO_JS("listCategories");
     ADD_FUNCTION_TO_JS("listQuestions");
@@ -269,6 +271,12 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
         int parent = arguments[2]->GetIntValue();
         
         _DB_->category_update(id, name, parent);
+        
+        return true;
+    }
+    
+    if (name == "export") {
+        _DB_->exportDB(OpenFileDialog());
         
         return true;
     }
