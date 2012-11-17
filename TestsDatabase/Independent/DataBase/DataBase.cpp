@@ -29,7 +29,7 @@ int selectCallback(void *p_data, int num_fields, char **p_fields, char **p_col_n
 DataBase::DataBase(std::string path)
 {
     this->_p      = new DataBasePrivate();
-    this->valid   = true;
+    this->valid   = false;
     
     int r = sqlite3_open(path.c_str(), &_p->db);
     
@@ -37,9 +37,11 @@ DataBase::DataBase(std::string path)
         this->valid = true;
     } else {
         const char* error = sqlite3_errmsg(_p->db);
+        std::string filename = "\nFile name: " + path;
         std::fstream file;
         file.open("sqlite.log", std::ios::out);
         file.write(error, strlen(error));
+        file.write(filename.c_str(), filename.length());
         file.close();
     }
     
