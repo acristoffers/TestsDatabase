@@ -188,6 +188,9 @@ void DataBase::exportCategory(int thisParent, int foreignParent, DataBase* db)
 
 void DataBase::exportDB(std::string file)
 {
+    if ( file.empty() )
+        return;
+    
     DataBase db(file);
     
     // Copy questions on the root;
