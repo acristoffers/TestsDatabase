@@ -1,5 +1,6 @@
 ﻿#include <string>
 #include <windows.h>
+#include <fstream>
 
 #include "include/cef_app.h"
 #include "include/cef_base.h"
@@ -115,6 +116,9 @@ HWND RegisterWindow(HINSTANCE hInstance, int nCmdShow)
 	return hwnd;
 }
 
+extern std::string utf8_encode(const std::wstring &wstr);
+extern std::wstring utf8_decode(const std::string &str);
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 {
 	std::string path = GetApplicationDir();
@@ -122,7 +126,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow)
 	path = "file://" + path + "/html/index.html";
     
 	if ( __argc > 1 ) {
-		AppHandler::instance()->openDataBase(__argv[1]);
+		char* file_path = __argv[1];
+		int size_needed = MultiByteToWideChar(CP_ACP, 0, &file_path[0], strlen(file_path), NULL, 0);
+		std::wstring wstrTo( size_needed, 0 );
+		MultiByteToWideChar(CP_ACP, 0, &file_path[0], strlen(file_path), &wstrTo[0], size_needed);
+		
+		std::string utf8 = utf8_encode(wstrTo);
+
+		AppHandler::instance()->openDataBase( utf8 );
 	}
 
 	// Register the window class.
