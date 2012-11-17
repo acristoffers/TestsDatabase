@@ -43,6 +43,7 @@
         'Edit': 'Editar',
         'Edit Category': 'Editar Categoria',
         'Edit Question': 'Editar Questão',
+        'Export': 'Exportar',
         'File': 'Arquivo',
         'Font size:': 'Tamanho da fonte:',
         'Generate': 'Gerar',

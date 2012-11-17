@@ -43,6 +43,7 @@
         'Edit': 'bearbeiten',
         'Edit Category': 'Kategorie bearbeiten',
         'Edit Question': 'Frage bearbeiten',
+        'Export': 'Exportieren',
         'File': 'Ablage',
         'Generate': 'erzeugen',
         'Invalid number of questions': 'Ungültige Anzahl von Fragen',
