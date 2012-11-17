@@ -22,7 +22,7 @@ def recurse(dir)
       else
         if sd.end_with? 'css' or sd.end_with? 'htm' or sd.end_with? 'html'
           css_comment = /\/\*[^\*]+\*\//
-          htm_comment = /<!--[^>]+-->/
+          htm_comment = /<![^>]+>/
           
           str = File.read(full_path(dir, sd))
           
