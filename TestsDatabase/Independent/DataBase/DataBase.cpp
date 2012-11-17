@@ -2,6 +2,8 @@
 #include "DataBasePrivate.h"
 #include "sqlite3.h"
 
+#include <fstream>
+#include <iostream>
 #include <sstream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,10 +31,16 @@ DataBase::DataBase(std::string path)
     this->_p      = new DataBasePrivate();
     this->valid   = true;
     
-    sqlite3_open(path.c_str(), &_p->db);
+    int r = sqlite3_open(path.c_str(), &_p->db);
     
-    if ( _p->db == 0 ) {
+    if ( r == SQLITE_OK ) {
         this->valid = true;
+    } else {
+        const char* error = sqlite3_errmsg(_p->db);
+        std::fstream file;
+        file.open("sqlite.log", std::ios::out);
+        file.write(error, strlen(error));
+        file.close();
     }
     
     verifyVersion();
