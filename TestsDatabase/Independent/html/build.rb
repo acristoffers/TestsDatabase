@@ -21,8 +21,8 @@ def recurse(dir)
         `uglifyjs2 #{full_path(dir, sd)} -c -m -o #{full_path(dir, sd)}`
       else
         if sd.end_with? 'css' or sd.end_with? 'htm' or sd.end_with? 'html'
-          css_comment = /\/\*[^\*]+\*\//
-          htm_comment = /<![^>]+>/
+          css_comment = /\/\*[^*]*\*+([^\/*][^*]*\*+)*\//
+          htm_comment = /\<![ \r\n\t]*(--([^\-]|[\r\n]|-[^\-])*--[ \r\n\t]*)\>/
           
           str = File.read(full_path(dir, sd))
           
