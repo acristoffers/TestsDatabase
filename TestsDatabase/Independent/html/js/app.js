@@ -15,6 +15,7 @@ var App = {
         }, function() {
             AppCore.categoryDelete(id);
             
+            AppNav.current.category = parent;
             AppNav.navigate('#/category/show/' + parent);
         });
     },
