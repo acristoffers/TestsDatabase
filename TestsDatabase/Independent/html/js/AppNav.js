@@ -62,6 +62,7 @@ var AppNav = {
         };
         
         cmdlist[cmd.model][cmd.action]([cmd.id]);
+        AppNav.blank();
     },
     
     navigate: function(hash) {

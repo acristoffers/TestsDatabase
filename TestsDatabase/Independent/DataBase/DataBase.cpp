@@ -209,6 +209,14 @@ void DataBase::exportDB(std::string file)
     
     exportCategory(0, 0, &db);
     
+    // Export tests
+    SqlResult tests = test_select_where("");
+    for ( qit = tests.begin(); qit < tests.end(); qit++ ) {
+        SqlRow r = *qit;
+        SqlRow test = test_select(SqlInt(r["id"]));
+        db.test_insert(test["title"], test["body"], test["header"]);
+    }
+    
     AppHandler::instance()->openDataBase(file);
 }
 

@@ -120,7 +120,6 @@ var App = {
     },
     
     printTests: function() {
-		AppNav.blank();
         $('#tests-wrapper').css('font-size', $('#print-font-size').val() + 'pt');
 		$('#tests-wrapper *').css('line-height', ( parseInt($('#print-font-size').val()) * 1.2 ) + 'pt');
 		
@@ -138,7 +137,6 @@ var App = {
     },
     
     printAnswers: function() {
-		AppNav.blank();
         $('#tests-wrapper').addClass('dont-print');
         $('#test-answers-sheets').removeClass('dont-print');
         $('#clean-answers-sheets').addClass('dont-print');
@@ -146,7 +144,6 @@ var App = {
     },
     
     printAnswerSheets: function() {
-		AppNav.blank();
         $('#tests-wrapper').addClass('dont-print');
         $('#test-answers-sheets').addClass('dont-print');
         $('#clean-answers-sheets').removeClass('dont-print');
@@ -174,8 +171,6 @@ var App = {
     },
     
     questionInsert: function() {
-        AppNav.blank();
-        
 		var id = AppNav.current.question;
 		var title = $("#question-form-title").val();
 		var difficulty = $('#question-form-difficulty').slider('value');
@@ -250,8 +245,6 @@ var App = {
     },
     
     testInsert: function() {
-        AppNav.blank();
-        
         var title = $('#test-form-title').val();
         var numOfTests = $('#test-form-number-tests').val();
         
