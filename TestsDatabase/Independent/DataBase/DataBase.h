@@ -61,7 +61,7 @@ protected:
     
           int getNextVacantID(std::string table);
     
-         void recurse_category(int id, std::vector<int>* categories, std::vector<int>* questions);
+         void recurse_category(int id, std::vector<int>* categories);
     
 private:
     DataBasePrivate* _p;

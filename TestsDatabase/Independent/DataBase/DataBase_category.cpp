@@ -7,7 +7,7 @@
 #define sql_param(x) sqlite3_bind_parameter_index(stmt,x)
 #define SQL_ERROR if( sqlite3_errcode(_p->db) != SQLITE_OK ) { printf("Error: %s\n", sqlite3_errmsg(_p->db)); return -1; }
 
-void DataBase::recurse_category(int id, std::vector<int> *categories, std::vector<int> *questions)
+void DataBase::recurse_category(int id, std::vector<int> *categories)
 {
     SqlResult::iterator it;
     
@@ -15,13 +15,7 @@ void DataBase::recurse_category(int id, std::vector<int> *categories, std::vecto
     for ( it = sub_categories.begin(); it < sub_categories.end(); it++ ) {
         SqlRow cat = *it;
         categories->push_back(SqlInt(cat["id"]));
-        recurse_category(SqlInt(cat["id"]), categories, questions);
-    }
-    
-    SqlResult sub_questions = question_select_where("category=" + IntToStdString(id));
-    for ( it = sub_questions.begin(); it < sub_questions.end(); it++ ) {
-        SqlRow q = *it;
-        questions->push_back(SqlInt(q["id"]));
+        recurse_category(SqlInt(cat["id"]), categories);
     }
 }
 
@@ -29,7 +23,7 @@ void DataBase::category_delete(int id)
 {
     std::vector<int> categories, questions;
     
-    recurse_category(id, &categories, &questions);
+    recurse_category(id, &categories);
     categories.push_back(id);
     
     std::vector<int>::iterator it;
@@ -40,6 +34,13 @@ void DataBase::category_delete(int id)
         cids += IntToStdString(*it);
     }
     cids += ")";
+    
+    SqlResult qr = question_select_where("category IN " + cids);
+    SqlResult::iterator rit;
+    for (rit = qr.begin(); rit < qr.end(); rit++) {
+        SqlRow q = *rit;
+        questions.push_back(SqlInt(q["id"]));
+    }
     
     std::string qids = "(";
     for ( it = questions.begin(); it < questions.end(); it++ ) {
