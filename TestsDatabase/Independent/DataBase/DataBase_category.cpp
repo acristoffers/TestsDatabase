@@ -21,7 +21,7 @@ void DataBase::recurse_category(int id, std::vector<int> *categories)
 
 void DataBase::category_delete(int id)
 {
-    std::vector<int> categories, questions;
+    std::vector<int> categories;
     
     recurse_category(id, &categories);
     categories.push_back(id);
@@ -36,17 +36,15 @@ void DataBase::category_delete(int id)
     cids += ")";
     
     SqlResult qr = question_select_where("category IN " + cids);
+    std::string qids = "(";
+    
     SqlResult::iterator rit;
     for (rit = qr.begin(); rit < qr.end(); rit++) {
         SqlRow q = *rit;
-        questions.push_back(SqlInt(q["id"]));
+        if ( rit != qr.begin() ) qids += ",";
+        qids += q["id"];
     }
     
-    std::string qids = "(";
-    for ( it = questions.begin(); it < questions.end(); it++ ) {
-        if ( it != questions.begin() ) qids += ",";
-        qids += IntToStdString(*it);
-    }
     qids += ")";
     
     std::string
