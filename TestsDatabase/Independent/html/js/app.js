@@ -245,6 +245,167 @@ var App = {
         });
     },
     
+    testHandInsert: function() {
+        var title = $('#test-create-title').val();
+        var numOfTests = $('#test-create-number-tests').val();
+        
+        var header = $('#test-create-header').val();
+        
+        var q = $('#test-create-questions input:checked');
+        var numberOfQuestions = q.length;
+        
+        var selectedQuestions = [];
+        for (var i = q.length - 1; i >= 0; i--)
+            selectedQuestions.push( q[i].value );
+        
+        if ( title == '' ) {
+            AppUI.showModalAlert({
+                title: 'No title...',
+                content: 'You forgot to type the title...',
+                cancel: false,
+                button: {
+                    text: 'Ok'
+                }
+            }, function() {
+                AppUI.closeModals();
+                $('#test-form-title').focus();
+            });
+            return;
+        }
+        
+        if ( numberOfQuestions < 0 || numberOfQuestions > 50 ) {
+            AppUI.showModalAlert({
+                title: 'Invalid number of questions',
+                content: 'Did you forget to select questions and difficulties?',
+                cancel: false,
+                button: {
+                    text: 'Ok'
+                }
+            }, AppUI.closeModals);
+            return;
+        }
+        
+        function randomPool(i, n)
+        {
+            var pool = [];
+            
+            for(var j=0; j<i; j++)
+                pool.push(Math.floor(Math.random()*n));
+            
+            pool = pool.filter(function(elem, pos) {
+                return pool.indexOf(elem) == pos;
+            });
+            
+            while ( pool.length < i ) {
+                pool.push(Math.floor(Math.random()*n));
+                
+                pool = pool.filter(function(elem, pos) {
+                    return pool.indexOf(elem) == pos;
+                });
+            }
+            
+            return pool;
+        }
+        
+        var tests = '<div id="tests-wrapper">';
+        
+        var answerSheets = '';
+        
+        for (var i=0; i < numOfTests; i++) {
+            var test = '<div class="test">';
+            test += '<div class="test-header">' + header + '</div>';
+            test += '<div class="test-number" data-i18n="Test %d" data-i18n-numbers="' + (i+1) + '"></div>';
+            test += '<div class="test-questions">';
+            
+            var as   = '<div class="answers-sheet"><div id="answers-header">' + header + '</div><div class="test-number" data-i18n="Test %d" data-i18n-numbers="' + (i+1) + '"></div><div class="answers"><div class="acol">';
+            
+            var qp = randomPool(selectedQuestions.length, selectedQuestions.length);
+            for (var j = 0; j < selectedQuestions.length; j++) {
+                var q = AppCore.questionSelect(selectedQuestions[qp[j]]);
+                
+                var question = '<div class="test-question"><span class="bullet">' + (j+1) + '. </span> <span class="question-body">' +
+                               '<div class="dont-print question-meta">';
+                
+                question +=  AppI18N.tr('<span data-i18n="Title:"></span> ') + q.title +
+                             AppI18N.tr('<br><span data-i18n="Reference:"></span> ') + q.reference +
+                             AppI18N.tr('<br><span data-i18n="Difficulty:"></span> ') + q.difficulty;
+                
+                question += '</div>' + q.body;
+                
+                question += '<div class="question-answers">';
+                
+                if ( j == 10 || j == 20 || j == 30 || j == 40 )
+                    as += '</div><div class="acol">';
+                
+                as += '<div class="arow"><div class="question-number">' + (j+1) + '</div>';
+                
+                var answers = AppCore.answerSelect(q.id);
+                var ap = randomPool(answers.length, answers.length);
+                var aa = ['a', 'b', 'c', 'd'];
+                for (var k = 0; k < answers.length; k++) {
+                    question += '<div class="question-alternative"><span class="bullet">' + aa[k] + ') </span> <span> ' + answers[ap[k]].body + '</span></div>';
+                    as += '<div class="alternative ' + (parseInt(answers[ap[k]].right) == 1 ?  'right' :  '') + '">' + aa[k] + '</div>';
+                }
+                
+                as += '</div>';
+                
+                question += '</div></span></div>';
+                
+                test += question;
+            }
+            
+            for (var j = selectedQuestions.length; j < 50; j++ ) {
+                if ( j == 10 || j == 20 || j == 30 || j == 40 )
+                    as += '</div><div class="acol">';
+                
+                as += '<div class="arow"><div class="question-number">' + (j+1) + '</div>';
+                    
+                var aa = ['a', 'b', 'c', 'd'];
+                for (var k = 0; k < 4; k++)
+                    as += '<div class="alternative">' + aa[k] + '</div>';
+                    
+                as += '</div>';
+            }
+            
+            as += '</div></div></div>';
+            
+            test += '</div>';
+            test += '</div>';
+            
+            tests += test;
+            
+            answerSheets += as;
+        }
+        
+        tests += '</div>';
+        
+        tests += '<div id="test-answers-sheets">' + answerSheets + '</div>';
+        
+        tests += '<div id="clean-answers-sheets">';
+        for ( var i = 0; i < numOfTests; i++) {
+            tests += '<div class="answers-sheet"><div id="answers-header">' + header + '</div><div class="test-number" data-i18n="Test %d" data-i18n-numbers="' + (i+1) + '"></div><div class="answers"><div class="acol">';
+            
+            for (var j = 0; j < 50; j++ ) {
+                if ( j == 10 || j == 20 || j == 30 || j == 40 )
+                    tests += '</div><div class="acol">';
+                
+                tests += '<div class="arow"><div class="question-number">' + (j+1) + '</div>';
+                
+                var aa = ['a', 'b', 'c', 'd'];
+                for (var k = 0; k < 4; k++)
+                    tests += '<div class="alternative">' + aa[k] + '</div>';
+                
+                tests += '</div>';
+            }
+            tests += '</div></div></div>';
+        }
+        
+        tests += '</div>';
+        
+        var id = AppCore.testInsert(title, tests, header);
+        AppNav.navigate('#/test/show/' + id);
+    },
+    
     testInsert: function() {
         var title = $('#test-form-title').val();
         var numOfTests = $('#test-form-number-tests').val();

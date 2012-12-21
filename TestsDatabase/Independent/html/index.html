@@ -99,6 +99,7 @@
     </div>
     <div id="test-list-toolbar" class="btn-toolbar">
         <a href="#/test/new" class="btn" data-i18n="New Test"></a>
+        <a href="#/test/create" class="btn pull-right" data-i18n="Create Test"></a>
     </div>
     <div id="categories-list-wrapper" class="light-well">
         <ul id="categories-list" class="nav nav-list">
@@ -179,12 +180,37 @@
     </div>
     
     <!--
+        Test Create
+    -->
+    <div id="test-create">
+        <form>
+            <legend>
+                <span data-i18n="Create Test"></span>
+            </legend>
+            
+            <label for="test-create-title" data-i18n="Title:"></label>
+            <input id="test-create-title" type="text">
+            
+            <label for="test-create-number-tests" data-i18n="Number of tests"></label>
+            <input id="test-create-number-tests" type="number" min="1" value="4">
+            
+            <label data-i18n="Page header"></label>
+            <textarea id="test-create-header"></textarea><br>
+            
+            <div id="test-create-questions" class="light-well"></div>
+            <div id="test-create-total-questions" data-i18n="Totalizing %d questions" data-i18n-numbers="0"></div>
+            
+            <a href="#/test/handinsert" class="btn btn-primary" data-i18n="Generate"></a>
+        </form>
+    </div>
+    
+    <!--
         Test Form
     -->
     <div id="test-form">
         <form>
             <legend>
-                <span data-i18n="Create Test"></span>
+                <span data-i18n="New Test"></span>
             </legend>
             
             <label for="test-form-title" data-i18n="Title:"></label>

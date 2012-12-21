@@ -33,14 +33,14 @@ extern std::string SaveFileDialog();
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [[NSApplication sharedApplication] setPresentationOptions:NSFullScreenWindowMask];
-  
+    
     [window setCollectionBehavior: NSWindowCollectionBehaviorFullScreenPrimary];
-  
+    
     // comes first because ClientHandler needs it when created;
     std::string path = [[[NSBundle mainBundle] resourcePath] cStringUsingEncoding:NSUTF8StringEncoding];
     AppHandler::htmlFolderPath = path + "/html";
     path = "file://" + path + "/html/index.html";
-
+    
     CefSettings appSettings;
     CefBrowserSettings browserSettings;
     

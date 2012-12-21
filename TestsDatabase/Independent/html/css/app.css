@@ -22,6 +22,10 @@ a {
     border-radius: 5px;
 }
 
+.btn {
+    margin-top: 10px;
+}
+
 
 
 /* 
@@ -155,6 +159,16 @@ Question form
     margin-top: 10px;
 }
 
+#test-create-questions div,
+#test-create-questions input {
+    margin-left: 10px;
+}
+
+#test-create-questions span {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 1.5em;
+}
 
 
 /*

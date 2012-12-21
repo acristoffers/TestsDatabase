@@ -44,11 +44,13 @@ var AppNav = {
             },
             
             test: {
-                delete: App.testDelete,
-                insert: App.testInsert,
-                list:   AppUI.testList,
-                new:    AppUI.testNew,
-                show:   AppUI.testShow,
+                create:     AppUI.testCreate,
+                delete:     App.testDelete,
+                handinsert: App.testHandInsert,
+                insert:     App.testInsert,
+                list:       AppUI.testList,
+                new:        AppUI.testNew,
+                show:       AppUI.testShow,
                 
                 printTests:        App.printTests,
                 printAnswers:      App.printAnswers,

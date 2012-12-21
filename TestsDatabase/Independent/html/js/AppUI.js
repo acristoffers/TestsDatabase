@@ -44,11 +44,10 @@ var AppUI = {
             if ( id == skip )
                 return '';
 	        
-        	if ( id == 0 ) {
+        	if ( id == 0 )
         		cat = {id: 0, name: AppI18N.tr('Root')};
-        	} else {
+            else
         		cat = AppCore.categorySelect(id);
-        	}
             
         	var html = '<div>';
             html += '<label>';
@@ -56,9 +55,8 @@ var AppUI = {
             html += '</label>';
 	        
         	var children = AppCore.listCategories(id);
-        	for (var i = 0; i < children.length; i++ ) {
+        	for (var i = 0; i < children.length; i++ )
                 html += recurse_categories(children[i].id);
-        	}
 	        
         	html += '</div>';
         	return html;
@@ -162,22 +160,25 @@ var AppUI = {
         
         // category edit
         $('#category-edit-wrapper').hide();
-        $('#question-form-answers').html('');
-        $('#category-edit-form-parent-tree').html('');
+        $('#question-form-answers').empty();
+        $('#category-edit-form-parent-tree').empty();
         
         // question form
-        $('#question-form-category-tree').html('');
-        $('#question-form-answers').html('');
+        $('#question-form-category-tree').empty();
+        $('#question-form-answers').empty();
         $('#question-form-body').val('');
         $('#question-form-wrapper').hide();
         
         // question show
-        $('#question-show').hide('');
-        $('#question-show-answers').html('');
-        $('#question-show-body').html('');
+        $('#question-show').hide();
+        $('#question-show-answers').empty();
+        $('#question-show-body').empty();
         
         // test form
+        $('#test-create').hide();
+        $('#test-create-questions').empty();
         $('#test-form').hide();
+        $('#test-form-categories').empty();
         
         // test show
         $('#test-show').hide();
@@ -209,7 +210,7 @@ var AppUI = {
         var anw = '';
 		for (var i = 0; i < as.length; i++)
 			anw += '<div class="input-prepend"><input class="add-on" type="radio" name="question-form-rigth-answer" ' + (parseInt(as[i].right)?'checked':'') + '><input type="text" name="question-form-answers-fields[]" class="input-xxlarge" value="' + as[i].body + '""></div>';
-
+        
         $('#question-form-answers').html(anw);
         
         $('#question-form-category-tree').html(AppUI.categoryHTMLTree());
@@ -370,6 +371,55 @@ var AppUI = {
         $('#alert-modal').show('fade');
     },
     
+    testCreate: function() {
+        AppNav.navigate('#/test/list');
+        AppNav.blank();
+        
+        $('#test-create').show();
+        
+        $('#test-create-questions').html( AppUI.testCreateQuestionsTree() );
+        
+        $('#test-create-questions input').click(function() {
+            var count = $('#test-create-questions input:checked').size();
+            $('#test-create-total-questions').data('i18n-numbers', count);
+            AppI18N.translate();
+        });
+        
+        AppI18N.translate();
+    },
+    
+    testCreateQuestionsTree: function() {
+        function recurse_categories(id) {
+        	var cat;
+            	        
+        	if ( id == 0 )
+        		cat = {id: 0, name: 'Root'};
+            else
+        		cat = AppCore.categorySelect(id);
+            
+            var questions = AppCore.listQuestions(cat.id);
+            
+        	var html = '<div>';
+            html += '<span data-i18n="' + cat.name + '"></span>'
+            for (var i = questions.length - 1; i >= 0; i--) {
+                var question = questions[i];
+                
+                html += '<label>';
+                html += '<input type="checkbox" name="category-tree-check" value="' + question.id + '"> ' + question.title;
+                html += '</label>';
+            }
+	        
+        	var children = AppCore.listCategories(id);
+        	for (var i = 0; i < children.length; i++ )
+                html += recurse_categories(children[i].id);
+	        
+        	html += '</div>';
+        	return html;
+        }
+        
+        return recurse_categories(0);
+    },
+    
     testList: function() {
         AppUI.clean();
         $('#test-list-toolbar').show();
@@ -379,7 +429,7 @@ var AppUI = {
         
         var tests = AppCore.listTests();
         
-        if( tests && tests.length > 0 ) {
+        if ( tests && tests.length > 0 ) {
             html += '<li class="nav-header" data-i18n="Tests"></li>';
             
             sortArrayByObjectKey(tests, 'title');
@@ -409,9 +459,8 @@ var AppUI = {
                    '</label>';
         
         var children = AppCore.listCategories(id);
-    	for (var i = 0; i < children.length; i++ ) {
+    	for (var i = 0; i < children.length; i++ )
             html += AppUI.testCategories(children[i].id);
-    	}
         
         html += '</div>';
         
@@ -424,7 +473,7 @@ var AppUI = {
         
         $('#test-form').show('fade');
         
-        $('#test-form-question-difficulties').html('');
+        $('#test-form-question-difficulties').empty();
         
         function addDiff() {
             function changeQTotal() {
