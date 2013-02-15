@@ -320,8 +320,9 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
         int       dif   = arguments[2]->GetIntValue();
         CefString body  = arguments[3]->GetStringValue();
         int       cat   = arguments[4]->GetIntValue();
+        int       kind  = arguments[5]->GetIntValue();
         
-        int id = _DB_->question_insert(title, ref, dif, body, cat);
+        int id = _DB_->question_insert(title, ref, dif, body, cat, kind);
         
         retval = CefV8Value::CreateInt(id);
         
@@ -342,6 +343,7 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
         int l = arguments[0]->GetArrayLength();
         int from = arguments[1]->GetIntValue();
         int to = arguments[2]->GetIntValue();
+        int kind = arguments[3]->GetIntValue();
         
         if ( from > to ) {
             int z = from;
@@ -354,7 +356,7 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
         for (int i=1; i < l; i++)
             ids +=  std::string(",") + std::string(arguments[0]->GetValue(i)->GetStringValue());
         
-        SqlResult r = _DB_->question_select_where("category in (" + ids + ") AND difficulty BETWEEN " + IntToStdString(from) + " AND " + IntToStdString(to));
+        SqlResult r = _DB_->question_select_where("category in (" + ids + ") AND difficulty BETWEEN " + IntToStdString(from) + " AND " + IntToStdString(to) + " AND kind=" + IntToStdString(kind));
         
         CefRefPtr<CefV8Value> array = CefV8Value::CreateArray(r.size());
         
@@ -375,8 +377,9 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
         int       dif   = arguments[3]->GetIntValue();
         CefString body  = arguments[4]->GetStringValue();
         int       cat   = arguments[5]->GetIntValue();
+        int       kind  = arguments[6]->GetIntValue();
         
-        _DB_->question_update(id, title, ref, dif, body, cat);
+        _DB_->question_update(id, title, ref, dif, body, cat, kind);
         
         return true;
     }

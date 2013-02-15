@@ -205,13 +205,23 @@ var AppUI = {
 		$('#question-form-difficulty').slider('value', q.difficulty);
 		$('#question-form-reference').val(q.reference);
 		$('#question-form-body').val(q.body);
+		$('#question-form-kind').attr('checked', q.kind == 1 ? true : false);
 		
-		var as = AppCore.answerSelect(AppNav.current.question);
-        var anw = '';
-		for (var i = 0; i < as.length; i++)
-			anw += '<div class="input-prepend"><input class="add-on" type="radio" name="question-form-rigth-answer" ' + (parseInt(as[i].right)?'checked':'') + '><input type="text" name="question-form-answers-fields[]" class="input-xxlarge" value="' + as[i].body + '""></div>';
-        
+		var anw = '';
+		if ( q.kind == 0 ) {
+			var as = AppCore.answerSelect(AppNav.current.question);
+			for (var i = 0; i < as.length; i++)
+				anw += '<div class="input-prepend"><input class="add-on" type="radio" name="question-form-rigth-answer" ' + (parseInt(as[i].right)?'checked':'') + '><input type="text" name="question-form-answers-fields[]" class="input-xxlarge" value="' + as[i].body + '""></div>';
+		} else {
+			for(var i=0; i<4; i++)
+				anw += '<div class="input-prepend"><input class="add-on" type="radio" name="question-form-rigth-answer"><input type="text" name="question-form-answers-fields[]" class="input-xxlarge"></div>';
+		}
+		
         $('#question-form-answers').html(anw);
+		if ( $('#question-form-kind').is(':checked') )
+			$('#question-form-answers-wrapper').hide();
+		else
+			$('#question-form-answers-wrapper').show();
         
         $('#question-form-category-tree').html(AppUI.categoryHTMLTree());
         $('#question-form-category-tree input[value=' + q.category + ']').click();
@@ -234,6 +244,7 @@ var AppUI = {
 		$('#question-form-title').val('');
 		$('#question-form-difficulty').slider('value', 6);
 		$('#question-form-reference').val('');
+		$('#question-form-kind').attr('checked', false);
         
         $('#question-form-category-tree').html(AppUI.categoryHTMLTree());
         $('#question-form-category-tree input[value=' + AppNav.current.category + ']').click();
@@ -243,6 +254,7 @@ var AppUI = {
             anw += '<div class="input-prepend"><input class="add-on" type="radio" name="question-form-rigth-answer"><input type="text" name="question-form-answers-fields[]" class="input-xxlarge"></div>';
         
         $('#question-form-answers').html(anw);
+		$('#question-form-answers-wrapper').show();
         
         $('#question-add-span').show();
         $('#question-edit-span').hide();
@@ -385,6 +397,10 @@ var AppUI = {
             AppI18N.translate();
         });
         
+        $('#test-create-header').val(AppCore.testHeader());
+    	$('#test-create-header').cleditor()[0].refresh();
+    	$('#test-create-header').cleditor()[0].updateFrame();
+        
         AppI18N.translate();
     },
     
@@ -484,13 +500,14 @@ var AppUI = {
                 $('#test-form-total-questions').data('i18n-numbers', i);
                 AppI18N.translate();
             }
-            
+			
             var h = '<div class="difficulty-setup"><span data-i18n="Number of questions"></span>' +
                     '<input class="questions" type="number" min="0" max="50" value="10">' +
                     '<span data-i18n="Difficulty from""></span>' +
                     '<input class="diff-from" type="number" min="0" max="9" value="6">' +
                     '<span data-i18n="to"></span>' +
                     '<input class="diff-to" type="number" min="1" max="10" value="7">' +
+					'<input type="checkbox" class="discursive"> <span data-i18n="Discursive"></span> ' +
                     '<a class="btn test-form-diff-remove" data-i18n="Remove"></a></div>';
             $('#test-form-question-difficulties').append(h);
             
@@ -555,6 +572,13 @@ $(document).ready(function() {
 	});
     
     $('#test-form-difficulty').slider({animate:true, max:10, values:[0,6], range:true});
+	
+	$('#question-form-kind').click(function() {
+		if ( $('#question-form-kind').is(':checked') )
+			$('#question-form-answers-wrapper').hide();
+		else
+			$('#question-form-answers-wrapper').show();
+	});
 	
     $('textarea').cleditor({width: 600, height: 400});
 });

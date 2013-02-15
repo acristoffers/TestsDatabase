@@ -110,7 +110,7 @@ var App = {
         for ( var f=0; f<100; f++ ) {
             var dif = Math.floor(Math.random()*11);
             if ( dif == 0 ) dif = 10;
-            var q = AppCore.questionInsert('Question dif=' + dif + ' on ' + id, 'ref', dif, text.substr(0, Math.floor(Math.random()*text.length)), id);
+            var q = AppCore.questionInsert('Question dif=' + dif + ' on ' + id, 'ref', dif, text.substr(0, Math.floor(Math.random()*text.length)), id, 0);
             AppCore.answerInsert('right ' + text.substr(0, Math.floor(Math.random()*text.length)), q, true);
             AppCore.answerInsert('wrong ' + text.substr(0, Math.floor(Math.random()*text.length)), q, false);
             AppCore.answerInsert('wrong ' + text.substr(0, Math.floor(Math.random()*text.length)), q, false);
@@ -194,37 +194,43 @@ var App = {
 		var answers = [];
 		var right_answer = null;
 		
-		$('input[name^=question-form-answers-fields]').each(function() {
-			var r = $(this).prev('input').is(':checked');
-			if ( r ) {
-				right_answer = $(this).val();
-			} else {
-				answers.push($(this).val());
+		if ( !$('#question-form-kind').is(':checked') ) {
+			$('input[name^=question-form-answers-fields]').each(function() {
+				var r = $(this).prev('input').is(':checked');
+				if ( r ) {
+					right_answer = $(this).val();
+				} else {
+					answers.push($(this).val());
+				}
+			});
+			
+			if ( right_answer == null ) {
+	            AppUI.showModalAlert({
+	                title: 'No right answer',
+	                content: 'You forgot to select the right answer...',
+	                cancel: false,
+	                button: {
+	                    text: 'Ok'
+	                }
+	            }, AppUI.closeModals);
+				return;
 			}
-		});
-		
-		if ( right_answer == null ) {
-            AppUI.showModalAlert({
-                title: 'No right answer',
-                content: 'You forgot to select the right answer...',
-                cancel: false,
-                button: {
-                    text: 'Ok'
-                }
-            }, AppUI.closeModals);
-			return;
 		}
 		
+		var kind = $('#question-form-kind').is(':checked');
+		
 		if ( id < 0 ) {
-			id = AppCore.questionInsert(title, reference, difficulty, body, category);
+			id = AppCore.questionInsert(title, reference, difficulty, body, category, kind);
 		} else {
-			AppCore.questionUpdate(id, title, reference, difficulty, body, category);
+			AppCore.questionUpdate(id, title, reference, difficulty, body, category, kind);
 			AppCore.answerDelete(id);
 		}
         
-        AppCore.answerInsert(right_answer, id, true);
-		for (var i = 0; i < answers.length; i++ ) {
-			AppCore.answerInsert(answers[i], id, false);
+		if ( !$('#question-form-kind').is(':checked') ) {
+			AppCore.answerInsert(right_answer, id, true);
+			for (var i = 0; i < answers.length; i++ ) {
+				AppCore.answerInsert(answers[i], id, false);
+			}
 		}
 		
 		AppNav.current.category = category;
@@ -255,8 +261,14 @@ var App = {
         var numberOfQuestions = q.length;
         
         var selectedQuestions = [];
-        for (var i = q.length - 1; i >= 0; i--)
-            selectedQuestions.push( q[i].value );
+		var discursiveQuestions = [];
+        for (var i = q.length - 1; i >= 0; i--) {
+			var sq = AppCore.questionSelect( q[i].value );
+			if ( sq.kind == 0 )
+				selectedQuestions.push( sq.id );
+			else
+				discursiveQuestions.push( sq.id );
+        }
         
         if ( title == '' ) {
             AppUI.showModalAlert({
@@ -320,7 +332,9 @@ var App = {
             var as   = '<div class="answers-sheet"><div id="answers-header">' + header + '</div><div class="test-number" data-i18n="Test %d" data-i18n-numbers="' + (i+1) + '"></div><div class="answers"><div class="acol">';
             
             var qp = randomPool(selectedQuestions.length, selectedQuestions.length);
+			var question_number = 0;
             for (var j = 0; j < selectedQuestions.length; j++) {
+				question_number = j+1;
                 var q = AppCore.questionSelect(selectedQuestions[qp[j]]);
                 
                 var question = '<div class="test-question"><span class="bullet">' + (j+1) + '. </span> <span class="question-body">' +
@@ -353,6 +367,24 @@ var App = {
                 
                 test += question;
             }
+			
+			for (var j = 0; j < discursiveQuestions.length; j++) {
+                var q = AppCore.questionSelect( discursiveQuestions[j] );
+                
+                var question = '<div class="test-question"><span class="bullet">' + (question_number+1) + '. </span> <span class="question-body">' +
+                               '<div class="dont-print question-meta">';
+                
+                question +=  AppI18N.tr('<span data-i18n="Title:"></span> ') + q.title +
+                             AppI18N.tr('<br><span data-i18n="Reference:"></span> ') + q.reference +
+                             AppI18N.tr('<br><span data-i18n="Difficulty:"></span> ') + q.difficulty;
+                
+                question += '</div>' + q.body;
+				question += '<hr><br> <hr><br> <hr><br> <hr><br> <hr><br> <hr><br>';
+				question += '</span></div>';
+				
+				test += question;
+				question_number++;
+			}
             
             for (var j = selectedQuestions.length; j < 50; j++ ) {
                 if ( j == 10 || j == 20 || j == 30 || j == 40 )
@@ -413,14 +445,16 @@ var App = {
         var numberOfQuestions = 0;
         var difficulties = [];
         $('#test-form-question-difficulties .difficulty-setup').each(function() {
-            var n = $( $(this).children('.questions')[0] ).val();
-            var f = $( $(this).children('.diff-from')[0] ).val();
-            var t = $( $(this).children('.diff-to')[0]   ).val();
-            
+            var n = $( $(this).children('.questions')[0]  ).val();
+            var f = $( $(this).children('.diff-from')[0]  ).val();
+            var t = $( $(this).children('.diff-to')[0]    ).val();
+			var d = $( $(this).children('.discursive')[0] ).is(':checked');
+			
             difficulties.push( {
                 questions: n,
                 from: f,
-                to: t
+                to: t,
+				kind: (d == true ? 1 : 0)
             });
             
             numberOfQuestions += parseInt(n);
@@ -485,10 +519,12 @@ var App = {
         }
         
         var selectedQuestions = [];
+		var discursiveQuestions = [];
         
         for (var i = difficulties.length - 1; i >= 0; i--) {
             var d = difficulties[i];
-            var questions = AppCore.questionSelectIds(categories, d.from, d.to);
+			
+            var questions = AppCore.questionSelectIds(categories, d.from, d.to, d.kind);
             if ( questions.length < d.questions ) {
                 AppUI.showModalAlert({
                     title: 'Not enough questions.',
@@ -502,9 +538,12 @@ var App = {
             }
             
             var rp = randomPool(d.questions, questions.length);
-
+			
             for (var j=0; j < d.questions; j++)
-                selectedQuestions.push( questions[rp[j]] );
+				if ( d.kind == 0 )
+                	selectedQuestions.push( questions[rp[j]] );
+				else
+					discursiveQuestions.push( questions[rp[j]] );
         }
         
         var tests = '<div id="tests-wrapper">';
@@ -520,7 +559,9 @@ var App = {
             var as   = '<div class="answers-sheet"><div id="answers-header">' + header + '</div><div class="test-number" data-i18n="Test %d" data-i18n-numbers="' + (i+1) + '"></div><div class="answers"><div class="acol">';
             
             var qp = randomPool(selectedQuestions.length, selectedQuestions.length);
+			var question_number = 0;
             for (var j = 0; j < selectedQuestions.length; j++) {
+				question_number = j+1;
                 var q = AppCore.questionSelect(selectedQuestions[qp[j]]);
                 
                 var question = '<div class="test-question"><span class="bullet">' + (j+1) + '. </span> <span class="question-body">' +
@@ -553,17 +594,35 @@ var App = {
                 
                 test += question;
             }
+			
+			for (var j = 0; j < discursiveQuestions.length; j++) {
+                var q = AppCore.questionSelect( discursiveQuestions[j] );
+                
+                var question = '<div class="test-question"><span class="bullet">' + (question_number+1) + '. </span> <span class="question-body">' +
+                               '<div class="dont-print question-meta">';
+                
+                question +=  AppI18N.tr('<span data-i18n="Title:"></span> ') + q.title +
+                             AppI18N.tr('<br><span data-i18n="Reference:"></span> ') + q.reference +
+                             AppI18N.tr('<br><span data-i18n="Difficulty:"></span> ') + q.difficulty;
+                
+                question += '</div>' + q.body;
+				question += '<hr><br> <hr><br> <hr><br> <hr><br> <hr><br> <hr><br>';
+				question += '</span></div>';
+				
+				test += question;
+				question_number++;
+			}
             
             for (var j = selectedQuestions.length; j < 50; j++ ) {
                 if ( j == 10 || j == 20 || j == 30 || j == 40 )
                     as += '</div><div class="acol">';
                 
                 as += '<div class="arow"><div class="question-number">' + (j+1) + '</div>';
-                    
+                
                 var aa = ['a', 'b', 'c', 'd'];
                 for (var k = 0; k < 4; k++)
                     as += '<div class="alternative">' + aa[k] + '</div>';
-                    
+                
                 as += '</div>';
             }
             

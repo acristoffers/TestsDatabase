@@ -39,10 +39,10 @@ public:
          void exportDB(std::string);
     
         void  question_delete(int id);
-         int  question_insert(std::string title, std::string reference, int difficulty, std::string body, int category);
+         int  question_insert(std::string title, std::string reference, int difficulty, std::string body, int category, int kind);
        SqlRow question_select(int id);
     SqlResult question_select_where(std::string WHERE_CLAUSE);
-         bool question_update(int id, std::string title, std::string reference, int difficulty, std::string body, int category);
+         bool question_update(int id, std::string title, std::string reference, int difficulty, std::string body, int category, int kind);
     
          void test_delete(int id);
           int test_insert(std::string title, std::string body, std::string header);

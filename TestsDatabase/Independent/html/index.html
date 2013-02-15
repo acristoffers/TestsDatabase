@@ -98,7 +98,7 @@
         <a href="#/database/dummy" class="btn pull-right" data-i18n="Populate"></a>
     </div>
     <div id="test-list-toolbar" class="btn-toolbar">
-        <a href="#/test/new" class="btn" data-i18n="New Test"></a>
+        <a href="#/test/new" class="btn" data-i18n="Generate Test"></a>
         <a href="#/test/create" class="btn pull-right" data-i18n="Create Test"></a>
     </div>
     <div id="categories-list-wrapper" class="light-well">
@@ -141,21 +141,25 @@
                 <span id="question-add-span" data-i18n="Add Question"></span>
                 <span id="question-edit-span" data-i18n="Edit Question"></span>
             </legend>
-        
+        	
             <label for="question-form-title" data-i18n="Title:"></label>
             <input type="text" id="question-form-title" class="input-xxlarge">
-        
+        	
             <label for="question-form-difficulty" data-i18n="Difficulty:"></label>
             <div id="question-form-difficulty" class="slider"></div>
             <span id="question-form-difficulty-span">6</span>
-        
+        	
             <label for="question-form-reference" data-i18n="Reference:"></label>
             <input type="text" id="question-form-reference" class="input-xxlarge">
-        
+        	
             <textarea id="question-form-body"></textarea><br>
-        
-            <label data-i18n="Answers:"></label>
-            <div id="question-form-answers"></div>
+        	
+            <label for="question-form-kind"> <input type="checkbox" id="question-form-kind" /> <span data-i18n="Discursive"></span> </label>
+			
+			<div id="question-form-answers-wrapper">
+				<label data-i18n="Answers:"></label>
+            	<div id="question-form-answers"></div>
+			</div>
             
             <div id="question-form-category-tree"></div><br>
             
@@ -210,7 +214,7 @@
     <div id="test-form">
         <form>
             <legend>
-                <span data-i18n="New Test"></span>
+                <span data-i18n="Generate Test"></span>
             </legend>
             
             <label for="test-form-title" data-i18n="Title:"></label>

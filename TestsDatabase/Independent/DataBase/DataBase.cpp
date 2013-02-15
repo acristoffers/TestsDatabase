@@ -12,7 +12,7 @@
 
 #include "AppHandler.h"
 
-#define DB_VERSION  1
+#define DB_VERSION  2
 
 int         SqlInt (std::string value) { return atoi(value.c_str()); }
 bool        SqlBool(std::string value) { return SqlInt(value)==0?false:true; }
@@ -116,11 +116,11 @@ void DataBase::createDatabase()
     executeSql("CREATE TABLE IF NOT EXISTS answers(id INT PRIMARY KEY, body BLOB, question INT, right INT)");
     executeSql("CREATE TABLE IF NOT EXISTS tests(id INT PRIMARY KEY, date DATE, title TEXT, body BLOB)");
     executeSql("CREATE TABLE IF NOT EXISTS test_header(body BLOB)");
-
+  
     std::string query = "INSERT INTO version VALUES(";
     query += IntToStdString(DB_VERSION);
     query += ")";
-
+    
     executeSql(query);
 }
 
@@ -182,7 +182,7 @@ void DataBase::exportCategory(int thisParent, int foreignParent, DataBase* db)
             SqlRow sq = *qit;
             SqlRow q = question_select(SqlInt(sq["id"]));
             
-            int q_id = db->question_insert(q["title"], q["reference"], SqlInt(q["difficulty"]), q["body"], c_id);
+            int q_id = db->question_insert(q["title"], q["reference"], SqlInt(q["difficulty"]), q["body"], c_id, SqlInt(q["kind"]));
             
             SqlResult answers = answer_select(SqlInt(q["id"]));
             SqlResult::iterator ait;
@@ -208,7 +208,7 @@ void DataBase::exportDB(std::string file)
     SqlResult::iterator qit;
     for( qit = questions.begin(); qit < questions.end(); qit++ ) {
         SqlRow q = *qit;
-        int q_id = db.question_insert(q["title"], q["reference"], SqlInt(q["difficulty"]), q["body"], 0);
+        int q_id = db.question_insert(q["title"], q["reference"], SqlInt(q["difficulty"]), q["body"], 0, SqlInt(q["kind"]));
         SqlResult answers = answer_select(SqlInt(q["id"]));
         SqlResult::iterator ait;
         for ( ait = answers.begin(); ait < answers.end(); ait++ ) {
@@ -235,6 +235,11 @@ void DataBase::updateDataBase(int version)
     switch ( version ) {
         case 0:
         createDatabase();
+        case 1:
+        executeSql("ALTER TABLE questions ADD COLUMN kind INT");
+        executeSql("UPDATE questions SET kind=0");
+        
+        executeSql("UPDATE version SET version=2");
     }
 }
 
@@ -248,7 +253,7 @@ void DataBase::verifyVersion()
     
     if ( version > DB_VERSION ) {
         _p->error = true;
-        _p->errorMsg = "Database file newer version than application supported version";
+        _p->errorMsg = "Database file version is newer than application supported version";
     } else if ( version < DB_VERSION ) {
         updateDataBase(version);
     }

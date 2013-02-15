@@ -15,6 +15,10 @@ a {
     cursor: pointer;
 }
 
+hr {
+	border: 1px solid black;
+}
+
 .light-well {
     padding: 10px;
     background: #F5F5F5;

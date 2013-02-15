@@ -19,7 +19,7 @@ void DataBase::question_delete(int id)
     executeSql(query);
 }
 
-int DataBase::question_insert(std::string title, std::string reference, int difficulty, std::string body, int category)
+int DataBase::question_insert(std::string title, std::string reference, int difficulty, std::string body, int category, int kind)
 {
     int id = 1;
     
@@ -28,7 +28,7 @@ int DataBase::question_insert(std::string title, std::string reference, int diff
         id = SqlInt(r[0]["MAX(id)"]) + 1;
     
     sqlite3_stmt* stmt;
-    sqlite3_prepare(_p->db, "INSERT INTO questions VALUES (:id, :title, :body, :difficulty, :reference, :category)", -1, &stmt, 0 ); SQL_ERROR
+    sqlite3_prepare(_p->db, "INSERT INTO questions VALUES (:id, :title, :body, :difficulty, :reference, :category, :kind)", -1, &stmt, 0 ); SQL_ERROR
     
     unsigned int len;
     char* blob = compress(body, &len);
@@ -39,6 +39,7 @@ int DataBase::question_insert(std::string title, std::string reference, int diff
     sqlite3_bind_int ( stmt, sql_param(":difficulty"), difficulty ); SQL_ERROR
     sqlite3_bind_text( stmt, sql_param(":reference"), reference.c_str(), reference.length(), SQLITE_STATIC ); SQL_ERROR
     sqlite3_bind_int ( stmt, sql_param(":category"), category ); SQL_ERROR
+    sqlite3_bind_int ( stmt, sql_param(":kind"), kind ); SQL_ERROR
 
     if ( sqlite3_step(stmt) != SQLITE_DONE )
         return -1;
@@ -75,9 +76,9 @@ SqlResult DataBase::question_select_where(std::string where_clause)
     return executeSql(query);
 }
 
-bool DataBase::question_update(int id, std::string title, std::string reference, int difficulty, std::string body, int category)
+bool DataBase::question_update(int id, std::string title, std::string reference, int difficulty, std::string body, int category, int kind)
 {
-    std::string query = "UPDATE questions SET title=:title, body=:body, difficulty=:difficulty, reference=:reference, category=:category WHERE id=";
+    std::string query = "UPDATE questions SET title=:title, body=:body, difficulty=:difficulty, reference=:reference, category=:category, kind=:kind WHERE id=";
     query += IntToStdString(id);
 
     sqlite3_stmt* stmt;
@@ -91,6 +92,7 @@ bool DataBase::question_update(int id, std::string title, std::string reference,
     sqlite3_bind_int ( stmt, sql_param(":difficulty"), difficulty ); SQL_ERROR
     sqlite3_bind_text( stmt, sql_param(":reference"), reference.c_str(), reference.length(), SQLITE_STATIC ); SQL_ERROR
     sqlite3_bind_int ( stmt, sql_param(":category"), category ); SQL_ERROR
+    sqlite3_bind_int ( stmt, sql_param(":kind"), kind ); SQL_ERROR
 
     bool result = (sqlite3_step(stmt) == SQLITE_DONE);
     
