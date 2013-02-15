@@ -2,6 +2,7 @@
 #include "DataBasePrivate.h"
 #include "sqlite3.h"
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <sstream>
