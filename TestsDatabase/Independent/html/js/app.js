@@ -85,10 +85,12 @@ var App = {
     },
     
     databaseChanged: function() {
-        if ( AppCore.checkDatabase() )
+        if ( AppCore.checkDatabase() ) {
             AppNav.navigate('#/category/show/0');
-        else
+			$('#file-name').html(AppCore.databaseName());
+        } else {
             AppNav.navigate('#/database/showdialog');
+		}
     },
     
     populateDatabase: function(id, i) {

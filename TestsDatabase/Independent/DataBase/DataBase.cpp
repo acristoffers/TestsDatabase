@@ -24,6 +24,18 @@ std::string IntToStdString(int i)
     return ss.str();
 }
 
+struct MatchPathSeparator
+{
+    bool operator()( char ch ) const {
+        return ch == '\\' || ch == '/';
+    }
+};
+
+std::string basename( std::string const& pathname )
+{
+    return std::string( std::find_if( pathname.rbegin(), pathname.rend(), MatchPathSeparator() ).base(), pathname.end() );
+}
+
 int selectCallback(void *p_data, int num_fields, char **p_fields, char **p_col_names);
 
 DataBase::DataBase(std::string path)
@@ -35,6 +47,7 @@ DataBase::DataBase(std::string path)
     
     if ( r == SQLITE_OK ) {
         this->valid = true;
+        this->file_name = basename(path);
     } else {
         const char* error = sqlite3_errmsg(_p->db);
         std::string filename = "\nFile name: " + path;
@@ -208,6 +221,7 @@ void DataBase::exportDB(std::string file)
     SqlResult::iterator qit;
     for( qit = questions.begin(); qit < questions.end(); qit++ ) {
         SqlRow q = *qit;
+        q = question_select(SqlInt(q["id"]));
         int q_id = db.question_insert(q["title"], q["reference"], SqlInt(q["difficulty"]), q["body"], 0, SqlInt(q["kind"]));
         SqlResult answers = answer_select(SqlInt(q["id"]));
         SqlResult::iterator ait;

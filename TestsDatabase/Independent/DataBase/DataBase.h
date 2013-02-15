@@ -50,6 +50,8 @@ public:
     SqlResult test_select_where(std::string WHERE_CLAUSE);
     
        SqlRow test_header();
+  
+  std::string file_name;
 
 protected:
         bool valid;

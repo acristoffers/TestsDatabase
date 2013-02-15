@@ -52,6 +52,14 @@ Header stuff
 	position: absolute;
 }
 
+#file-name {
+	color: #CCC;
+	font-weight: bold;
+	top: 110px;
+	left: 10px;
+	position: absolute;
+}
+
 
 
 /*

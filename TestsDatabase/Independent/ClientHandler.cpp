@@ -142,6 +142,7 @@ void ClientHandler::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<Ce
     ADD_FUNCTION_TO_JS("ArrayHaveElement");
     
     ADD_FUNCTION_TO_JS("checkDatabase");
+    ADD_FUNCTION_TO_JS("databaseName");
     
     ADD_FUNCTION_TO_JS("categoryDelete");
     ADD_FUNCTION_TO_JS("categoryInsert");
@@ -224,12 +225,17 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
     }
     
     if (name == "checkDatabase") {
-		bool ret = false;
+        bool ret = false;
 
-		if ( _DB_ )
-			ret = _DB_->isValid();
+    		if ( _DB_ )
+            ret = _DB_->isValid();
 
         retval = CefV8Value::CreateBool(ret);
+        return true;
+    }
+    
+    if (name == "databaseName") {
+        retval = CefV8Value::CreateString(_DB_->file_name);
         return true;
     }
     
