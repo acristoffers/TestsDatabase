@@ -25,6 +25,8 @@ def recurse(dir)
           htm_comment = /\<![ \r\n\t]*(--([^\-]|[\r\n]|-[^\-])*--[ \r\n\t]*)\>/
           
           str = File.read(full_path(dir, sd))
+
+	  str.gsub! '<a href="#/database/dummy" class="btn pull-right" data-i18n="Populate"></a>', ''
           
           str.gsub! css_comment, ''
           str.gsub! htm_comment, ''
