@@ -77,6 +77,8 @@ ruby build.rb
 cd ../..
 
 echo "Creating install 'package'"
+strip bin/TestsDatabase
+strip bin/libcef.so
 cp ../TestsDatabase/Linux/install/* .
 cd ..
 mv build TestsDatabase-1.0
