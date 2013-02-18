@@ -74,12 +74,13 @@ cd bin/html
 
 echo "'Building' HTML/JS/CSS"
 ruby build.rb
-cd ..
-
-echo "Reducing sizes... (may take quite a while)"
-#upx --ultra-brute libcef.so TestsDatabase
-cd ..
+cd ../..
 
 echo "Creating install 'package'"
 cp ../TestsDatabase/Linux/install/* .
+cd ..
+mv build TestsDatabase-1.0
+tar -cf TestsDatabase-1.0.tar TestsDatabase-1.0
+xz -e TestsDatabase-1.0.tar
+rm -r TestsDatabase-1.0
 

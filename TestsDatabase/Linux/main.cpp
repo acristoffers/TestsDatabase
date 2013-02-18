@@ -59,7 +59,7 @@ int main(int argc, char** argv)
     gtk_init(&argc, &argv);
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_default_size(GTK_WINDOW(window), 800, 600);
+    gtk_window_set_default_size(GTK_WINDOW(window), 1024, 768);
 
     g_signal_connect (window, "delete-event", G_CALLBACK (delete_event), NULL);
 
