@@ -13,10 +13,20 @@ Mac:
 		Ruby
 		Uglifyjs
 	The Package was created with DMGCanvas.
-	It's not hard, so roll on your own.
+	dmgCanvas file can be found in TestsDatabase/Mac/install
 
 Windows:
 	Visual Studio
 	If you want to package:
 		Linux or Mac :p (or get the compressor to compile, then ruby and uglifyjs are required)
+		NSI script can be found in TestsDatabase/Win/install
 
+To run:
+Mac:
+	Out of the box
+
+Windows:
+	Out of the box (dlls required are provided by the NSI installer)
+	
+Linux:
+	Not known yet, probably some libs.
