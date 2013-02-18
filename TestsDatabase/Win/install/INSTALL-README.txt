@@ -1,0 +1,1 @@
+Just install NSI compiler, put TestsDatabase.exe, the localize folder and the 'compiled' html folder here and compile the NSI script.
