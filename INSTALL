@@ -29,4 +29,4 @@ Windows:
 	Out of the box (dlls required are provided by the NSI installer)
 	
 Linux:
-	Not known yet, probably some libs.
+	Out of the box, but may require the session to be restarted in order to the app to show up in the menu/search

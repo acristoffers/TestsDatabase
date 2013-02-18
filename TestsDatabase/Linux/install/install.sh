@@ -10,6 +10,7 @@ echo "#"
 echo
 sudo mv ~/.TestsDatabase/libcef.so /usr/lib/libcef.so
 
+mkdir -p ~/.local/share/applications
 cp TestsDatabase.desktop ~/.local/share/applications/TestsDatabase.desktop
 
 echo "Exec=`echo ~`/.TestsDatabase/TestsDatabase %F" >> ~/.local/share/applications/TestsDatabase.desktop
@@ -28,4 +29,3 @@ echo "# As long as it's not an error with TestsDatabase.desktop, then everything
 echo "# The errors are from other apps."
 echo "#"
 echo
-
