@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 mkdir -p build
+touch build/touched # for silencing the next line, in case the folder was just created
 rm -r build/*
 cd build
 
@@ -56,18 +57,20 @@ gcc *.o \
 	`pkg-config --cflags --libs gtk+-2.0` \
 	-L ../TestsDatabase/CEF/Linux/lib \
 	-lcef \
-	-Wl,-R.
+	-Wl,-R. -Wl,-R/usr/lib
 
 echo "Copying files around..."
 rm *.o
-cp -r ../TestsDatabase/CEF/Linux/resources/* .
-cp -r ../TestsDatabase/CEF/Linux/lib/libcef.so libcef.so
-cp -r ../TestsDatabase/Independent/html .
-rm html/compressor
-rm html/build.rb
-mv compressor html/
-cp ../TestsDatabase/Linux/build.rb html/build.rb
-cd html
+mkdir bin
+mv TestsDatabase bin/
+cp -r ../TestsDatabase/CEF/Linux/resources/* bin/
+cp -r ../TestsDatabase/CEF/Linux/lib/libcef.so bin/libcef.so
+cp -r ../TestsDatabase/Independent/html bin/
+rm bin/html/compressor
+rm bin/html/build.rb
+mv compressor bin/html/compressor
+cp ../TestsDatabase/Linux/build.rb bin/html/build.rb
+cd bin/html
 
 echo "'Building' HTML/JS/CSS"
 ruby build.rb
@@ -75,4 +78,8 @@ cd ..
 
 echo "Reducing sizes... (may take quite a while)"
 #upx --ultra-brute libcef.so TestsDatabase
+cd ..
+
+echo "Creating install 'package'"
+cp ../TestsDatabase/Linux/install/* .
 
