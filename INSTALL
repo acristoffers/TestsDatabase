@@ -1,0 +1,22 @@
+This is what you will need to build on:
+
+Linux:
+	g++
+	ruby
+	uglifyjs
+	tar
+	xz
+
+Mac:
+	Xcode
+	If you want to package:
+		Ruby
+		Uglifyjs
+	The Package was created with DMGCanvas.
+	It's not hard, so roll on your own.
+
+Windows:
+	Visual Studio
+	If you want to package:
+		Linux or Mac :p (or get the compressor to compile, then ruby and uglifyjs are required)
+

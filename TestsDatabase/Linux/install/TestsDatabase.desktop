@@ -1,11 +1,22 @@
 [Desktop Entry]
 Version=1.0
 Encoding=UTF-8
-Name=TestsDatabase
-GenericName=TestsDatabase
+
+Name=Tests Database
+Name[de]=Fragen Bank
+Name[pt]=Banco de Questões
+
+GenericName=Tests Database
+GenericName[de]=Fragen Bank
+GenericName[pt]=Banco de Questões
+
 Comment=Manages questions and generates tests
+Comment[de]=Verwalten Fragen und erzeugen Prüfungen
+Comment[pt]=Gerencia questões e gera provas
+
 Terminal=false
 Type=Application
 Categories=Application;Utility;
 MimeType=application/x-qdb
+StartupNotify=true
 

@@ -80,7 +80,7 @@ echo "Creating install 'package'"
 cp ../TestsDatabase/Linux/install/* .
 cd ..
 mv build TestsDatabase-1.0
-tar -cf TestsDatabase-1.0.tar TestsDatabase-1.0
-xz -e TestsDatabase-1.0.tar
-rm -r TestsDatabase-1.0
+#tar -cf TestsDatabase-1.0.tar TestsDatabase-1.0
+#xz -e TestsDatabase-1.0.tar
+#rm -r TestsDatabase-1.0
 
