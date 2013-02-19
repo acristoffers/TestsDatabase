@@ -18,9 +18,10 @@
 #include <iostream>
 #include <sstream>
 
-#include <AppHandler.h>
-#include <DataBase.h>
-#include <md5.h>
+#include "AppHandler.h"
+#include "DataBase.h"
+#include "Helper.h"
+#include "md5.h"
 
 extern std::string OpenFileDialog();
 extern std::string SaveFileDialog();
@@ -168,6 +169,8 @@ void ClientHandler::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<Ce
     
     ADD_FUNCTION_TO_JS("OpenFileDialog");
     ADD_FUNCTION_TO_JS("SaveFileDialog");
+  
+    ADD_FUNCTION_TO_JS("openURI");
 }
 
 void ClientHandler::OnContextReleased(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context)
@@ -436,6 +439,12 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
     if (name == "SaveFileDialog") {
         AppHandler::instance()->openDataBase(SaveFileDialog());
         return true;
+    }
+  
+    if (name == "openURI") {
+      std::string uri = arguments[0]->GetStringValue();
+      openURI(uri);
+      return true;
     }
 
     return false;

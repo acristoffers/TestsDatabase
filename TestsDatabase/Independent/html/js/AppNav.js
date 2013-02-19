@@ -34,6 +34,10 @@ var AppNav = {
                 show:   AppUI.categoryShow,
                 update: App.categoryUpdate
             },
+			
+			help: {
+				show: AppUI.help
+			},
             
             question: {
                 delete: App.questionDelete,

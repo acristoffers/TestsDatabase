@@ -278,7 +278,8 @@ Test Show and Print
 }
 
 .answers-sheet,
-.test {
+.test,
+.test-number {
     page-break-after: always;
 }
 

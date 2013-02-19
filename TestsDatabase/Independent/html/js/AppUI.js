@@ -195,6 +195,10 @@ var AppUI = {
         $('#open-dialog-bg').hide('fade');
         $('#alert-modal').hide('fade');
     },
+	
+	help: function() {
+        AppCore.openURI("http://www.youtube.com/watch?v=uAIZZFtFX2w&html5=True");
+	},
     
     questionEdit: function() {
         AppNav.navigate('#/category/show/' + AppNav.current.category);

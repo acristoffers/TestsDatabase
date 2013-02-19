@@ -50,6 +50,7 @@
         'File': 'Ablage',
         'Generate': 'schaffen',
 		'Generate Test': 'Erzeug Prüfung',
+		'Help': 'Hilfe',
         'Invalid number of questions': 'Ungültige Anzahl von Fragen',
         'Language': 'Sprache',
         'Merge': 'verschmelzen',

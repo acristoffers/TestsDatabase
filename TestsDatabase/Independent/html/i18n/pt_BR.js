@@ -51,6 +51,7 @@
         'Font size:': 'Tamanho da fonte:',
         'Generate': 'Gerar',
 		'Generate Test': 'Gerar prova',
+		'Help': 'Ajuda',
         'Invalid number of questions': 'Número de questões inválido',
         'Language': 'Idioma',
         'Merge': 'Mesclar', 

@@ -137,6 +137,7 @@
 		E738EAC51647CE1600B83357 /* zoomInCursor.png in Resources */ = {isa = PBXBuildFile; fileRef = E738EA5E1647CE1500B83357 /* zoomInCursor.png */; };
 		E738EAC61647CE1600B83357 /* zoomOutCursor.png in Resources */ = {isa = PBXBuildFile; fileRef = E738EA5F1647CE1500B83357 /* zoomOutCursor.png */; };
 		E7808D65165589DB00FB7FFA /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7808D63165589DB00FB7FFA /* md5.cpp */; };
+		E78D817E16D3D3D10085BA1A /* Helper.mm in Sources */ = {isa = PBXBuildFile; fileRef = E78D817C16D3D3D10085BA1A /* Helper.mm */; };
 		E7A6B9D41648681C00F93EFA /* FileDialog.mm in Sources */ = {isa = PBXBuildFile; fileRef = E7A6B9D31648681C00F93EFA /* FileDialog.mm */; };
 		E7A6B9D816487A2100F93EFA /* AppHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E7A6B9D616487A2100F93EFA /* AppHandler.cpp */; };
 /* End PBXBuildFile section */
@@ -299,6 +300,8 @@
 		E738EA5F1647CE1500B83357 /* zoomOutCursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = zoomOutCursor.png; path = TestsDatabase/CEF/Mac/resources/zoomOutCursor.png; sourceTree = "<group>"; };
 		E7808D63165589DB00FB7FFA /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = md5.cpp; path = TestsDatabase/Independent/MD5/md5.cpp; sourceTree = "<group>"; };
 		E7808D64165589DB00FB7FFA /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = md5.h; path = TestsDatabase/Independent/MD5/md5.h; sourceTree = "<group>"; };
+		E78D817C16D3D3D10085BA1A /* Helper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Helper.mm; path = Mac/Helper.mm; sourceTree = "<group>"; };
+		E78D817F16D3D48E0085BA1A /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Helper.h; path = TestsDatabase/Independent/Helper.h; sourceTree = "<group>"; };
 		E7A6B9D31648681C00F93EFA /* FileDialog.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FileDialog.mm; path = Mac/FileDialog.mm; sourceTree = "<group>"; };
 		E7A6B9D616487A2100F93EFA /* AppHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppHandler.cpp; path = Independent/AppHandler.cpp; sourceTree = "<group>"; };
 		E7A6B9D716487A2100F93EFA /* AppHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppHandler.h; path = Independent/AppHandler.h; sourceTree = "<group>"; };
@@ -391,6 +394,7 @@
 				E738E8871647BE3A00B83357 /* AppDelegate.h */,
 				E738E89A1647BFFB00B83357 /* main.mm */,
 				E738E88A1647BE3A00B83357 /* TestsDatabase-Prefix.pch */,
+				E78D817C16D3D3D10085BA1A /* Helper.mm */,
 				E738E86B1647BC2900B83357 /* Supporting Files */,
 			);
 			path = TestsDatabase;
@@ -417,6 +421,7 @@
 				E71028331647FE2E007DF484 /* DataBase */,
 				E738E89E1647C85D00B83357 /* ClientHandler.cpp */,
 				E738E89F1647C85D00B83357 /* ClientHandler.h */,
+				E78D817F16D3D48E0085BA1A /* Helper.h */,
 			);
 			name = "Platform Independent files";
 			sourceTree = "<group>";
@@ -758,6 +763,7 @@
 				E71B9880164FF3510042603B /* huffman.c in Sources */,
 				E71B9881164FF3510042603B /* randtable.c in Sources */,
 				E7808D65165589DB00FB7FFA /* md5.cpp in Sources */,
+				E78D817E16D3D3D10085BA1A /* Helper.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
