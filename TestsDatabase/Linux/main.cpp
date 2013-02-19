@@ -83,8 +83,8 @@ int main(int argc, char** argv)
     gtk_container_add(GTK_CONTAINER(window), vbox);
     gtk_widget_show_all(GTK_WIDGET(window));
 
-	if ( argc > 1 )
-		AppHandler::instance()->openDataBase(argv[1]);
+    if ( argc > 1 )
+        AppHandler::instance()->openDataBase(argv[1]);
 
     CefRunMessageLoop();
 
