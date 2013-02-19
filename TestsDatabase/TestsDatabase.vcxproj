@@ -100,6 +100,7 @@ XCOPY /I /E /Y "$(ProjectDir)Independent\html" "$(OutputPath)html"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Helper.cpp" />
     <ClCompile Include="Independent\AppHandler.cpp" />
     <ClCompile Include="Independent\bzip\blocksort.c" />
     <ClCompile Include="Independent\bzip\bzlib.c" />
@@ -127,6 +128,7 @@ XCOPY /I /E /Y "$(ProjectDir)Independent\html" "$(OutputPath)html"</Command>
     <ClInclude Include="Independent\ClientHandler.h" />
     <ClInclude Include="Independent\DataBase\DataBase.h" />
     <ClInclude Include="Independent\DataBase\DataBasePrivate.h" />
+    <ClInclude Include="Independent\Helper.h" />
     <ClInclude Include="Independent\MD5\md5.h" />
     <ClInclude Include="Independent\sqlite\sqlite3.h" />
   </ItemGroup>
