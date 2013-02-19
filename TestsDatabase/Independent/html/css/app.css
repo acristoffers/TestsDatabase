@@ -203,6 +203,12 @@ input[type=number] {
     margin-top: 5px;
 }
 
+.checkbox * {
+	display: inline-block;
+	vertical-align: middle;
+	margin:0 0;padding: 0 0;
+}
+
 
 /*
 Open file dialog
