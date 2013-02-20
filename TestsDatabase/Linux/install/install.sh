@@ -16,6 +16,9 @@ cp TestsDatabase.desktop ~/.local/share/applications/TestsDatabase.desktop
 echo "Exec=`echo ~`/.TestsDatabase/TestsDatabase %F" >> ~/.local/share/applications/TestsDatabase.desktop
 echo "Icon=`echo ~`/.TestsDatabase/html/img/icon.png" >> ~/.local/share/applications/TestsDatabase.desktop
 
+chmod u+x ~/.local/share/applications/TestsDatabase.desktop
+cp ~/.local/share/applications/TestsDatabase.desktop `xdg-user-dir DESKTOP`
+
 xdg-mime install acristoffers-x-qdb-mime.xml
 xdg-mime default TestsDatabase.desktop application/x-qdb
 xdg-icon-resource install --context mimetypes --size 254 ~/.TestsDatabase/html/img/icon.png application-x-qdb
