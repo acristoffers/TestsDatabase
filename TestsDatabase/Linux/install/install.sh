@@ -13,7 +13,7 @@ sudo mv ~/.TestsDatabase/libcef.so /usr/lib/libcef.so
 mkdir -p ~/.local/share/applications
 cp TestsDatabase.desktop ~/.local/share/applications/TestsDatabase.desktop
 
-echo "Exec=`echo ~`/.TestsDatabase/TestsDatabase %F" >> ~/.local/share/applications/TestsDatabase.desktop
+echo "Exec=`echo ~`/.TestsDatabase/TestsDatabase %f" >> ~/.local/share/applications/TestsDatabase.desktop
 echo "Icon=`echo ~`/.TestsDatabase/html/img/icon.png" >> ~/.local/share/applications/TestsDatabase.desktop
 
 chmod u+x ~/.local/share/applications/TestsDatabase.desktop

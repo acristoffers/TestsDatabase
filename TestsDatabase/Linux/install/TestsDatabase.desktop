@@ -16,7 +16,8 @@ Comment[pt]=Gerencia questões e gera provas
 
 Terminal=false
 Type=Application
-Categories=Application;Utility;
+Categories=Utility;
 MimeType=application/x-qdb
 StartupNotify=true
 StartupWMClass=TestsDatabase
+

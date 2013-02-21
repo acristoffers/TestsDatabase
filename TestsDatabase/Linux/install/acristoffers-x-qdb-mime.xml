@@ -2,6 +2,8 @@
 <mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
 	<mime-type type="application/x-qdb">
     	<comment>Tests DataBase file</comment>
+    	<comment xml:lang="de">Fragen Bank Datei</comment>
+    	<comment xml:lang="pt">Arquivo Banco de Questões</comment>
     	<glob pattern="*.qdb"/>
   	</mime-type>
 </mime-info>
