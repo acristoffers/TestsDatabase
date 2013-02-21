@@ -19,4 +19,4 @@ Type=Application
 Categories=Application;Utility;
 MimeType=application/x-qdb
 StartupNotify=true
-
+StartupWMClass=TestsDatabase
