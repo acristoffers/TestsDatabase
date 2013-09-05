@@ -1,4 +1,4 @@
-/* (c) 2012 Álan Crístoffer */
+﻿/* (c) 2012 Álan Crístoffer */
 
 #ifndef APPHANDLER_H
 #define APPHANDLER_H
@@ -11,28 +11,27 @@
 
 class ClientHandler;
 
-class AppHandler {
+class AppHandler
+{
 public:
-    ClientHandler* clientHandler;
-    static AppHandler* instance();
-    
-    DataBase* getDataBase() const;
-    
+    ClientHandler *clientHandler;
+    static AppHandler *instance();
+
+    DataBase *getDataBase() const;
+
     void openDataBase(std::string file);
-    
+
     static CefRefPtr<CefV8Value> SqlResultToJSArray(SqlResult);
     static CefRefPtr<CefV8Value> SqlRowToJSObject(SqlRow);
-    
+
     static std::string htmlFolderPath;
-    
 protected:
     AppHandler();
-    
-    void emitModelChanged();
-    
-private:
-    static AppHandler* _self;
-    DataBase* _db;
-};
 
+    void emitModelChanged();
+
+private:
+    static AppHandler *_self;
+    DataBase          *_db;
+};
 #endif

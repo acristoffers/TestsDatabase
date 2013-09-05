@@ -1,4 +1,4 @@
-/* (c) 2012 Álan Crístoffer */
+﻿/* (c) 2012 Álan Crístoffer */
 
 #import "AppDelegate.h"
 
@@ -25,57 +25,58 @@ extern std::string SaveFileDialog();
 
 @synthesize window;
 
-- (void)dealloc
+-(void)dealloc
 {
     [super dealloc];
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+-(void)applicationDidFinishLaunching: (NSNotification *)aNotification
 {
     [[NSApplication sharedApplication] setPresentationOptions:NSFullScreenWindowMask];
-    
-    [window setCollectionBehavior: NSWindowCollectionBehaviorFullScreenPrimary];
-    
+
+    [window setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];
+
     // comes first because ClientHandler needs it when created;
     std::string path = [[[NSBundle mainBundle] resourcePath] cStringUsingEncoding:NSUTF8StringEncoding];
     AppHandler::htmlFolderPath = path + "/html";
-    path = "file://" + path + "/html/index.html";
-    
-    CefSettings appSettings;
+    path                       = "file://" + path + "/html/index.html";
+
+    CefSettings        appSettings;
     CefBrowserSettings browserSettings;
-    
-    CefRefPtr<CefApp> cefApplication;
-    CefRefPtr<CefClient> client(new ClientHandler());
-    
+
+    CefRefPtr<CefApp>    cefApplication;
+    CefRefPtr<CefClient> client( new ClientHandler() );
+
     CefWindowInfo info;
     info.SetAsChild([window contentView], 0, 0, [[window contentView] frame].size.width, [[window contentView] frame].size.height);
-    
+
     CefInitialize(appSettings, cefApplication);
-    
+
     CefBrowser::CreateBrowser(info, client, path, browserSettings);
-    
+
     CefRunMessageLoop();
 }
 
-- (BOOL)application:(NSApplication *)sender openFile:(NSString *)filename
+-(BOOL)application: (NSApplication *)sender openFile: (NSString *)filename
 {
     AppHandler::instance()->openDataBase([filename cStringUsingEncoding:NSUTF8StringEncoding]);
+
     return true;
 }
 
-- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
+-(BOOL)applicationShouldTerminateAfterLastWindowClosed: (NSApplication *)sender
 {
     return YES;
 }
 
-- (IBAction)openAction:(id)sender
+-(IBAction)openAction: (id)sender
 {
-    AppHandler::instance()->openDataBase(OpenFileDialog());
+    AppHandler::instance()->openDataBase( OpenFileDialog() );
 }
 
-- (IBAction)saveAction:(id)sender
+-(IBAction)saveAction: (id)sender
 {
-    AppHandler::instance()->openDataBase(SaveFileDialog());
+    AppHandler::instance()->openDataBase( SaveFileDialog() );
 }
 
 @end

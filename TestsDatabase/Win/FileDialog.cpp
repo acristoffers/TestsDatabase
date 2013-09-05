@@ -1,8 +1,8 @@
-#include <windows.h>      // For common windows data types and function headers
+﻿#include <windows.h> // For common windows data types and function headers
 #define STRICT_TYPED_ITEMIDS
 #include <shlobj.h>
-#include <objbase.h>      // For COM headers
-#include <shobjidl.h>     // for IFileDialogEvents and IFileDialogControlEvents
+#include <objbase.h>  // For COM headers
+#include <shobjidl.h> // for IFileDialogEvents and IFileDialogControlEvents
 #include <shlwapi.h>
 #include <knownfolders.h> // for KnownFolder APIs/datatypes/function headers
 #include <propvarutil.h>  // for PROPVAR-related functions
@@ -19,9 +19,10 @@
 // Convert a wide Unicode string to an UTF8 string
 std::string utf8_encode(const std::wstring &wstr)
 {
-    int size_needed = WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int)wstr.size(), NULL, 0, NULL, NULL);
-    std::string strTo( size_needed, 0 );
-    WideCharToMultiByte                  (CP_UTF8, 0, &wstr[0], (int)wstr.size(), &strTo[0], size_needed, NULL, NULL);
+    int         size_needed = WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int) wstr.size(), NULL, 0, NULL, NULL);
+    std::string strTo(size_needed, 0);
+
+    WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int) wstr.size(), &strTo[0], size_needed, NULL, NULL);
     return strTo;
 }
 
@@ -29,9 +30,10 @@ std::string utf8_encode(const std::wstring &wstr)
 // I don't use this one here, but it's here if I need it in the future
 std::wstring utf8_decode(const std::string &str)
 {
-    int size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), NULL, 0);
-    std::wstring wstrTo( size_needed, 0 );
-    MultiByteToWideChar                  (CP_UTF8, 0, &str[0], (int)str.size(), &wstrTo[0], size_needed);
+    int          size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int) str.size(), NULL, 0);
+    std::wstring wstrTo(size_needed, 0);
+
+    MultiByteToWideChar(CP_UTF8, 0, &str[0], (int) str.size(), &wstrTo[0], size_needed);
     return wstrTo;
 }
 
@@ -40,147 +42,204 @@ std::wstring utf8_decode(const std::string &str)
 class CDialogEventHandler : public IFileDialogEvents, public IFileDialogControlEvents
 {
 public:
-	// IUnknown methods
-	IFACEMETHODIMP QueryInterface(REFIID riid, void** ppv)
-	{
-		static const QITAB qit[] = {
-			QITABENT(CDialogEventHandler, IFileDialogEvents),
-			QITABENT(CDialogEventHandler, IFileDialogControlEvents),
-			{ 0 },
-		};
-		//return QISearch(this, qit, riid, ppv);
+    // IUnknown methods
+    IFACEMETHODIMP QueryInterface(REFIID riid, void **ppv)
+    {
+        static const QITAB qit[] = {
+            QITABENT(CDialogEventHandler,        IFileDialogEvents),
+            QITABENT(CDialogEventHandler, IFileDialogControlEvents),
+            { 0 },
+        };
 
-		*ppv = NULL;
-		if(riid == IID_IUnknown || riid == IID_IFileDialogEvents) {
-			*ppv = static_cast<IFileDialogEvents*>(this);
-			AddRef();
-			return S_OK;
-		}
+        // return QISearch(this, qit, riid, ppv);
 
-		if(riid == IID_IUnknown || riid == IID_IFileDialogControlEvents) {
-			*ppv = static_cast<IFileDialogControlEvents*>(this);
-			AddRef();
-			return S_OK;
-		}
+        *ppv = NULL;
+        if ( (riid == IID_IUnknown) || (riid == IID_IFileDialogEvents) ) {
+            *ppv = static_cast<IFileDialogEvents *> (this);
+            AddRef();
+            return S_OK;
+        }
 
-		return E_NOINTERFACE;
-	}
+        if ( (riid == IID_IUnknown) || (riid == IID_IFileDialogControlEvents) ) {
+            *ppv = static_cast<IFileDialogControlEvents *> (this);
+            AddRef();
+            return S_OK;
+        }
 
-	IFACEMETHODIMP_(ULONG) AddRef()
-	{
-		return InterlockedIncrement(&_cRef);
-	}
+        return E_NOINTERFACE;
+    }
 
-	IFACEMETHODIMP_(ULONG) Release()
-	{
-		long cRef = InterlockedDecrement(&_cRef);
-		if (!cRef)
-			delete this;
-		return cRef;
-	}
+    IFACEMETHODIMP_(ULONG) AddRef() {
+        return InterlockedIncrement(&_cRef);
+    }
 
-	// IFileDialogEvents methods
-	IFACEMETHODIMP OnFileOk(IFileDialog *) { return S_OK; };
-	IFACEMETHODIMP OnFolderChange(IFileDialog *) { return S_OK; };
-	IFACEMETHODIMP OnFolderChanging(IFileDialog *, IShellItem *) { return S_OK; };
-	IFACEMETHODIMP OnHelp(IFileDialog *) { return S_OK; };
-	IFACEMETHODIMP OnSelectionChange(IFileDialog *) { return S_OK; };
-	IFACEMETHODIMP OnShareViolation(IFileDialog *, IShellItem *, FDE_SHAREVIOLATION_RESPONSE *) { return S_OK; };
-	IFACEMETHODIMP OnTypeChange(IFileDialog *pfd) { return S_OK; };
-	IFACEMETHODIMP OnOverwrite(IFileDialog *, IShellItem *, FDE_OVERWRITE_RESPONSE *) { return S_OK; };
+    IFACEMETHODIMP_(ULONG) Release() {
+        long cRef = InterlockedDecrement(&_cRef);
 
-	// IFileDialogControlEvents methods
-	IFACEMETHODIMP OnItemSelected(IFileDialogCustomize *pfdc, DWORD dwIDCtl, DWORD dwIDItem) { return S_OK; };
-	IFACEMETHODIMP OnButtonClicked(IFileDialogCustomize *, DWORD) { return S_OK; };
-	IFACEMETHODIMP OnCheckButtonToggled(IFileDialogCustomize *, DWORD, BOOL) { return S_OK; };
-	IFACEMETHODIMP OnControlActivating(IFileDialogCustomize *, DWORD) { return S_OK; };
+        if ( !cRef ) {
+            delete this;
+        }
+        return cRef;
+    }
 
-	CDialogEventHandler() : _cRef(1) { };
+    // IFileDialogEvents methods
+    IFACEMETHODIMP OnFileOk(IFileDialog *)
+    {
+        return S_OK;
+    }
+
+    IFACEMETHODIMP OnFolderChange(IFileDialog *)
+    {
+        return S_OK;
+    }
+
+    IFACEMETHODIMP OnFolderChanging(IFileDialog *, IShellItem *)
+    {
+        return S_OK;
+    }
+
+    IFACEMETHODIMP OnHelp(IFileDialog *)
+    {
+        return S_OK;
+    }
+
+    IFACEMETHODIMP OnSelectionChange(IFileDialog *)
+    {
+        return S_OK;
+    }
+
+    IFACEMETHODIMP OnShareViolation(IFileDialog *, IShellItem *, FDE_SHAREVIOLATION_RESPONSE *)
+    {
+        return S_OK;
+    }
+
+    IFACEMETHODIMP OnTypeChange(IFileDialog *pfd)
+    {
+        return S_OK;
+    }
+
+    IFACEMETHODIMP OnOverwrite(IFileDialog *, IShellItem *, FDE_OVERWRITE_RESPONSE *)
+    {
+        return S_OK;
+    }
+
+    // IFileDialogControlEvents methods
+    IFACEMETHODIMP OnItemSelected(IFileDialogCustomize *pfdc, DWORD dwIDCtl, DWORD dwIDItem)
+    {
+        return S_OK;
+    }
+
+    IFACEMETHODIMP OnButtonClicked(IFileDialogCustomize *, DWORD)
+    {
+        return S_OK;
+    }
+
+    IFACEMETHODIMP OnCheckButtonToggled(IFileDialogCustomize *, DWORD, BOOL)
+    {
+        return S_OK;
+    }
+
+    IFACEMETHODIMP OnControlActivating(IFileDialogCustomize *, DWORD)
+    {
+        return S_OK;
+    }
+
+    CDialogEventHandler() : _cRef(1)
+    {
+    }
+
 private:
-	~CDialogEventHandler() { };
-	long _cRef;
+    ~CDialogEventHandler()
+    {
+    }
+
+    long _cRef;
 };
 
 std::string OpenFileDialog()
 {
-	IFileDialog *pfd = NULL;
-	CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfd));
+    IFileDialog *pfd = NULL;
 
-	IFileDialogEvents *pfde = new CDialogEventHandler();
+    CoCreateInstance( CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfd) );
 
-	DWORD dwCookie;
-	pfd->Advise(pfde, &dwCookie);
+    IFileDialogEvents *pfde = new CDialogEventHandler();
 
-	const COMDLG_FILTERSPEC c_rgSaveTypes[] = {
-		{L"Tests Database File(*.qdb)",       L"*.qdb"}
-	};
+    DWORD dwCookie;
+    pfd->Advise(pfde, &dwCookie);
 
-	DWORD dwFlags;
-	pfd->GetOptions(&dwFlags);
-	pfd->SetOptions(dwFlags | FOS_FORCEFILESYSTEM);
-	pfd->SetFileTypes(ARRAYSIZE(c_rgSaveTypes), c_rgSaveTypes);
-	pfd->SetDefaultExtension(L"qdb");
-	pfd->Show(NULL);
+    const COMDLG_FILTERSPEC c_rgSaveTypes[] = {
+        { L"Tests Database File(*.qdb)", L"*.qdb" }
+    };
 
-	IShellItem *psiResult;
-	HRESULT hr = pfd->GetResult(&psiResult);
+    DWORD dwFlags;
+    pfd->GetOptions(&dwFlags);
+    pfd->SetOptions(dwFlags | FOS_FORCEFILESYSTEM);
+    pfd->SetFileTypes(ARRAYSIZE(c_rgSaveTypes), c_rgSaveTypes);
+    pfd->SetDefaultExtension(L"qdb");
+    pfd->Show(NULL);
 
-	if (!SUCCEEDED(hr))
-		return "";
+    IShellItem *psiResult;
+    HRESULT    hr = pfd->GetResult(&psiResult);
 
-	PWSTR pszFilePath = NULL;
-	psiResult->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
+    if ( !SUCCEEDED(hr) ) {
+        return "";
+    }
 
-	pfd->Unadvise(dwCookie);
-	pfde->Release();
-	pfd->Release();
+    PWSTR pszFilePath = NULL;
+    psiResult->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
 
-	std::wstring wide = pszFilePath;
-	std::string file = utf8_encode(wide);
+    pfd->Unadvise(dwCookie);
+    pfde->Release();
+    pfd->Release();
 
-	CoTaskMemFree(pszFilePath);
+    std::wstring wide = pszFilePath;
+    std::string  file = utf8_encode(wide);
 
-	return file;
+    CoTaskMemFree(pszFilePath);
+
+    return file;
 }
 
 std::string SaveFileDialog()
 {
-	IFileDialog *pfd = NULL;
-	CoCreateInstance(CLSID_FileSaveDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfd));
+    IFileDialog *pfd = NULL;
 
-	IFileDialogEvents *pfde = new CDialogEventHandler();
+    CoCreateInstance( CLSID_FileSaveDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pfd) );
 
-	DWORD dwCookie;
-	pfd->Advise(pfde, &dwCookie);
+    IFileDialogEvents *pfde = new CDialogEventHandler();
 
-	const COMDLG_FILTERSPEC c_rgSaveTypes[] = {
-		{L"Tests Database File(*.qdb)",       L"*.qdb"}
-	};
+    DWORD dwCookie;
+    pfd->Advise(pfde, &dwCookie);
 
-	DWORD dwFlags;
-	pfd->GetOptions(&dwFlags);
-	pfd->SetOptions(dwFlags | FOS_FORCEFILESYSTEM);
-	pfd->SetFileTypes(ARRAYSIZE(c_rgSaveTypes), c_rgSaveTypes);
-	pfd->SetDefaultExtension(L"qdb");
-	pfd->Show(NULL);
+    const COMDLG_FILTERSPEC c_rgSaveTypes[] = {
+        { L"Tests Database File(*.qdb)", L"*.qdb" }
+    };
 
-	IShellItem *psiResult;
-	HRESULT hr = pfd->GetResult(&psiResult);
+    DWORD dwFlags;
+    pfd->GetOptions(&dwFlags);
+    pfd->SetOptions(dwFlags | FOS_FORCEFILESYSTEM);
+    pfd->SetFileTypes(ARRAYSIZE(c_rgSaveTypes), c_rgSaveTypes);
+    pfd->SetDefaultExtension(L"qdb");
+    pfd->Show(NULL);
 
-	if (!SUCCEEDED(hr))
-		return "";
+    IShellItem *psiResult;
+    HRESULT    hr = pfd->GetResult(&psiResult);
 
-	PWSTR pszFilePath = NULL;
-	psiResult->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
+    if ( !SUCCEEDED(hr) ) {
+        return "";
+    }
 
-	pfd->Unadvise(dwCookie);
-	pfde->Release();
-	pfd->Release();
+    PWSTR pszFilePath = NULL;
+    psiResult->GetDisplayName(SIGDN_FILESYSPATH, &pszFilePath);
 
-	std::wstring wide = pszFilePath;
-	std::string file = utf8_encode(wide);
+    pfd->Unadvise(dwCookie);
+    pfde->Release();
+    pfd->Release();
 
-	CoTaskMemFree(pszFilePath);
+    std::wstring wide = pszFilePath;
+    std::string  file = utf8_encode(wide);
 
-	return file;
+    CoTaskMemFree(pszFilePath);
+
+    return file;
 }

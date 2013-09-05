@@ -1,5 +1,6 @@
-#include "DataBasePrivate.h"
+﻿#include "DataBasePrivate.h"
 
-DataBasePrivate::~DataBasePrivate() {
+DataBasePrivate::~DataBasePrivate()
+{
     sqlite3_close(db);
 }

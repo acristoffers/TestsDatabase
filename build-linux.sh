@@ -51,11 +51,12 @@ g++ -c ../TestsDatabase/Linux/*.cpp \
 	`pkg-config --cflags --libs gtk+-2.0`
 
 echo "Linking..."
-gcc *.o \
+g++ *.o \
 	../TestsDatabase/CEF/Linux/lib/libcef_dll_wrapper.a \
 	-o TestsDatabase \
 	`pkg-config --cflags --libs gtk+-2.0` \
 	-L ../TestsDatabase/CEF/Linux/lib \
+	-ldl \
 	-lcef \
 	-Wl,-R. -Wl,-R/usr/lib
 

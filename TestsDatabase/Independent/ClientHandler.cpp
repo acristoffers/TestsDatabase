@@ -1,4 +1,4 @@
-/* (c) 2012 Álan Crístoffer */
+﻿/* (c) 2012 Álan Crístoffer */
 
 #include "ClientHandler.h"
 
@@ -27,53 +27,59 @@ extern std::string OpenFileDialog();
 extern std::string SaveFileDialog();
 
 /* std::string.split BEGIN */
-std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems) {
+std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems)
+{
     std::stringstream ss(s);
-    std::string item;
-    while(std::getline(ss, item, delim)) {
+    std::string       item;
+
+    while ( std::getline(ss, item, delim) ) {
         elems.push_back(item);
     }
     return elems;
 }
 
-std::vector<std::string> split(const std::string &s, char delim) {
+std::vector<std::string> split(const std::string &s, char delim)
+{
     std::vector<std::string> elems;
+
     return split(s, delim, elems);
 }
+
 /* std::string.split END */
 
 ClientHandler::ClientHandler() : m_Browser(NULL), m_BrowserHwnd(NULL)
 {
 #ifndef DEBUG
     std::fstream file;
-    file.open((AppHandler::htmlFolderPath + "/blob").c_str(), std::ios::binary | std::ios::in | std::ios::ate );
-    
+    file.open( (AppHandler::htmlFolderPath + "/blob").c_str(), std::ios::binary | std::ios::in | std::ios::ate );
+
     if ( file.is_open() ) {
-        unsigned int srcLen = (unsigned)file.tellg();
-        
-        char* source = (char*)malloc(srcLen);
-        
+        unsigned int srcLen = (unsigned) file.tellg();
+
+        char *source = (char *) malloc(srcLen);
+
         file.seekg(0, std::ios::beg);
         file.read(source, srcLen);
         file.close();
-        
+
         std::string md5list = DataBase::uncompress(source);
-        
+
         std::vector<std::string> fileMD5List = split(md5list, '\n');
-        
+
         std::vector<std::string>::iterator it;
-        for ( it=fileMD5List.begin() ; it < fileMD5List.end(); it++ ) {
+        for ( it = fileMD5List.begin(); it < fileMD5List.end(); it++ ) {
             std::string fileMD5 = *it;
-            
+
             std::vector<std::string> fm = split(fileMD5, '=');
-            
-			std::ifstream t((AppHandler::htmlFolderPath + "/" + fm[0]).c_str(), std::ios::binary);
-            std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
-            
+
+            std::ifstream t( (AppHandler::htmlFolderPath + "/" + fm[0]).c_str(), std::ios::binary );
+            std::string   str( ( std::istreambuf_iterator<char> (t) ), std::istreambuf_iterator<char> () );
+
             std::string filemd5str = md5(str);
-            
-            if ( filemd5str != fm[1] )
+
+            if ( filemd5str != fm[1] ) {
                 exit(0);
+            }
         }
     } else {
         exit(0);
@@ -89,16 +95,16 @@ bool ClientHandler::DoClose(CefRefPtr<CefBrowser> browser)
 
 void ClientHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser)
 {
-    if (!m_Browser.get())   {
-        m_Browser = browser;
+    if ( !m_Browser.get() ) {
+        m_Browser     = browser;
         m_BrowserHwnd = browser->GetWindowHandle();
     }
 }
 
 void ClientHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser)
 {
-    if (m_BrowserHwnd == browser->GetWindowHandle()) {
-		// Free the browser pointer so that the browser can be destroyed
+    if ( m_BrowserHwnd == browser->GetWindowHandle() ) {
+        // Free the browser pointer so that the browser can be destroyed
         m_Browser = NULL;
     }
 }
@@ -107,279 +113,281 @@ void ClientHandler::OnLoadEnd(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame>
 {
 }
 
-bool ClientHandler::OnBeforePopup(CefRefPtr<CefBrowser> parentBrowser, const CefPopupFeatures& popupFeatures, CefWindowInfo& windowInfo, const CefString& url, CefRefPtr<CefClient>& client, CefBrowserSettings& settings)
+bool ClientHandler::OnBeforePopup(CefRefPtr<CefBrowser> parentBrowser, const CefPopupFeatures &popupFeatures, CefWindowInfo &windowInfo, const CefString &url, CefRefPtr<CefClient> &client, CefBrowserSettings &settings)
 {
     return false;
 }
 
 void ClientHandler::OnContextCreated(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context)
 {
-	// Retrieve the context's window object.
+    // Retrieve the context's window object.
     CefRefPtr<CefV8Value> window = context->GetGlobal();
-    
-	// Create an instance of my CefV8Handler object.
-	// In this case it's this object, and content will be executed in bool ClientHandler::Execute(...)
+
+    // Create an instance of my CefV8Handler object.
+    // In this case it's this object, and content will be executed in bool ClientHandler::Execute(...)
     CefRefPtr<CefV8Handler> handler = this;
-    
-	// Create a new object
+
+    // Create a new object
     CefRefPtr<CefV8Value> cpp = CefV8Value::CreateObject(NULL);
-    
-	// Add the object to windows JS: window.cpp
+
+    // Add the object to windows JS: window.cpp
     window->SetValue("AppCore", cpp, V8_PROPERTY_ATTRIBUTE_NONE);
-    
+
     /*
-     // Create a function.
-     CefRefPtr<CefV8Value> function = CefV8Value::CreateFunction("ChangeTextInJS", handler);
-     
-     // Add the function to the object
-     cpp->SetValue("ChangeTextInJS", function, V8_PROPERTY_ATTRIBUTE_NONE);
+     *  // Create a function.
+     *  CefRefPtr<CefV8Value> function = CefV8Value::CreateFunction("ChangeTextInJS", handler);
+     *
+     *  // Add the function to the object
+     *  cpp->SetValue("ChangeTextInJS", function, V8_PROPERTY_ATTRIBUTE_NONE);
      */
 #define ADD_FUNCTION_TO_JS(FUNCTION) cpp->SetValue(FUNCTION, CefV8Value::CreateFunction(FUNCTION, handler), V8_PROPERTY_ATTRIBUTE_NONE)
-    
-    ADD_FUNCTION_TO_JS("answerDelete");
-    ADD_FUNCTION_TO_JS("answerInsert");
-    ADD_FUNCTION_TO_JS("answerSelect");
-    
-    ADD_FUNCTION_TO_JS("ArrayHaveElement");
-    
-    ADD_FUNCTION_TO_JS("checkDatabase");
-    ADD_FUNCTION_TO_JS("databaseName");
-    
-    ADD_FUNCTION_TO_JS("categoryDelete");
-    ADD_FUNCTION_TO_JS("categoryInsert");
-    ADD_FUNCTION_TO_JS("categorySelect");
-    ADD_FUNCTION_TO_JS("categoryUpdate");
-    
-    ADD_FUNCTION_TO_JS("export");
 
-    ADD_FUNCTION_TO_JS("listCategories");
-    ADD_FUNCTION_TO_JS("listQuestions");
-    ADD_FUNCTION_TO_JS("listTests");
-    
-    ADD_FUNCTION_TO_JS("questionDelete");
-    ADD_FUNCTION_TO_JS("questionInsert");
-    ADD_FUNCTION_TO_JS("questionSelect");
+    ADD_FUNCTION_TO_JS(     "answerDelete");
+    ADD_FUNCTION_TO_JS(     "answerInsert");
+    ADD_FUNCTION_TO_JS(     "answerSelect");
+
+    ADD_FUNCTION_TO_JS( "ArrayHaveElement");
+
+    ADD_FUNCTION_TO_JS(    "checkDatabase");
+    ADD_FUNCTION_TO_JS(     "databaseName");
+
+    ADD_FUNCTION_TO_JS(   "categoryDelete");
+    ADD_FUNCTION_TO_JS(   "categoryInsert");
+    ADD_FUNCTION_TO_JS(   "categorySelect");
+    ADD_FUNCTION_TO_JS(   "categoryUpdate");
+
+    ADD_FUNCTION_TO_JS(           "export");
+
+    ADD_FUNCTION_TO_JS(   "listCategories");
+    ADD_FUNCTION_TO_JS(    "listQuestions");
+    ADD_FUNCTION_TO_JS(        "listTests");
+
+    ADD_FUNCTION_TO_JS(   "questionDelete");
+    ADD_FUNCTION_TO_JS(   "questionInsert");
+    ADD_FUNCTION_TO_JS(   "questionSelect");
     ADD_FUNCTION_TO_JS("questionSelectIds");
-    ADD_FUNCTION_TO_JS("questionUpdate");
-    
-    ADD_FUNCTION_TO_JS("testDelete");
-    ADD_FUNCTION_TO_JS("testHeader");
-    ADD_FUNCTION_TO_JS("testInsert");
-    ADD_FUNCTION_TO_JS("testSelect");
-    
-    ADD_FUNCTION_TO_JS("OpenFileDialog");
-    ADD_FUNCTION_TO_JS("SaveFileDialog");
-  
-    ADD_FUNCTION_TO_JS("openURI");
+    ADD_FUNCTION_TO_JS(   "questionUpdate");
+
+    ADD_FUNCTION_TO_JS(       "testDelete");
+    ADD_FUNCTION_TO_JS(       "testHeader");
+    ADD_FUNCTION_TO_JS(       "testInsert");
+    ADD_FUNCTION_TO_JS(       "testSelect");
+
+    ADD_FUNCTION_TO_JS(   "OpenFileDialog");
+    ADD_FUNCTION_TO_JS(   "SaveFileDialog");
+
+    ADD_FUNCTION_TO_JS(          "openURI");
 }
 
 void ClientHandler::OnContextReleased(CefRefPtr<CefBrowser> browser, CefRefPtr<CefFrame> frame, CefRefPtr<CefV8Context> context)
 {
-    
 }
 
 #define _DB_ AppHandler::instance()->getDataBase()
 
-bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object, const CefV8ValueList& arguments, CefRefPtr<CefV8Value>& retval, CefString& exception)
+bool ClientHandler::Execute(const CefString &name, CefRefPtr<CefV8Value> object, const CefV8ValueList &arguments, CefRefPtr<CefV8Value> &retval, CefString &exception)
 {
-    if (name == "answerDelete") {
+    if ( name == "answerDelete" ) {
         int id = arguments[0]->GetIntValue();
-        
+
         _DB_->answer_delete(id);
-        
+
         return true;
     }
-    
-    if (name == "answerInsert") {
-        CefString a = arguments[0]->GetStringValue();
-        int id = arguments[1]->GetIntValue();
-        bool right = arguments[2]->GetBoolValue();
-        
+
+    if ( name == "answerInsert" ) {
+        CefString a     = arguments[0]->GetStringValue();
+        int       id    = arguments[1]->GetIntValue();
+        bool      right = arguments[2]->GetBoolValue();
+
         _DB_->answer_insert(a, id, right);
-        
+
         return true;
     }
-    
-    if (name == "answerSelect") {
+
+    if ( name == "answerSelect" ) {
         int id = arguments[0]->GetIntValue();
-        
+
         SqlResult r = _DB_->answer_select(id);
-        
+
         retval = AppHandler::SqlResultToJSArray(r);
-        
+
         return true;
     }
-    
-    if (name == "ArrayHaveElement") {
-        CefRefPtr<CefV8Value> array = arguments[0];
-        std::string compare = arguments[1]->GetStringValue();
-        
+
+    if ( name == "ArrayHaveElement" ) {
+        CefRefPtr<CefV8Value> array   = arguments[0];
+        std::string           compare = arguments[1]->GetStringValue();
+
         retval = CefV8Value::CreateBool(false);
-        
-        for (int i=0; i < array->GetArrayLength(); i++) {
+
+        for ( int i = 0; i < array->GetArrayLength(); i++ ) {
             std::string val = array->GetValue(i)->GetStringValue();
-            if ( compare == val) {
+            if ( compare == val ) {
                 retval = CefV8Value::CreateBool(true);
                 break;
             }
         }
-        
+
         return true;
     }
-    
-    if (name == "checkDatabase") {
+
+    if ( name == "checkDatabase" ) {
         bool ret = false;
 
-    		if ( _DB_ )
+        if ( _DB_ ) {
             ret = _DB_->isValid();
+        }
 
         retval = CefV8Value::CreateBool(ret);
         return true;
     }
-    
-    if (name == "databaseName") {
+
+    if ( name == "databaseName" ) {
         retval = CefV8Value::CreateString(_DB_->file_name);
         return true;
     }
-    
-    if (name == "categoryDelete") {
+
+    if ( name == "categoryDelete" ) {
         int id = arguments[0]->GetIntValue();
-        
+
         _DB_->category_delete(id);
-        
+
         return true;
     }
-    
-    if (name == "categoryInsert") {
-        CefString name = arguments[0]->GetStringValue();
-        int parent = arguments[1]->GetIntValue();
-        
+
+    if ( name == "categoryInsert" ) {
+        CefString name   = arguments[0]->GetStringValue();
+        int       parent = arguments[1]->GetIntValue();
+
         if ( name.empty() ) {
             retval = CefV8Value::CreateInt(-1);
             return true;
         }
-        
+
         int id = _DB_->category_insert(name, parent);
         retval = CefV8Value::CreateInt(id);
-        
+
         return true;
     }
-    
-    if (name == "categorySelect") {
+
+    if ( name == "categorySelect" ) {
         int id = arguments[0]->GetIntValue();
-        
+
         SqlRow result = _DB_->category_select(id);
         retval = AppHandler::SqlRowToJSObject(result);
-        
+
         return true;
     }
-    
-    if (name == "categoryUpdate") {
-        int id = arguments[0]->GetIntValue();
-        CefString name = arguments[1]->GetStringValue();
-        int parent = arguments[2]->GetIntValue();
-        
+
+    if ( name == "categoryUpdate" ) {
+        int       id     = arguments[0]->GetIntValue();
+        CefString name   = arguments[1]->GetStringValue();
+        int       parent = arguments[2]->GetIntValue();
+
         _DB_->category_update(id, name, parent);
-        
+
         return true;
     }
-    
-    if (name == "export") {
-        _DB_->exportDB(OpenFileDialog());
-        
+
+    if ( name == "export" ) {
+        _DB_->exportDB( OpenFileDialog() );
+
         return true;
     }
-    
-    if (name == "listCategories") {
+
+    if ( name == "listCategories" ) {
         int id = arguments[0]->GetIntValue();
-        
-        SqlResult result = _DB_->category_select_where("parent=" + IntToStdString(id));
+
+        SqlResult result = _DB_->category_select_where( "parent=" + IntToStdString(id) );
         retval = AppHandler::SqlResultToJSArray(result);
-        
+
         return true;
     }
-    
-    if (name == "listQuestions") {
+
+    if ( name == "listQuestions" ) {
         int id = arguments[0]->GetIntValue();
-        
-        SqlResult result = _DB_->question_select_where("category=" + IntToStdString(id));
+
+        SqlResult result = _DB_->question_select_where( "category=" + IntToStdString(id) );
         retval = AppHandler::SqlResultToJSArray(result);
-        
+
         return true;
     }
-    
-    if (name == "listTests") {
+
+    if ( name == "listTests" ) {
         SqlResult result = _DB_->test_select_where("");
         retval = AppHandler::SqlResultToJSArray(result);
-        
+
         return true;
     }
-    
-    if (name == "questionDelete") {
+
+    if ( name == "questionDelete" ) {
         int id = arguments[0]->GetIntValue();
-        
+
         _DB_->question_delete(id);
-        
+
         return true;
     }
-    
-    if (name == "questionInsert") {
+
+    if ( name == "questionInsert" ) {
         CefString title = arguments[0]->GetStringValue();
         CefString ref   = arguments[1]->GetStringValue();
         int       dif   = arguments[2]->GetIntValue();
         CefString body  = arguments[3]->GetStringValue();
         int       cat   = arguments[4]->GetIntValue();
         int       kind  = arguments[5]->GetIntValue();
-        
+
         int id = _DB_->question_insert(title, ref, dif, body, cat, kind);
-        
+
         retval = CefV8Value::CreateInt(id);
-        
+
         return true;
     }
-    
-    if (name == "questionSelect") {
+
+    if ( name == "questionSelect" ) {
         int id = arguments[0]->GetIntValue();
-        
+
         SqlRow r = _DB_->question_select(id);
-        
+
         retval = AppHandler::SqlRowToJSObject(r);
-        
+
         return true;
     }
-    
-    if (name == "questionSelectIds") {
-        int l = arguments[0]->GetArrayLength();
+
+    if ( name == "questionSelectIds" ) {
+        int l    = arguments[0]->GetArrayLength();
         int from = arguments[1]->GetIntValue();
-        int to = arguments[2]->GetIntValue();
+        int to   = arguments[2]->GetIntValue();
         int kind = arguments[3]->GetIntValue();
-        
+
         if ( from > to ) {
             int z = from;
             from = to;
-            to = z;
+            to   = z;
         }
-        
+
         std::string ids = arguments[0]->GetValue(0)->GetStringValue();
-        
-        for (int i=1; i < l; i++)
-            ids +=  std::string(",") + std::string(arguments[0]->GetValue(i)->GetStringValue());
-        
-        SqlResult r = _DB_->question_select_where("category in (" + ids + ") AND difficulty BETWEEN " + IntToStdString(from) + " AND " + IntToStdString(to) + " AND kind=" + IntToStdString(kind));
-        
-        CefRefPtr<CefV8Value> array = CefV8Value::CreateArray(r.size());
-        
+
+        for ( int i = 1; i < l; i++ ) {
+            ids += std::string(",") + std::string( arguments[0]->GetValue(i)->GetStringValue() );
+        }
+
+        SqlResult r = _DB_->question_select_where( "category in (" + ids + ") AND difficulty BETWEEN " + IntToStdString(from) + " AND " + IntToStdString(to) + " AND kind=" + IntToStdString(kind) );
+
+        CefRefPtr<CefV8Value> array = CefV8Value::CreateArray( r.size() );
+
         SqlResult::iterator it;
-        int i = 0;
-        for ( it = r.begin() ; it < r.end(); it++ )
-            array->SetValue(i++, CefV8Value::CreateString((*it)["id"]));
-        
+        int                 i = 0;
+        for ( it = r.begin(); it < r.end(); it++ ) {
+            array->SetValue( i++, CefV8Value::CreateString( (*it)["id"] ) );
+        }
+
         retval = array;
-        
+
         return true;
     }
-    
-    if (name == "questionUpdate") {
+
+    if ( name == "questionUpdate" ) {
         int       id    = arguments[0]->GetIntValue();
         CefString title = arguments[1]->GetStringValue();
         CefString ref   = arguments[2]->GetStringValue();
@@ -387,64 +395,64 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
         CefString body  = arguments[4]->GetStringValue();
         int       cat   = arguments[5]->GetIntValue();
         int       kind  = arguments[6]->GetIntValue();
-        
+
         _DB_->question_update(id, title, ref, dif, body, cat, kind);
-        
+
         return true;
     }
-    
-    if (name == "testDelete") {
+
+    if ( name == "testDelete" ) {
         int id = arguments[0]->GetIntValue();
-        
+
         _DB_->test_delete(id);
-        
+
         return true;
     }
-    
-    if (name == "testHeader") {
+
+    if ( name == "testHeader" ) {
         SqlRow r = _DB_->test_header();
-        
+
         retval = CefV8Value::CreateString(r["body"]);
-        
+
         return true;
     }
-    
-    if (name == "testInsert") {
-        std::string title = arguments[0]->GetStringValue();
-        std::string body  = arguments[1]->GetStringValue();
+
+    if ( name == "testInsert" ) {
+        std::string title  = arguments[0]->GetStringValue();
+        std::string body   = arguments[1]->GetStringValue();
         std::string header = arguments[2]->GetStringValue();
-        
+
         int r = _DB_->test_insert(title, body, header);
-        
+
         retval = CefV8Value::CreateInt(r);
-        
+
         return true;
     }
-    
-    if (name == "testSelect") {
+
+    if ( name == "testSelect" ) {
         int id = arguments[0]->GetIntValue();
-        
+
         SqlRow r = _DB_->test_select(id);
-        
+
         retval = AppHandler::SqlRowToJSObject(r);
-        
+
         return true;
     }
-    
-    if (name == "OpenFileDialog") {
-        AppHandler::instance()->openDataBase(OpenFileDialog());
+
+    if ( name == "OpenFileDialog" ) {
+        AppHandler::instance()->openDataBase( OpenFileDialog() );
         return true;
     }
-    
-    if (name == "SaveFileDialog") {
-        AppHandler::instance()->openDataBase(SaveFileDialog());
+
+    if ( name == "SaveFileDialog" ) {
+        AppHandler::instance()->openDataBase( SaveFileDialog() );
         return true;
     }
-  
-    if (name == "openURI") {
-      std::string uri = arguments[0]->GetStringValue();
-      openURI(uri);
-      return true;
+
+    if ( name == "openURI" ) {
+        std::string uri = arguments[0]->GetStringValue();
+        openURI(uri);
+        return true;
     }
 
     return false;
@@ -453,6 +461,6 @@ bool ClientHandler::Execute(const CefString& name, CefRefPtr<CefV8Value> object,
 void ClientHandler::modelChanged()
 {
     CefRefPtr<CefFrame> frame = this->GetBrowser()->GetMainFrame();
-    
+
     frame->ExecuteJavaScript("App.modelChanged();", frame->GetURL(), 0);
 }

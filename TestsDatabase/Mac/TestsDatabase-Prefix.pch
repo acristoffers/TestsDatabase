@@ -1,7 +1,7 @@
-//
+﻿//
 // Prefix header for all source files of the 'TestsDatabase' target in the 'TestsDatabase' project
 //
 
 #ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
+#import <Cocoa/Cocoa.h>
 #endif
