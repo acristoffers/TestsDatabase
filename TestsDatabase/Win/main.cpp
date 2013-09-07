@@ -21,14 +21,14 @@ ClientHandler *g_handler = 0;
 std::string GetApplicationDir()
 {
     HMODULE hModule = GetModuleHandleW(NULL);
-    WCHAR   wpath[MAX_PATH];
+    WCHAR wpath[MAX_PATH];
 
     GetModuleFileNameW(hModule, wpath, MAX_PATH);
-
     std::wstring wide(wpath);
-    std::string  path( wide.begin(), wide.end() );
 
-    return path.substr( 0, path.find_last_of("\\/") );
+    std::string path = CefString(wide);
+    path = path.substr( 0, path.find_last_of("\\/") );
+    return path;
 }
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
