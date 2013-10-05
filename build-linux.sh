@@ -87,3 +87,31 @@ tar -cf TestsDatabase-1.0.tar TestsDatabase-1.0
 xz -e TestsDatabase-1.0.tar
 rm -r TestsDatabase-1.0
 
+# Creates a .sh installer
+touch install_TestsDatabase_linux.sh
+rm install_TestsDatabase_linux.sh
+
+tee install_TestsDatabase_linux.sh << 'EOF' > /dev/null
+#!/usr/bin/env bash
+
+created_folder="TestsDatabase-1.0"
+file_to_execute="install.sh"
+
+echo "Unpacking installer..."
+
+# some tail don't understand the "-n", so we test for it
+use_tail="-n"
+tail -n +1 "$0" > /dev/null 2> /dev/null || use_tail=""
+tail $use_tail +19 "$0" | tar -xJ
+cd "$created_folder"
+bash "$file_to_execute"
+cd ..
+rm -R "$created_folder"
+
+exit 0
+
+EOF
+
+cat TestsDatabase-1.0.tar.xz >> install_TestsDatabase_linux.sh
+chmod +x install_TestsDatabase_linux.sh
+
