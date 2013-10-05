@@ -1,6 +1,11 @@
 #!/usr/bin/env ruby
 
-require 'ftools'
+if RUBY_VERSION < '1.9'
+  require 'ftools'
+else
+  require 'fileutils'
+end
+
 require 'digest/md5'
 
 $list = ''
@@ -66,3 +71,4 @@ end
 File.delete 'blob.txt'
 File.delete 'compressor'
 File.delete 'build.rb'
+

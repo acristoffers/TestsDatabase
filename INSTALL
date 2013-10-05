@@ -2,10 +2,12 @@ This is what you will need to build on:
 
 Linux:
 	g++
+	libbz
 	ruby
 	uglifyjs
 	tar
 	xz
+	Ubuntu: sudo apt-get install build-essential libbz2-dev ruby node-uglify
 
 Mac:
 	Xcode
