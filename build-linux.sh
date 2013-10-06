@@ -88,10 +88,7 @@ xz -e TestsDatabase-1.0.tar
 rm -r TestsDatabase-1.0
 
 # Creates a .sh installer
-touch install_TestsDatabase_linux.sh
-rm install_TestsDatabase_linux.sh
-
-tee install_TestsDatabase_linux.sh << 'EOF' > /dev/null
+cat > install_TestsDatabase_linux.sh << 'EOF'
 #!/usr/bin/env bash
 
 created_folder="TestsDatabase-1.0"
