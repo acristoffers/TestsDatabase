@@ -24,6 +24,7 @@ g++ -c ../TestsDatabase/Independent/MD5/md5.cpp
 echo "Building TestsDatabase::DataBase"
 g++ -c ../TestsDatabase/Independent/DataBase/*.cpp \
 	-I ../TestsDatabase/Independent \
+        -I ../TestsDatabase/Independent/bzip \
 	-I ../TestsDatabase/Independent/DataBase \
 	-I ../TestsDatabase/Independent/sqlite \
 	-I ../TestsDatabase/CEF/Linux \
