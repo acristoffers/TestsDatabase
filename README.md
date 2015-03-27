@@ -1,14 +1,14 @@
 Test Database
 =============
-Easily manage questions and print tests.
+Manage questions and print tests.
 
 Banco de Questões
 =================
-Gerencie questões e imprima provas com facilidade.
+Gerencie questões e imprima provas.
 
 Fragen Bank
 ===========
-Verwalten Fragen und Drucktests mit Leichtigkeit.
+Verwalten Fragen und Prüfungen drucken.
 
 
 
